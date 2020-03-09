@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Data.Common.Models
+﻿namespace PersonalStockTrader.Data.Common.Models
 {
     using System;
 

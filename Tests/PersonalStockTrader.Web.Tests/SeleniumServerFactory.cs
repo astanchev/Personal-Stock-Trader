@@ -1,9 +1,8 @@
-﻿namespace AspNetCoreTemplate.Web.Tests
+﻿namespace PersonalStockTrader.Web.Tests
 {
     using System;
     using System.Diagnostics;
     using System.Linq;
-
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Server.Features;
     using Microsoft.AspNetCore.Mvc.Testing;

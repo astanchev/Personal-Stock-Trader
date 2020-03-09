@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\AspNetCoreTemplate.Data\AspNetCoreTemplate.Data.csproj" />
-    <ProjectReference Include="..\..\Services\AspNetCoreTemplate.Services.Data\AspNetCoreTemplate.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Data\PersonalStockTrader.Data\PersonalStockTrader.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
   </ItemGroup>
 
 </Project>

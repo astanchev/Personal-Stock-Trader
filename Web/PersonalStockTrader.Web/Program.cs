@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Web
+﻿namespace PersonalStockTrader.Web
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;

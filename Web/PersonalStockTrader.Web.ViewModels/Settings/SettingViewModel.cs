@@ -1,9 +1,8 @@
-﻿namespace AspNetCoreTemplate.Web.ViewModels.Settings
+﻿namespace PersonalStockTrader.Web.ViewModels.Settings
 {
-    using AspNetCoreTemplate.Data.Models;
-    using AspNetCoreTemplate.Services.Mapping;
-
     using AutoMapper;
+    using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Services.Mapping;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

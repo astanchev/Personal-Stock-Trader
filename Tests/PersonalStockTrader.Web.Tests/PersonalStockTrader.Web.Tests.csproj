@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Web\AspNetCoreTemplate.Web\AspNetCoreTemplate.Web.csproj" />
+    <ProjectReference Include="..\..\Web\PersonalStockTrader.Web\PersonalStockTrader.Web.csproj" />
   </ItemGroup>
 
 </Project>

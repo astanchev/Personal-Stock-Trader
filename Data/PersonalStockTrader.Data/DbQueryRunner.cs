@@ -1,11 +1,10 @@
-﻿namespace AspNetCoreTemplate.Data
+﻿namespace PersonalStockTrader.Data
 {
     using System;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using PersonalStockTrader.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Services.Mapping
+﻿namespace PersonalStockTrader.Services.Mapping
 {
     // ReSharper disable once UnusedTypeParameter
     public interface IMapFrom<T>

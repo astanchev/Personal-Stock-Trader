@@ -1,11 +1,9 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace AspNetCoreTemplate.Data.Models
+namespace PersonalStockTrader.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
-    using AspNetCoreTemplate.Data.Common.Models;
-
+    using Common.Models;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity

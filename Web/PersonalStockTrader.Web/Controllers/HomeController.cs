@@ -1,10 +1,9 @@
-﻿namespace AspNetCoreTemplate.Web.Controllers
+﻿namespace PersonalStockTrader.Web.Controllers
 {
     using System.Diagnostics;
 
-    using AspNetCoreTemplate.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using PersonalStockTrader.Web.ViewModels;
 
     public class HomeController : BaseController
     {

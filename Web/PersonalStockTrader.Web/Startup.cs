@@ -1,17 +1,6 @@
-﻿namespace AspNetCoreTemplate.Web
+﻿namespace PersonalStockTrader.Web
 {
     using System.Reflection;
-
-    using AspNetCoreTemplate.Data;
-    using AspNetCoreTemplate.Data.Common;
-    using AspNetCoreTemplate.Data.Common.Repositories;
-    using AspNetCoreTemplate.Data.Models;
-    using AspNetCoreTemplate.Data.Repositories;
-    using AspNetCoreTemplate.Data.Seeding;
-    using AspNetCoreTemplate.Services.Data;
-    using AspNetCoreTemplate.Services.Mapping;
-    using AspNetCoreTemplate.Services.Messaging;
-    using AspNetCoreTemplate.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -20,6 +9,16 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using PersonalStockTrader.Data;
+    using PersonalStockTrader.Data.Common;
+    using PersonalStockTrader.Data.Common.Repositories;
+    using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Data.Repositories;
+    using PersonalStockTrader.Data.Seeding;
+    using PersonalStockTrader.Services.Data;
+    using PersonalStockTrader.Services.Mapping;
+    using PersonalStockTrader.Services.Messaging;
+    using PersonalStockTrader.Web.ViewModels;
 
     public class Startup
     {

@@ -1,10 +1,10 @@
-﻿namespace AspNetCoreTemplate.Data.Seeding
+﻿namespace PersonalStockTrader.Data.Seeding
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data.Models;
+    using PersonalStockTrader.Data.Models;
 
     internal class SettingsSeeder : ISeeder
     {

@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Services.Messaging
+﻿namespace PersonalStockTrader.Services.Messaging
 {
     public class EmailAttachment
     {

@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Services.Data
+﻿namespace PersonalStockTrader.Services.Data
 {
     using System.Collections.Generic;
 

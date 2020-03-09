@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Data.Common.Repositories
+﻿namespace PersonalStockTrader.Data.Common.Repositories
 {
     using System;
     using System.Linq;

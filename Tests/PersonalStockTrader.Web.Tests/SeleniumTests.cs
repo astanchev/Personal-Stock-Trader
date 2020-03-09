@@ -1,9 +1,8 @@
-﻿namespace AspNetCoreTemplate.Web.Tests
+﻿namespace PersonalStockTrader.Web.Tests
 {
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
     using OpenQA.Selenium.Remote;
-
     using Xunit;
 
     public class SeleniumTests : IClassFixture<SeleniumServerFactory<Startup>>

@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Data
+﻿namespace PersonalStockTrader.Data
 {
     using Microsoft.AspNetCore.Identity;
 

@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AspNetCoreTemplate.Data.Migrations
 {
+    using PersonalStockTrader.Data;
+
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20191224074400_InitialCreate")]
     partial class InitialCreate

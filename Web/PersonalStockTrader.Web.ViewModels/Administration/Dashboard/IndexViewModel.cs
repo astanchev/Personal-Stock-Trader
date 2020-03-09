@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Web.ViewModels.Administration.Dashboard
+﻿namespace PersonalStockTrader.Web.ViewModels.Administration.Dashboard
 {
     public class IndexViewModel
     {

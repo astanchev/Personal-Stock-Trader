@@ -1,10 +1,9 @@
-﻿namespace AspNetCoreTemplate.Data
+﻿namespace PersonalStockTrader.Data
 {
     using System.Linq;
 
-    using AspNetCoreTemplate.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using PersonalStockTrader.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

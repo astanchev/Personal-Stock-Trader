@@ -30,13 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\AspNetCoreTemplate.Data.Models\AspNetCoreTemplate.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Data\AspNetCoreTemplate.Data\AspNetCoreTemplate.Data.csproj" />
-    <ProjectReference Include="..\..\Services\AspNetCoreTemplate.Services.Data\AspNetCoreTemplate.Services.Data.csproj" />
-    <ProjectReference Include="..\..\Services\AspNetCoreTemplate.Services.Mapping\AspNetCoreTemplate.Services.Mapping.csproj" />
-    <ProjectReference Include="..\..\Services\AspNetCoreTemplate.Services.Messaging\AspNetCoreTemplate.Services.Messaging.csproj" />
-    <ProjectReference Include="..\..\Services\AspNetCoreTemplate.Services\AspNetCoreTemplate.Services.csproj" />
-    <ProjectReference Include="..\AspNetCoreTemplate.Web.Infrastructure\AspNetCoreTemplate.Web.Infrastructure.csproj" />
-    <ProjectReference Include="..\AspNetCoreTemplate.Web.ViewModels\AspNetCoreTemplate.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\PersonalStockTrader.Data\PersonalStockTrader.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Mapping\PersonalStockTrader.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Messaging\PersonalStockTrader.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services\PersonalStockTrader.Services.csproj" />
+    <ProjectReference Include="..\PersonalStockTrader.Web.Infrastructure\PersonalStockTrader.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
   </ItemGroup>
 </Project>

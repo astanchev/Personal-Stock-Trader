@@ -1,6 +1,6 @@
-﻿namespace AspNetCoreTemplate.Data.Models
+﻿namespace PersonalStockTrader.Data.Models
 {
-    using AspNetCoreTemplate.Data.Common.Models;
+    using Common.Models;
 
     public class Setting : BaseDeletableModel<int>
     {

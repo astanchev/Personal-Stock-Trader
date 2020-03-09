@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Data
+﻿namespace PersonalStockTrader.Data
 {
     using System;
     using System.Linq;
@@ -6,12 +6,11 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data.Common.Models;
-    using AspNetCoreTemplate.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-
+    using PersonalStockTrader.Data.Common.Models;
+    using PersonalStockTrader.Data.Models;
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =

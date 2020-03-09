@@ -1,18 +1,15 @@
-﻿namespace AspNetCoreTemplate.Services.Data.Tests
+﻿namespace PersonalStockTrader.Services.Data.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data;
-    using AspNetCoreTemplate.Data.Common.Repositories;
-    using AspNetCoreTemplate.Data.Models;
-    using AspNetCoreTemplate.Data.Repositories;
-
     using Microsoft.EntityFrameworkCore;
-
     using Moq;
-
+    using PersonalStockTrader.Data;
+    using PersonalStockTrader.Data.Common.Repositories;
+    using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Data.Repositories;
     using Xunit;
 
     public class SettingsServiceTests

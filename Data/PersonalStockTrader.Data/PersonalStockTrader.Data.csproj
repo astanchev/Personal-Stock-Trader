@@ -39,9 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetCoreTemplate.Common\AspNetCoreTemplate.Common.csproj" />
-    <ProjectReference Include="..\AspNetCoreTemplate.Data.Common\AspNetCoreTemplate.Data.Common.csproj" />
-    <ProjectReference Include="..\AspNetCoreTemplate.Data.Models\AspNetCoreTemplate.Data.Models.csproj" />
+    <ProjectReference Include="..\..\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
+    <ProjectReference Include="..\PersonalStockTrader.Data.Common\PersonalStockTrader.Data.Common.csproj" />
+    <ProjectReference Include="..\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

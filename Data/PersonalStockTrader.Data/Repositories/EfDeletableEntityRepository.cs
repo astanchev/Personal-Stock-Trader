@@ -1,13 +1,12 @@
-﻿namespace AspNetCoreTemplate.Data.Repositories
+﻿namespace PersonalStockTrader.Data.Repositories
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data.Common.Models;
-    using AspNetCoreTemplate.Data.Common.Repositories;
-
     using Microsoft.EntityFrameworkCore;
+    using PersonalStockTrader.Data.Common.Models;
+    using PersonalStockTrader.Data.Common.Repositories;
 
     public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity

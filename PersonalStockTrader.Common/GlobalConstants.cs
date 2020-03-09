@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Common
+﻿namespace PersonalStockTrader.Common
 {
     public static class GlobalConstants
     {

@@ -1,14 +1,13 @@
-﻿namespace AspNetCoreTemplate.Web.Controllers
+﻿namespace PersonalStockTrader.Web.Controllers
 {
     using System;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data.Common.Repositories;
-    using AspNetCoreTemplate.Data.Models;
-    using AspNetCoreTemplate.Services.Data;
-    using AspNetCoreTemplate.Web.ViewModels.Settings;
-
     using Microsoft.AspNetCore.Mvc;
+    using PersonalStockTrader.Data.Common.Repositories;
+    using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Services.Data;
+    using PersonalStockTrader.Web.ViewModels.Settings;
 
     public class SettingsController : BaseController
     {

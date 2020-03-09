@@ -5,21 +5,21 @@
     using System.IO;
     using System.Threading.Tasks;
 
-    using AspNetCoreTemplate.Data;
-    using AspNetCoreTemplate.Data.Common;
-    using AspNetCoreTemplate.Data.Common.Repositories;
-    using AspNetCoreTemplate.Data.Models;
-    using AspNetCoreTemplate.Data.Repositories;
-    using AspNetCoreTemplate.Data.Seeding;
-    using AspNetCoreTemplate.Services.Data;
-    using AspNetCoreTemplate.Services.Messaging;
-
     using CommandLine;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+
+    using PersonalStockTrader.Data;
+    using PersonalStockTrader.Data.Common;
+    using PersonalStockTrader.Data.Common.Repositories;
+    using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Data.Repositories;
+    using PersonalStockTrader.Data.Seeding;
+    using PersonalStockTrader.Services.Data;
+    using PersonalStockTrader.Services.Messaging;
 
     public static class Program
     {

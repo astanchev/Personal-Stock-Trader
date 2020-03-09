@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreTemplate.Web.ViewModels
+﻿namespace PersonalStockTrader.Web.ViewModels
 {
     public class ErrorViewModel
     {
