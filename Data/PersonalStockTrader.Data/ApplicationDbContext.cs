@@ -25,6 +25,20 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<FeePayment> FeePayments { get; set; }
+
+        public DbSet<Position> Positions { get; set; }
+
+        public DbSet<Stock> Stocks { get; set; }
+
+        public DbSet<Interval> Intervals { get; set; }
+
+        public DbSet<MetaData> MetaDatas { get; set; }
+
+        public DbSet<DataSet> DataSets { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
