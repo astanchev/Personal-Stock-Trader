@@ -1,6 +1,6 @@
 ﻿namespace PersonalStockTrader.Data.Models
 {
-    using Common.Models;
+    using PersonalStockTrader.Data.Common.Models;
 
     public class Setting : BaseDeletableModel<int>
     {

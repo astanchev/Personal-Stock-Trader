@@ -10,7 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using PersonalStockTrader.Data.Common.Models;
     using PersonalStockTrader.Data.Models;
-    
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
@@ -93,6 +93,13 @@
                 .HasMany(e => e.Roles)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(e => e.Accounts)
+                .WithOne()
+                .HasForeignKey(e => e.ApplicationUserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }

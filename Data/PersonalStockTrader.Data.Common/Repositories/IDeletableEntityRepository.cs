@@ -2,7 +2,8 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Models;
+
+    using PersonalStockTrader.Data.Common.Models;
 
     public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IDeletableEntity
