@@ -65,6 +65,10 @@
 
             ConfigureUserIdentityRelations(builder);
 
+            builder.Entity<DataSet>()
+                .HasIndex(d => d.DateAndTime)
+                .IsUnique();
+
             EntityIndexesConfiguration.Configure(builder);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
@@ -107,13 +111,6 @@
                 .HasMany(e => e.Roles)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<ApplicationUser>()
-                .HasMany(e => e.Accounts)
-                .WithOne()
-                .HasForeignKey(e => e.ApplicationUserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }

@@ -27,12 +27,12 @@
         public string Notes { get; set; }
 
         [Required]
-        public string ApplicationUserId { get; set; }
+        public string UserId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public ICollection<Position> Positions { get; set; }
+        public virtual ICollection<Position> Positions { get; set; }
 
-        public ICollection<FeePayment> Fees { get; set; }
+        public virtual ICollection<FeePayment> Fees { get; set; }
     }
 }
