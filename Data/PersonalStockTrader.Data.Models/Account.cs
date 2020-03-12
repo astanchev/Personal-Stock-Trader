@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Common.Models;
 
     public class Account : BaseDeletableModel<int>
@@ -13,12 +14,15 @@
             this.Fees = new HashSet<FeePayment>();
         }
 
+        [Column(TypeName = "decimal(18,4)")]
         [Range(typeof(decimal), "1000.0", "79228162514264337593543950335")]
         public decimal Balance { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         [Range(typeof(decimal), "0.01", "100.00")]
         public decimal MonthlyFee { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         [Range(typeof(decimal), "0.01", "100.00")]
         public decimal TradeFee { get; set; }
 
