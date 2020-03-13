@@ -1,7 +1,9 @@
 ﻿namespace PersonalStockTrader.Web.ViewModels.Administration.Dashboard
 {
+    using System.Collections.Generic;
+
     public class IndexViewModel
     {
-        public int SettingsCount { get; set; }
+        public IEnumerable<AccountManagerOutputViewModel> AccountManagers { get; set; }
     }
 }

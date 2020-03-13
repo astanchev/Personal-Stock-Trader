@@ -3,11 +3,13 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Models;
+
     using PersonalStockTrader.Common;
+    using PersonalStockTrader.Data.Models;
 
     public class AdministratorSeeder : ISeeder
     {
@@ -25,6 +27,7 @@
             {
                 UserName = configuration["Administrator:UserName"],
                 Email = configuration["Administrator:Email"],
+                EmailConfirmed = true,
             };
 
             var administratorPassword = configuration["Administrator:Password"];

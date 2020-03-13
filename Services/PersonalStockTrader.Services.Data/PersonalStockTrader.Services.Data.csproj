@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Common\PersonalStockTrader.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
+    <ProjectReference Include="..\..\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
+    <ProjectReference Include="..\..\Web\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Services.Mapping\PersonalStockTrader.Services.Mapping.csproj" />
   </ItemGroup>
 
