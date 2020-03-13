@@ -5,3 +5,32 @@
 
 <h1>@this.ViewData["Title"]</h1>
 
+<div class="button-holder">
+    <a href="/Administration/Dashboard/CreateAccountManager" class="btn btn-info text-uppercase">Create Account Manager</a>
+</div>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < Model.AccountManagers.Count(); i++)
+    {
+        <tr>
+            <th scope="row">@(i+1)</th>
+            <td>@Model.AccountManagers[i].Username</td>
+            <td>@Model.AccountManagers[i].Email</td>
+            <td>
+                <div class="button-holder">
+                <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -4,6 +4,6 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<AccountManagerOutputViewModel> AccountManagers { get; set; }
+        public IList<AccountManagerOutputViewModel> AccountManagers { get; set; }
     }
 }

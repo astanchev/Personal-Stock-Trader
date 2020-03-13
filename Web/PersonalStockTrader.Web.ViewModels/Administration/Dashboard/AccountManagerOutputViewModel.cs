@@ -5,7 +5,7 @@
 
     public class AccountManagerOutputViewModel : IMapTo<ApplicationUser>, IMapFrom<ApplicationUser>
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
         public string Username { get; set; }
 

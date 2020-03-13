@@ -7,7 +7,9 @@
 
     public interface IAdministratorService
     {
-        Task<IEnumerable<AccountManagerOutputViewModel>> GetAllAccountManagersAsync();
+        Task<IList<AccountManagerOutputViewModel>> GetAllAccountManagersAsync();
+
+        Task<AccountManagerOutputViewModel> GetAccountManagersByIdAsync(string userId);
 
         Task<bool> RemoveAccountManagerAsync(string userId);
 

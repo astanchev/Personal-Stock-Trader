@@ -36,14 +36,14 @@
         {
             await this.administratorService.CreateAccountManagerAsync(accountManager);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(nameof(Index));
         }
-
+        
         public async Task<IActionResult> DeleteAccountManager(string userId)
         {
             await this.administratorService.RemoveAccountManagerAsync(userId);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction(nameof(Index));
         }
     }
 }

@@ -28,12 +28,31 @@
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<AccountManagerOutputViewModel>> GetAllAccountManagersAsync()
+        public async Task<IList<AccountManagerOutputViewModel>> GetAllAccountManagersAsync()
         {
             return (await this.userManager
-                    .GetUsersInRoleAsync(GlobalConstants.AccountManagerRoleName))
-                .To<AccountManagerOutputViewModel>()
+                .GetUsersInRoleAsync(GlobalConstants.AccountManagerRoleName))
+                .Where(x => x.IsDeleted == false)
+                .Select(x => new AccountManagerOutputViewModel
+                {
+                    UserId = x.Id,
+                    Username = x.UserName,
+                    Email = x.Email,
+                })
                 .ToList();
+        }
+
+        public async Task<AccountManagerOutputViewModel> GetAccountManagersByIdAsync(string userId)
+        {
+            var accountManager = await this.userRepository
+                .GetByIdWithDeletedAsync(userId);
+
+            return new AccountManagerOutputViewModel
+            {
+                UserId = accountManager.Id,
+                Username = accountManager.UserName,
+                Email = accountManager.Email,
+            };
         }
 
         public async Task<bool> RemoveAccountManagerAsync(string userId)
@@ -56,12 +75,19 @@
                 accountManager.DeletedOn = DateTime.Now;
             }
 
+            await this.userRepository.SaveChangesAsync();
+
             return result.Succeeded;
         }
 
         public async Task<bool> CreateAccountManagerAsync(AccountManagerInputViewModel accountManager)
         {
-            var user = accountManager.To<ApplicationUser>();
+            var user = new ApplicationUser
+            {
+                Email = accountManager.Email,
+                EmailConfirmed = true,
+                UserName = accountManager.Username,
+            };
 
             var result = await this.userManager.CreateAsync(
                 user,
@@ -73,6 +99,8 @@
                     user,
                     GlobalConstants.AccountManagerRoleName);
             }
+
+            await this.userRepository.SaveChangesAsync();
 
             return result.Succeeded;
         }
