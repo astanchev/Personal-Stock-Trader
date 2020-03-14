@@ -3,6 +3,7 @@ namespace PersonalStockTrader.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
     using PersonalStockTrader.Data.Common.Models;
@@ -15,7 +16,6 @@ namespace PersonalStockTrader.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.Accounts = new HashSet<Account>();
         }
 
         // Audit info
@@ -28,12 +28,12 @@ namespace PersonalStockTrader.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public Account Account { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
-
-        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

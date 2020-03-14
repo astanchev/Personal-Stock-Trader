@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Common.Models;
+
+    using PersonalStockTrader.Data.Common.Models;
 
     public class Account : BaseDeletableModel<int>
     {
