@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
+    using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Models;
 
     [AllowAnonymous]
@@ -67,6 +68,11 @@
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Range(typeof(decimal), "1000.00", "79228162514264337593543950335", ErrorMessage = "Value for {0} must be at least {1} USD.")]
+            [Display(Name = "Starting Balance")]
+            public decimal StartBalance { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,11 +93,16 @@
                 {
                     UserName = this.Input.Username,
                     Email = this.Input.Email,
+                    StartBalance = this.Input.StartBalance,
                 };
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
+                    result = await this.userManager.AddToRoleAsync(
+                        user,
+                        GlobalConstants.UserRoleName);
+
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);

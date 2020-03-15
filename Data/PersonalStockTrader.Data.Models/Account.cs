@@ -16,7 +16,7 @@
         }
 
         [Column(TypeName = "decimal(18,4)")]
-        [Range(typeof(decimal), "1000.0", "79228162514264337593543950335")]
+        [Range(typeof(decimal), "1000.00", "79228162514264337593543950335")]
         public decimal Balance { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]

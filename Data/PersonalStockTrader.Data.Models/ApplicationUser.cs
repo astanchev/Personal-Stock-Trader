@@ -3,6 +3,7 @@ namespace PersonalStockTrader.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
@@ -27,6 +28,10 @@ namespace PersonalStockTrader.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        [Column(TypeName = "decimal(18,4)")]
+        [Range(typeof(decimal), "1000.00", "79228162514264337593543950335")]
+        public decimal StartBalance { get; set; }
 
         public Account Account { get; set; }
 

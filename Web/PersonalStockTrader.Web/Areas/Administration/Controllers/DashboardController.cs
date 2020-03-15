@@ -1,10 +1,10 @@
 ﻿namespace PersonalStockTrader.Web.Areas.Administration.Controllers
 {
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
     using PersonalStockTrader.Services.Data;
-
-    using ViewModels.Administration.Dashboard;
+    using PersonalStockTrader.Web.ViewModels.Administration.Dashboard;
 
     public class DashboardController : AdministrationController
     {
@@ -36,14 +36,14 @@
         {
             await this.administratorService.CreateAccountManagerAsync(accountManager);
 
-            return this.RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
-        
+
         public async Task<IActionResult> DeleteAccountManager(string userId)
         {
             await this.administratorService.RemoveAccountManagerAsync(userId);
 
-            return this.RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
     }
 }
