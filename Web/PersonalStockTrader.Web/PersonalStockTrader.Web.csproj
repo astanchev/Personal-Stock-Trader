@@ -14,6 +14,21 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\AboutUs\**" />
+    <Compile Remove="Views\ContactUs\**" />
+    <Compile Remove="Views\OurServices\**" />
+    <Content Remove="Views\AboutUs\**" />
+    <Content Remove="Views\ContactUs\**" />
+    <Content Remove="Views\OurServices\**" />
+    <EmbeddedResource Remove="Views\AboutUs\**" />
+    <EmbeddedResource Remove="Views\ContactUs\**" />
+    <EmbeddedResource Remove="Views\OurServices\**" />
+    <None Remove="Views\AboutUs\**" />
+    <None Remove="Views\ContactUs\**" />
+    <None Remove="Views\OurServices\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>

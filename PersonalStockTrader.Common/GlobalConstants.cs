@@ -4,6 +4,8 @@
     {
         public const string SystemName = "PersonalStockTrader";
 
+        public const string SystemDisplayName = "Personal Stock Trader";
+
         public const string AdministratorRoleName = "Administrator";
 
         public const string AccountManagerRoleName = "AccountManager";
