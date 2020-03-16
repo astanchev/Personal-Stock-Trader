@@ -14,7 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <environment names="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
@@ -56,16 +56,15 @@
     <header class="">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h2>Personal<br/>Stock Trader</h2></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h2>Personal<br />Stock Trader</h2></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 Home
-                                <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -85,8 +84,8 @@
     </header>
 
     <div class="">
-        <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            <partial name="_CookieConsentPartial" />
             @this.RenderBody()
         </main>
     </div>
@@ -97,14 +96,16 @@
             <div class="row">
                 <div class="col-md-6 footer-item">
                     <h4>Personal Stock Trader</h4>
-                    <p>We are here to help you</p>
+                    <ul class="menu-list">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">We are here to help you</a></li>
+                    </ul>
                 </div>
                 <div class="col-md-6 footer-item">
                     <h4>Additional Pages</h4>
                     <ul class="menu-list">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">How We Work</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a asp-area="" asp-controller="About" asp-action="Index">About Us</a></li>
+                        <li><a asp-area="" asp-controller="Services" asp-action="Index">How We Work</a></li>
+                        <li><a asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -123,17 +124,17 @@
 
     <!-- Bootstrap core JavaScript -->
     <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
@@ -151,7 +152,7 @@
                 t.value = '';         // with more chance of typos
                 t.style.color = '#fff';
             }
-        }
+        };
     </script>
 
     @this.RenderSection("Scripts", required: false)
