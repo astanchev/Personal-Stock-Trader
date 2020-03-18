@@ -32,6 +32,20 @@
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\maps\style.css.map" />
+    <None Include="wwwroot\fonts\auth\.DS_Store" />
+    <None Include="wwwroot\fonts\faces\.DS_Store" />
+    <None Include="wwwroot\images\auth\.DS_Store" />
+    <None Include="wwwroot\images\faces\.DS_Store" />
+    <None Include="wwwroot\vendors\.DS_Store" />
+    <None Include="wwwroot\vendors\base\vendor.bundle.base.js" />
+    <None Include="wwwroot\vendors\chart.js\Chart.min.js" />
+    <None Include="wwwroot\vendors\datatables.net-bs4\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\vendors\datatables.net\jquery.dataTables.js" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.svg" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.9" />

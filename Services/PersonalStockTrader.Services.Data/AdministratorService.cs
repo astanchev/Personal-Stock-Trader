@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using PersonalStockTrader.Common;
@@ -33,12 +33,14 @@
             return (await this.userManager
                 .GetUsersInRoleAsync(GlobalConstants.AccountManagerRoleName))
                 .Where(x => x.IsDeleted == false)
-                .Select(x => new AccountManagerOutputViewModel
-                {
-                    UserId = x.Id,
-                    Username = x.UserName,
-                    Email = x.Email,
-                })
+                .AsQueryable()
+                .To<AccountManagerOutputViewModel>()
+                //.Select(x => new AccountManagerOutputViewModel
+                //{
+                //    UserId = x.Id,
+                //    Username = x.UserName,
+                //    Email = x.Email,
+                //})
                 .ToList();
         }
 
@@ -47,12 +49,14 @@
             var accountManager = await this.userRepository
                 .GetByIdWithDeletedAsync(userId);
 
-            return new AccountManagerOutputViewModel
-            {
-                UserId = accountManager.Id,
-                Username = accountManager.UserName,
-                Email = accountManager.Email,
-            };
+            return AutoMapperConfig.MapperInstance.Map<AccountManagerOutputViewModel>(accountManager);
+
+            //return new AccountManagerOutputViewModel
+            //{
+            //    UserId = accountManager.Id,
+            //    Username = accountManager.UserName,
+            //    Email = accountManager.Email,
+            //};
         }
 
         public async Task<bool> RemoveAccountManagerAsync(string userId)
