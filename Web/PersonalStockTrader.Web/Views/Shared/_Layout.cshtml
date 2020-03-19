@@ -77,7 +77,15 @@
                             <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

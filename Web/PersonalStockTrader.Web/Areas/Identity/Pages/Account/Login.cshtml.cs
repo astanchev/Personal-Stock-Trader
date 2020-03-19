@@ -80,7 +80,15 @@
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");
-                    return this.LocalRedirect(returnUrl);
+
+                    return this.LocalRedirect("~/Administration/Dashboard");
+
+                    //if (this.User.IsInRole("Administrator"))
+                    //{
+                    //    return this.LocalRedirect("./Dashboard/Index");
+                    //}
+
+                    //return this.LocalRedirect(returnUrl);
                 }
 
                 if (result.RequiresTwoFactor)

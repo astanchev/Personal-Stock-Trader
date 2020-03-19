@@ -2,17 +2,22 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Web.ViewModels.Administration.Dashboard;
 
     public class DashboardController : AdministrationController
     {
         private readonly IAdministratorService administratorService;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public DashboardController(ISettingsService settingsService, IAdministratorService administratorService)
+        public DashboardController(ISettingsService settingsService, IAdministratorService administratorService, SignInManager<ApplicationUser> signInManager)
         {
             this.administratorService = administratorService;
+            this.signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index()
@@ -44,6 +49,14 @@
             await this.administratorService.RemoveAccountManagerAsync(userId);
 
             return this.RedirectToAction(nameof(this.Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+
+            return this.Redirect("/Home/Index");
         }
     }
 }
