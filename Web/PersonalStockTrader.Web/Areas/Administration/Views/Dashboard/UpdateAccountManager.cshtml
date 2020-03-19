@@ -1,30 +1,25 @@
-﻿@model PersonalStockTrader.Web.ViewModels.Administration.Dashboard.AccountManagerInputViewModel
+﻿@model PersonalStockTrader.Web.ViewModels.Administration.Dashboard.AccountManagerOutputViewModel
 @{
-    ViewData["Title"] = "CreateAccountManager";
+    ViewData["Title"] = "UpdateAccountManager";
 }
 
 <section class="py-5">
     <div class="container">
-        <h1 style="margin: 2%; text-align: center;">Create Account Manager</h1>
+        <h1 style="margin: 2%; text-align: center;">Update Account Manager</h1>
         <div style="padding: 5%;">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Username">Username</label>
-                    <input type="text" class="form-control" asp-for="Username"
-                           placeholder="Enter username">
+                    <input type="text" class="form-control" asp-for="Username" value="@Model.Username" placeholder="Enter username">
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Email">Email address</label>
-                    <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp" value="@Model.Email" placeholder="Enter email">
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password">Password</label>
-                    <input type="password" class="form-control" asp-for="Password" placeholder="Password">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
+                <div><input asp-for="UserId" type="hidden" value="@Model.UserId"/></div>
                 <button type="submit" class="btn btn-info text-uppercase">Submit</button>
             </form>
         </div>

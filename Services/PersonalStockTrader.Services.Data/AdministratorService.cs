@@ -104,5 +104,17 @@
 
             return result.Succeeded;
         }
+
+        public async Task<bool> UpdateAccountManagerAsync(AccountManagerOutputViewModel accountManager)
+        {
+            var user = await this.userRepository.GetByIdWithDeletedAsync(accountManager.UserId);
+
+            user.Email = accountManager.Email;
+            user.UserName = accountManager.Username;
+
+            var result = await this.userManager.UpdateAsync(user);
+
+            return result.Succeeded;
+        }
     }
 }

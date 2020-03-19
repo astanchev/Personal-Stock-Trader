@@ -1,37 +1,43 @@
 ﻿@model PersonalStockTrader.Web.ViewModels.Administration.Dashboard.IndexViewModel
 @{
-    this.ViewData["Title"] = "Admin dashboard";
+    this.ViewData["Title"] = "Account managers";
 }
 
 <div class="container-fluid">
     <div class="request-form">
-        <h1>@this.ViewData["Title"]</h1>
+        <h1 style="margin: 2%; text-align: center;">@this.ViewData["Title"]</h1>
 
         <div class="button-holder">
-            <a asp-area="Administration" asp-controller="Dashboard" asp-action="CreateAccountManager" class="btn btn-info text-uppercase">Create Account Manager</a>
+            <a asp-area="Administration" asp-controller="Dashboard" asp-action="CreateAccountManager" class="btn btn-info text-uppercase btn-icon-text">Create Account Manager</a>
         </div>
-        <table class="table">
+        <table class="table table-hover table-striped">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Username</th>
+                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Update</th>
+                    <th scope="col" class="text-center">Delete</th>
                 </tr>
             </thead>
             <tbody>
                 @for (int i = 0; i < Model.AccountManagers.Count(); i++)
                 {
-                    <tr>
-                        <th scope="row">@(i + 1)</th>
-                        <td>@Model.AccountManagers[i].Username</td>
-                        <td>@Model.AccountManagers[i].Email</td>
-                        <td>
-                            <div class="button-holder">
-                                <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
+                <tr>
+                    <th scope="row" class="text-center">@(i + 1)</th>
+                    <td class="text-center">@Model.AccountManagers[i].Username</td>
+                    <td class="text-center">@Model.AccountManagers[i].Email</td>
+                    <td class="text-center">
+                        <div class="button-holder">
+                            <a href="/Administration/Dashboard/UpdateAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-inverse-info text-uppercase">Update</a>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="button-holder">
+                            <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

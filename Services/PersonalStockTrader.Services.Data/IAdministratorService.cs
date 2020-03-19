@@ -14,5 +14,7 @@
         Task<bool> RemoveAccountManagerAsync(string userId);
 
         Task<bool> CreateAccountManagerAsync(AccountManagerInputViewModel accountManager);
+
+        Task<bool> UpdateAccountManagerAsync(AccountManagerOutputViewModel accountManager);
     }
 }

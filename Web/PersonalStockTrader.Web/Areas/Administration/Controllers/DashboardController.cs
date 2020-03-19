@@ -44,6 +44,21 @@
             return this.RedirectToAction(nameof(this.Index));
         }
 
+        public async Task<IActionResult> UpdateAccountManager(string userId)
+        {
+            var user = await this.administratorService.GetAccountManagersByIdAsync(userId);
+
+            return this.View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAccountManager(AccountManagerOutputViewModel accountManager)
+        {
+            await this.administratorService.UpdateAccountManagerAsync(accountManager);
+
+            return this.RedirectToAction(nameof(this.Index));
+        }
+
         public async Task<IActionResult> DeleteAccountManager(string userId)
         {
             await this.administratorService.RemoveAccountManagerAsync(userId);
