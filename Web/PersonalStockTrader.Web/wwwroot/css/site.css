@@ -8,3 +8,7 @@ for details on configuring this project to bundle and minify static web assets. 
     width: 50%;
     z-index: 9999999999 !important;
 }
+
+#content {
+    all: initial;
+}
