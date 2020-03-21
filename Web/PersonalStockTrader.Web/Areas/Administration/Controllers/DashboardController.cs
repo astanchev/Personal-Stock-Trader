@@ -14,7 +14,7 @@
         private readonly IAdministratorService administratorService;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public DashboardController(ISettingsService settingsService, IAdministratorService administratorService, SignInManager<ApplicationUser> signInManager)
+        public DashboardController(IAdministratorService administratorService, SignInManager<ApplicationUser> signInManager)
         {
             this.administratorService = administratorService;
             this.signInManager = signInManager;

@@ -47,9 +47,9 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews(configuration =>
+            services.AddControllersWithViews(c =>
             {
-                configuration.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                c.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             services.AddRazorPages();
@@ -62,9 +62,10 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IEmailSender>(
+                serviceProvider => new SendGridEmailSender(this.configuration["SendGridApiKey:ApiKey"]));
             services.AddTransient<IAdministratorService, AdministratorService>();
+            services.AddTransient<IContactFormService, ContactFormService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
