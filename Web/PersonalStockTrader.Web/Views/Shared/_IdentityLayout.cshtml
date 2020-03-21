@@ -1,0 +1,66 @@
+﻿@using PersonalStockTrader.Common
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemDisplayName</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+                <div class="row flex-grow">
+                    <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                        <div class="auth-form-transparent text-left p-3">
+                            <div class="display-3 text-capitalize text-info font-weight-bold">@GlobalConstants.SystemDisplayName</div>
+                            <hr />
+                            @this.RenderBody()
+                        </div>
+                    </div>
+                    @if ((string)this.ViewData["Title"] == "Register")
+                    {
+                        <div class="col-lg-6 register-half-bg d-flex flex-row">
+                            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2020<br />@GlobalConstants.SystemDisplayName. All rights reserved.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 login-half-bg d-flex flex-row">
+                            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright 2020 &copy;<br />@GlobalConstants.SystemDisplayName. All rights reserved.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="~/js/off-canvas.js"></script>
+    <script src="~/js/hoverable-collapse.js"></script>
+    <script src="~/js/template.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <!-- endinject -->
+
+    @this.RenderSection("Scripts", required: false)
+</body>
+
+</html>
