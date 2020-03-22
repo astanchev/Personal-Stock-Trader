@@ -23,21 +23,21 @@
             <tbody>
                 @for (int i = 0; i < Model.AccountManagers.Count(); i++)
                 {
-                <tr>
-                    <th scope="row" class="text-center">@(i + 1)</th>
-                    <td class="text-center">@Model.AccountManagers[i].Username</td>
-                    <td class="text-center">@Model.AccountManagers[i].Email</td>
-                    <td class="text-center">
-                        <div class="button-holder">
-                            <a href="/Administration/Dashboard/UpdateAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-inverse-info text-uppercase">Update</a>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="button-holder">
-                            <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <th scope="row" class="text-center">@(i + 1)</th>
+                        <td class="text-center">@Model.AccountManagers[i].Username</td>
+                        <td class="text-center">@Model.AccountManagers[i].Email</td>
+                        <td class="text-center">
+                            <div class="button-holder">
+                                <a href="/Administration/Dashboard/UpdateAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-inverse-info text-uppercase">Update</a>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="button-holder">
+                                <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

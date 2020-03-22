@@ -1,0 +1,48 @@
+﻿@model PersonalStockTrader.Web.ViewModels.Administration.Emails.SendReplayViewModel
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Send Replay</h2>
+                    <p class="card-description">
+                       Answer to potential client
+                    </p>
+                    <form method="post" class="forms-sample">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="Id" value="@Model.Id">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name">Name</label>
+                            <input type="text" class="form-control" asp-for="Name" value="@Model.Name" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email">Email address</label>
+                            <input type="email" class="form-control" asp-for="Email" value="@Model.Email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Subject">Subject</label>
+                            <input type="text" class="form-control" asp-for="Subject" value="@Model.Subject" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Content">Content</label>
+                            <textarea rows="6" class="form-control" asp-for="Content" value="@Model.Subject" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Answer">Answer</label>
+                            <textarea rows="6" class="form-control" asp-for="Answer"></textarea>
+                            <span asp-validation-for="Answer" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-info mr-2">Answer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

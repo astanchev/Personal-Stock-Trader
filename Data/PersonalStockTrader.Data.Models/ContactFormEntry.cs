@@ -4,7 +4,7 @@
 
     using PersonalStockTrader.Data.Common.Models;
 
-    public class ContactFormEntry: BaseModel<int>
+    public class ContactFormEntry : BaseModel<int>
     {
         public ContactFormEntry()
         {

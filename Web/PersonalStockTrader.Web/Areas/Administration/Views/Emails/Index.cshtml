@@ -1,0 +1,126 @@
+﻿@using System.Globalization
+@model PersonalStockTrader.Web.ViewModels.Administration.Emails.EmailsIndexPageViewModel
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Not answered emails last 10 days</h4>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Ratio between answered and not answered emails</h4>
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Visitor emails</h4>
+                <p class="card-description">
+                    Emails that are not answered
+                </p>
+                <div class="table-responsive">
+                    <table id="emailsTable" class="table table-hover table-striped">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col" class="text-center">From</th>
+                                <th scope="col" class="text-center">Email</th>
+                                <th scope="col" class="text-center">Subject</th>
+                                <th scope="col" class="text-center">From Date</th>
+                                <th scope="col" class="text-center">Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var email in Model.NotAnsweredEmails)
+                            {
+                                <tr>
+                                    <th scope="row" class="text-center">@email.Id</th>
+                                    <td class="text-center">@email.Name</td>
+                                    <td class="text-center">@email.Email</td>
+                                    <td class="text-center">@email.Subject</td>
+                                    <td class="text-center">@email.CreatedOn</td>
+                                    <td class="text-center">
+                                        <div class="button-holder">
+                                            <a href="/Administration/Emails/AnswerEmail?emailId=@email.Id" class="btn btn-info text-uppercase">Answer</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script>
+        new Chart(document.getElementById('barChart'),
+            {
+                type: 'bar',
+                data: {
+                    labels: [
+                        @Html.Raw(string.Join(", ",Model.NotAnsweredLast10Days.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))
+                    ],
+                    datasets: [
+                        {
+                            data: [@string.Join(", ", Model.NotAnsweredLast10Days.Values.ToArray())],
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                            borderColor: "#ff0000",
+                            fill: true
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Not answered emails'
+                    }
+                }
+            });
+    </script>
+    
+    <script>
+        new Chart(document.getElementById('doughnutChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ["Answered emails", "Not answered emails"],
+                datasets: [
+                    {
+                        backgroundColor: ["#3e95cd", "#c45850"],
+                        data: [@Model.CountAnsweredEmails, @Model.CountNotAnsweredEmails]
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Answered / Not answered emails'
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#emailsTable').DataTable({
+                "pagingType": "simple_numbers"
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

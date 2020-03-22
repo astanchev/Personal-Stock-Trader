@@ -44,6 +44,17 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "moment@2.24.0",
+      "destination": "wwwroot/lib/moment/",
+      "files": [
+        "min/moment.min.js",
+        "min/moment-with-locales.min.js",
+        "src/moment.js",
+        "min/moment-with-locales.js"
+      ]
     }
   ]
 }

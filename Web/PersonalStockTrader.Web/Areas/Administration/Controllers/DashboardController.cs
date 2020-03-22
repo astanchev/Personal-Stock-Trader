@@ -39,6 +39,11 @@
         [HttpPost]
         public async Task<IActionResult> CreateAccountManager(AccountManagerInputViewModel accountManager)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(accountManager);
+            }
+
             await this.administratorService.CreateAccountManagerAsync(accountManager);
 
             return this.RedirectToAction(nameof(this.Index));
@@ -46,6 +51,11 @@
 
         public async Task<IActionResult> UpdateAccountManager(string userId)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
             var user = await this.administratorService.GetAccountManagersByIdAsync(userId);
 
             return this.View(user);
@@ -54,6 +64,11 @@
         [HttpPost]
         public async Task<IActionResult> UpdateAccountManager(AccountManagerOutputViewModel accountManager)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(accountManager);
+            }
+
             await this.administratorService.UpdateAccountManagerAsync(accountManager);
 
             return this.RedirectToAction(nameof(this.Index));
@@ -61,6 +76,11 @@
 
         public async Task<IActionResult> DeleteAccountManager(string userId)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
             await this.administratorService.RemoveAccountManagerAsync(userId);
 
             return this.RedirectToAction(nameof(this.Index));
