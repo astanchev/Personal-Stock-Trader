@@ -34,9 +34,13 @@
                     {
 
                     }
-                    else
+                    else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
                     {
-
+                                
+                    }
+                    else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
+                    {
+                                
                     }
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -83,9 +87,13 @@
                             {
 
                             }
-                            else
+                            else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
                             {
-
+                                
+                            }
+                            else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
+                            {
+                                
                             }
                         </div>
                     </li>

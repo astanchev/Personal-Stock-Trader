@@ -31,7 +31,7 @@
         public async Task<IEnumerable<ConfirmedClientsViewModel>> GetAllConfirmedClientsAsync()
         {
             return (await this.userManager
-                    .GetUsersInRoleAsync(GlobalConstants.UserRoleName))
+                    .GetUsersInRoleAsync(GlobalConstants.ConfirmedUserRoleName))
                 .Where(u => u.Account.Confirmed)
                 .Select(u => new ConfirmedClientsViewModel
                 {
@@ -48,7 +48,7 @@
         public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
         {
             return (await this.userManager
-                    .GetUsersInRoleAsync(GlobalConstants.UserRoleName))
+                    .GetUsersInRoleAsync(GlobalConstants.NotConfirmedUserRoleName))
                 .Where(u => u.Account.Confirmed == false && u.IsDeleted == false)
                 .Select(u => new NotConfirmedClientsViewModel
                 {
@@ -110,6 +110,13 @@
                 Confirmed = true,
                 Notes = user.Notes,
             };
+
+            var result = await this.userManager.RemoveFromRoleAsync(userToBeConfirmed, GlobalConstants.NotConfirmedUserRoleName);
+
+            if (result.Succeeded)
+            {
+                await this.userManager.AddToRoleAsync(userToBeConfirmed, GlobalConstants.ConfirmedUserRoleName);
+            }
 
             this.userRepository.Update(userToBeConfirmed);
 

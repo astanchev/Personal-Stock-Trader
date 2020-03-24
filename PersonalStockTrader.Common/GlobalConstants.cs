@@ -10,7 +10,9 @@
 
         public const string AccountManagerRoleName = "AccountManager";
 
-        public const string UserRoleName = "User";
+        public const string ConfirmedUserRoleName = "ConfirmedUser";
+
+        public const string NotConfirmedUserRoleName = "NotConfirmedUser";
 
         public const string SystemEmail = "personal.stock.trader@gmail.com";
 

@@ -101,7 +101,7 @@
                 {
                     result = await this.userManager.AddToRoleAsync(
                         user,
-                        GlobalConstants.UserRoleName);
+                        GlobalConstants.NotConfirmedUserRoleName);
 
                     this.logger.LogInformation("User created a new account with password.");
 
