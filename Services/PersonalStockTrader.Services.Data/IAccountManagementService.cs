@@ -1,5 +1,6 @@
 ﻿namespace PersonalStockTrader.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -25,5 +26,11 @@
         Task DeleteUserAsync(string userId);
 
         Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee);
+
+        IDictionary<string, decimal> GetPaidTradeFeesLast7Days();
+
+        IDictionary<string, decimal> GetPaidMonthlyFeesLast6Months();
+
+        IDictionary<string, decimal> GetAllPaidFeesLast90Days();
     }
 }

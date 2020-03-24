@@ -101,7 +101,7 @@
 
         public IDictionary<DateTime, int> GetNotAnsweredLast10Days()
         {
-            var result = this.CreateEmptyResult();
+            var result = this.CreateEmptyResult10Days();
 
             var emails = this.contactRepository
                 .All()
@@ -124,7 +124,7 @@
             return result;
         }
 
-        private IDictionary<DateTime, int> CreateEmptyResult()
+        private IDictionary<DateTime, int> CreateEmptyResult10Days()
         {
             var result = new Dictionary<DateTime, int>();
 
