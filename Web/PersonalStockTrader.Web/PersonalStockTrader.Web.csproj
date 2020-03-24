@@ -117,4 +117,10 @@
     <ProjectReference Include="..\PersonalStockTrader.Web.Infrastructure\PersonalStockTrader.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\AccountManagement\Views\ClientsStatistic\" />
+    <Folder Include="Areas\AccountManagement\Views\ManageClients\" />
+    <Folder Include="Areas\AccountManagement\Views\NewClients\" />
+  </ItemGroup>
 </Project>

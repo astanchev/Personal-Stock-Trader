@@ -66,6 +66,7 @@
                 serviceProvider => new SendGridEmailSender(this.configuration["SendGridApiKey:ApiKey"]));
             services.AddTransient<IAdministratorService, AdministratorService>();
             services.AddTransient<IContactFormService, ContactFormService>();
+            services.AddTransient<IAccountManagementService, AccountManagementService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
