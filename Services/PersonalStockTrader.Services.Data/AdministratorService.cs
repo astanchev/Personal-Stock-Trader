@@ -4,26 +4,23 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
-    using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Web.ViewModels.Administration.Dashboard;
 
     public class AdministratorService : IAdministratorService
     {
         private const string InvalidUserIdErrorMessage = "User with ID: {0} does not exist.";
 
-        private readonly IConfiguration configuration;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
 
-        public AdministratorService(IConfiguration configuration, UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> userRepository)
+        public AdministratorService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> userRepository)
         {
-            this.configuration = configuration;
             this.userManager = userManager;
             this.userRepository = userRepository;
         }

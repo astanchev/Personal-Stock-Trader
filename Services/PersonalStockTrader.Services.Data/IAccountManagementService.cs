@@ -16,14 +16,14 @@
 
         Task<ClientToBeManagedViewModel> GetClientToBeManagedByIdAsync(string userId);
 
-        Task<bool> ConfirmUserAccountAsync(string userId);
+        Task ConfirmUserAccountAsync(ClientToBeConfirmedViewModel user);
 
-        Task<bool> DeleteUserAccountAsync(string userId);
+        Task DeleteUserAccountAsync(string userId);
 
-        Task<bool> RestoreUserAccountAsync(string userId);
+        Task RestoreUserAccountAsync(string userId);
 
-        Task<bool> DeleteUserAsync(string userId);
+        Task DeleteUserAsync(string userId);
 
-        Task<bool> UpdateUserAccountAsync(ClientToBeManagedViewModel user);
+        Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee);
     }
 }

@@ -11,7 +11,5 @@
         public int AccountId { get; set; }
 
         public decimal StartingBalance { get; set; }
-
-        public bool AccountConfirmed { get; set; }
     }
 }

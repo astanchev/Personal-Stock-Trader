@@ -10,7 +10,7 @@
 
         public int AccountId { get; set; }
 
-        public decimal StartingBalance { get; set; }
+        public decimal Balance { get; set; }
 
         public decimal TradeFee { get; set; }
 
