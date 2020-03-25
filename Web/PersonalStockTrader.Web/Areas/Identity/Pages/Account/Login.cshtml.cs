@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Common;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -77,18 +77,34 @@
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await this.signInManager.PasswordSignInAsync(this.Input.Username, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");
 
-                    return this.LocalRedirect("~/Administration/Dashboard");
+                    var user = await this.signInManager.UserManager.FindByNameAsync(this.Input.Username);
 
-                    //if (this.User.IsInRole("Administrator"))
-                    //{
-                    //    return this.LocalRedirect("./Dashboard/Index");
-                    //}
+                    var isInRoleAdmin = await this.signInManager.UserManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName);
+                    var isInRoleAccountManager = await this.signInManager.UserManager.IsInRoleAsync(user, GlobalConstants.AccountManagerRoleName);
+                    var isInRoleConfirmedUser = await this.signInManager.UserManager.IsInRoleAsync(user, GlobalConstants.ConfirmedUserRoleName);
+                    var isInRoleNotConfirmedUser = await this.signInManager.UserManager.IsInRoleAsync(user, GlobalConstants.NotConfirmedUserRoleName);
 
-                    //return this.LocalRedirect(returnUrl);
+                    if (isInRoleAdmin)
+                    {
+                        return this.LocalRedirect("~/Administration/Dashboard");
+                    }
+                    else if (isInRoleAccountManager)
+                    {
+                        return this.LocalRedirect("~/AccountManagement/NewClients");
+                    }
+                    else if (isInRoleConfirmedUser)
+                    {
+                        return this.LocalRedirect("~/Users/Account");
+                    }
+                    else if (isInRoleNotConfirmedUser)
+                    {
+                        return this.LocalRedirect("~/Users/Account");
+                    }
                 }
 
                 if (result.RequiresTwoFactor)

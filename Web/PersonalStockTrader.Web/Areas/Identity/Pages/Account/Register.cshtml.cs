@@ -94,6 +94,7 @@
                     UserName = this.Input.Username,
                     Email = this.Input.Email,
                     StartBalance = this.Input.StartBalance,
+                    EmailConfirmed = true,
                 };
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);

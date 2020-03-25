@@ -10,11 +10,15 @@
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients;
     using PersonalStockTrader.Web.ViewModels.AccountManagement.NewClients;
 
     public class AccountManagementService : IAccountManagementService
     {
+        private const decimal MonthlyFee = 50.0M;
+        private const decimal TradeFee = 10.0M;
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Account> accountRepository;
@@ -28,11 +32,13 @@
             this.feePaymentsRepository = feePaymentsRepository;
         }
 
-        public async Task<IEnumerable<ConfirmedClientsViewModel>> GetAllConfirmedClientsAsync()
+        public IEnumerable<ConfirmedClientsViewModel> GetAllConfirmedClients()
         {
-            return (await this.userManager
-                    .GetUsersInRoleAsync(GlobalConstants.ConfirmedUserRoleName))
-                .Where(u => u.Account.Confirmed)
+            var clients = this.userRepository
+                .All()
+                .Where(u => u.Account != null && u.Account.Confirmed);
+
+            var result = clients
                 .Select(u => new ConfirmedClientsViewModel
                 {
                     UserId = u.Id,
@@ -43,19 +49,20 @@
                     Condition = u.Account.IsDeleted,
                 })
                 .ToList();
+
+            return result;
         }
 
         public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
         {
             return (await this.userManager
                     .GetUsersInRoleAsync(GlobalConstants.NotConfirmedUserRoleName))
-                .Where(u => u.Account.Confirmed == false && u.IsDeleted == false)
+                .Where(u => u.IsDeleted == false)
                 .Select(u => new NotConfirmedClientsViewModel
                 {
                     UserId = u.Id,
                     Username = u.UserName,
                     Email = u.Email,
-                    AccountId = u.Account.Id,
                     StartingBalance = u.StartBalance,
                 })
                 .ToList();
@@ -71,11 +78,10 @@
                     UserId = u.Id,
                     Username = u.UserName,
                     Email = u.Email,
-                    AccountId = u.Account.Id,
                     Balance = u.StartBalance,
-                    TradeFee = u.Account.TradeFee,
-                    MonthlyFee = u.Account.MonthlyFee,
-                    Notes = u.Account.Notes,
+                    TradeFee = TradeFee,
+                    MonthlyFee = MonthlyFee,
+                    Notes = string.Empty,
                 })
                 .FirstOrDefaultAsync();
         }

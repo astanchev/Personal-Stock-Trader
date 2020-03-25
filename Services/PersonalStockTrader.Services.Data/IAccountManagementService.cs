@@ -9,7 +9,7 @@
 
     public interface IAccountManagementService
     {
-        Task<IEnumerable<ConfirmedClientsViewModel>> GetAllConfirmedClientsAsync();
+        IEnumerable<ConfirmedClientsViewModel> GetAllConfirmedClients();
 
         Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync();
 

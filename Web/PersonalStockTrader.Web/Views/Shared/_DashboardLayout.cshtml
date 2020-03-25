@@ -32,15 +32,16 @@
                     }
                     else if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
                     {
-
+                        <a class="navbar-brand brand-logo" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
+                        <a class="navbar-brand brand-logo-mini" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
                     }
                     else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
                     {
-                                
+
                     }
                     else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                     {
-                                
+
                     }
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -85,15 +86,20 @@
                             }
                             else if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
                             {
-
+                                <form method="post" class="form-inline" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Logout">
+                                    <a class="dropdown-item">
+                                        <i class="mdi mdi-logout text-info font-weight-bold"></i>
+                                        <button type="submit" class="nav-link btn btn-link text-dark font-weight-bold">Logout</button>
+                                    </a>
+                                </form>
                             }
                             else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
                             {
-                                
+
                             }
                             else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                             {
-                                
+
                             }
                         </div>
                     </li>
@@ -120,7 +126,7 @@
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a href="https://www.urbanui.com/" target="_blank">@GlobalConstants.SystemDisplayName</a>. All rights reserved.</span>
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a class="text-info" href="#">@GlobalConstants.SystemDisplayName</a>. All rights reserved.</span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
                     </div>
                 </footer>

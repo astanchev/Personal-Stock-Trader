@@ -8,8 +8,6 @@
 
     public class FeePayment : BaseDeletableModel<int>
     {
-        public DateTime PaymentDate { get; set; }
-
         [Column(TypeName = "decimal(18,4)")]
         [Range(typeof(decimal), "0.01", "100.00")]
         public decimal Amount { get; set; }

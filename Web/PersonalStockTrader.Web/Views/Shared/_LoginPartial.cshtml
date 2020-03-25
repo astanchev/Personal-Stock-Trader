@@ -12,6 +12,8 @@
                     <i class="mdi mdi-account-multiple menu-icon text-info"></i>
                     <span class="menu-title text-info font-weight-bold">Manage<br />account managers</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" asp-area="Administration" asp-controller="Emails" asp-action="Index">
                     <i class="mdi mdi-email menu-icon text-info"></i>
                     <span class="menu-title text-info font-weight-bold">Manage emails</span>
@@ -20,7 +22,24 @@
         }
         else if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
         {
-
+            <li class="nav-item">
+                <a class="nav-link" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index">
+                    <i class="mdi mdi-account-plus menu-icon text-info"></i>
+                    <span class="menu-title text-info font-weight-bold">Manage<br />new accounts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="AccountManagement" asp-controller="ManageClients" asp-action="Index">
+                    <i class="mdi mdi-account-check menu-icon text-info"></i>
+                    <span class="menu-title text-info font-weight-bold">Manage<br/>confirmed clients</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="AccountManagement" asp-controller="ClientsStatistic" asp-action="Index">
+                    <i class="mdi mdi-chart-line menu-icon text-info"></i>
+                    <span class="menu-title text-info font-weight-bold">Clients statistic</span>
+                </a>
+            </li>
         }
         else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
         {
