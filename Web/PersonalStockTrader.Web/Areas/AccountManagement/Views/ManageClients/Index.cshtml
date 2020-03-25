@@ -1,1 +1,67 @@
 ﻿@model PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients.ManageClientsViewModel
+@{
+    this.ViewData["Title"] = "Clients";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Clients</h4>
+            <p class="card-description">
+                Manage clients
+            </p>
+            <div class="table-responsive">
+                <table id="clients" class="table table-hover table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-center">Username</th>
+                            <th scope="col" class="text-center">Email</th>
+                            <th scope="col" class="text-center">Account Id</th>
+                            <th scope="col" class="text-center">Balance</th>
+                            <th scope="col" class="text-center">Condition</th>
+                            <th scope="col" class="text-center">Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var client in Model.Clients)
+                        {
+                            <tr>
+                                <td class="text-center">@client.Username</td>
+                                <td class="text-center">@client.Email</td>
+                                <td class="text-center">@client.AccountId</td>
+                                <td class="text-center">@client.Balance.ToString("f2")</td>
+                                <td class="text-center">
+                                    @if (client.Condition)
+                                    {
+                                        <label class="badge badge-danger">STOPPED</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="badge badge-success">ACTING</label>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <div class="button-holder">
+                                        <a href="/AccountManagement/ManageClients/ManageClient?userId=@client.UserId" class="btn btn-info text-uppercase">Update</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#clients').DataTable({
+                "pagingType": "simple_numbers"
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

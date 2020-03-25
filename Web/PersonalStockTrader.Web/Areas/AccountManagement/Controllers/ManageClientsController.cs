@@ -27,5 +27,23 @@
 
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> ManageClient(string userId)
+        {
+            var user = await this.accountManagement.GetClientToBeManagedByIdAsync(userId);
+
+            return this.View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageClient(ClientToBeManagedViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return await this.ManageClient(input.UserId);
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
+        }
     }
 }

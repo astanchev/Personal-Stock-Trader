@@ -14,6 +14,7 @@
     {
         private const string ConfirmMessage = "Your account has been approved!";
         private const string ConfirmSubject = "Account confirmation";
+
         private readonly IAccountManagementService accountManagement;
         private readonly IEmailSender emailSender;
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -50,7 +51,6 @@
                 return await this.ConfirmAccount(input.UserId);
             }
 
-            ;
             await this.accountManagement.ConfirmUserAccountAsync(input);
 
             await this.emailSender.SendEmailAsync(

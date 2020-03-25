@@ -1,0 +1,102 @@
+﻿@model PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients.ClientToBeManagedViewModel
+
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Username</h4>
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <p class="card-description">
+                    Client info
+                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label asp-for="Username" class="col-sm-3 col-form-label text-right">Username</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Username" type="text" class="form-control" value="@Model.Username" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label asp-for="Email" class="col-sm-3 col-form-label text-right">Email</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Email" type="text" class="form-control" value="@Model.Email" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label asp-for="MonthlyFee" class="col-sm-3 col-form-label text-right">Monthly Fee</label>
+                                        <div class="col-sm-9">
+                                            <input id="monthlyFee" asp-for="MonthlyFee" type="number" min="0.01" max="100.00" class="form-control border border-dark" value="@Model.MonthlyFee.ToString("F2")" />
+                                            <span asp-validation-for="MonthlyFee" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label asp-for="TradeFee" class="col-sm-3 col-form-label text-right">Trade Fee</label>
+                                        <div class="col-sm-9">
+                                            <input id="tradeFee" asp-for="TradeFee" type="number" min="0.01" max="100.00" class="form-control border border-dark" value="@Model.TradeFee.ToString("F2")" />
+                                            <span asp-validation-for="TradeFee" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label asp-for="Balance" class="col-sm-3 col-form-label text-right">Starting Balance</label>
+                                        <div class="col-sm-9">
+                                            <input id="startBalance" asp-for="Balance" type="number" min="1000" class="form-control border border-dark" value="@Model.Balance.ToString("F2")" />
+                                            <span asp-validation-for="Balance" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <button type="button" class="btn btn-success btn-lg btn-icon-text">
+                                        Edit Values
+                                        <i class="mdi mdi-file-check btn-icon-append"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary btn-lg btn-block"><i class="mdi mdi-account-check"></i>Activate Account</button>
+                                <button type="button" class="btn btn-inverse-danger btn-lg btn-block"><i class="mdi mdi-account-remove"></i>Deactivate account</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-warning btn-lg btn-block">
+                                    <i class="mdi mdi-email-variant"></i>Send email
+                                </button>
+                                <button type="button" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i>Delete user</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
