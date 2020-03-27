@@ -4,6 +4,16 @@
     this.ViewData["Title"] = "Home Page";
 }
 
+@if (this.TempData["InfoMessage"] != null)
+{
+    <div id="emailConfirm" class="alert alert-warning alert-dismissible fade show" role="alert">
+        @this.TempData["InfoMessage"]
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">OK</span>
+        </button>
+    </div>
+}
+
 <!-- Page Content -->
 <!-- Banner Starts Here -->
 <div class="main-banner header-text" id="top">

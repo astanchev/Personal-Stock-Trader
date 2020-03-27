@@ -9,6 +9,14 @@ for details on configuring this project to bundle and minify static web assets. 
     z-index: 9999999999 !important;
 }
 
+#emailConfirm {
+    position: fixed;
+    margin-top: 150px;
+    margin-left: 200px;
+    width: 25%;
+    z-index: 9999999999 !important;
+}
+
 #content {
     all: initial;
 }

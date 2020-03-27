@@ -42,6 +42,8 @@
                 input.Subject ?? GlobalConstants.ConstSubject,
                 input.Content);
 
+            this.TempData["InfoMessage"] = "Thank you for your email!";
+
             return this.Redirect("/Home/Index");
         }
     }
