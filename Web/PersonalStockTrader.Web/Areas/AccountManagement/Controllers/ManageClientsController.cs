@@ -3,6 +3,8 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.WebEncoders.Testing;
+    using Newtonsoft.Json.Linq;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Messaging;
     using PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients;

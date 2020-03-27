@@ -166,15 +166,18 @@
 
         public async Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee)
         {
-            var userToBeUpdated = await this.userRepository.GetByIdWithDeletedAsync(userId);
+            var accountToBeUpdated = await this.accountRepository
+                .AllWithDeleted()
+                .FirstOrDefaultAsync(a => a.UserId == userId);
 
-            userToBeUpdated.Account.Balance = balance;
-            userToBeUpdated.Account.TradeFee = tradeFee;
-            userToBeUpdated.Account.MonthlyFee = monthlyFee;
 
-            this.userRepository.Update(userToBeUpdated);
+            accountToBeUpdated.Balance = balance;
+            accountToBeUpdated.TradeFee = tradeFee;
+            accountToBeUpdated.MonthlyFee = monthlyFee;
 
-            await this.userRepository.SaveChangesAsync();
+            this.accountRepository.Update(accountToBeUpdated);
+
+            await this.accountRepository.SaveChangesAsync();
         }
 
         public IDictionary<string, decimal> GetPaidTradeFeesLast7Days()

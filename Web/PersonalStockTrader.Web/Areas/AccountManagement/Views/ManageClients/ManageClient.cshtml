@@ -9,6 +9,7 @@
                 <p class="card-description">
                     Client info
                 </p>
+                <input id="userId" asp-for="UserId" type="hidden" value="@Model.UserId" />
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -53,15 +54,16 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label asp-for="Balance" class="col-sm-3 col-form-label text-right">Starting Balance</label>
+                                        <label asp-for="Balance" class="col-sm-3 col-form-label text-right">Balance</label>
                                         <div class="col-sm-9">
-                                            <input id="startBalance" asp-for="Balance" type="number" min="1000" class="form-control border border-dark" value="@Model.Balance.ToString("F2")" />
+                                            <input id="balance" asp-for="Balance" type="number" min="1000" class="form-control border border-dark" value="@Model.Balance.ToString("F2")" />
                                             <span asp-validation-for="Balance" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <button type="button" class="btn btn-success btn-lg btn-icon-text">
+                                    <form id="editForm" method="post"></form>
+                                    <button id="btnEdit" type="button" class="btn btn-success btn-lg btn-icon-text" onclick="editValues()" disabled>
                                         Edit Values
                                         <i class="mdi mdi-file-check btn-icon-append"></i>
                                     </button>
@@ -74,8 +76,8 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary btn-lg btn-block"><i class="mdi mdi-account-check"></i>Activate Account</button>
-                                <button type="button" class="btn btn-inverse-danger btn-lg btn-block"><i class="mdi mdi-account-remove"></i>Deactivate account</button>
+                                <button type="button" class="btn btn-primary btn-lg btn-block"><i class="mdi mdi-account-check"></i> Activate Account</button>
+                                <button type="button" class="btn btn-inverse-danger btn-lg btn-block"><i class="mdi mdi-account-remove"></i> Deactivate account</button>
                             </div>
                         </div>
                     </div>
@@ -83,9 +85,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <button type="button" class="btn btn-warning btn-lg btn-block">
-                                    <i class="mdi mdi-email-variant"></i>Send email
+                                    <i class="mdi mdi-email-variant"></i> Send email
                                 </button>
-                                <button type="button" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i>Delete user</button>
+                                <button type="button" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</button>
                             </div>
                         </div>
                     </div>
@@ -99,4 +101,56 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        $(window).on('load', function (e) {
+            $('form').each(function () {
+                    $(this).data('serialized', $(this).serialize())
+                })
+                .on('change input', function () {
+                    $(this)
+                        .find('#btnEdit')
+                        .prop('disabled', $(this).serialize() == $(this).data('serialized'));
+                })
+                .find('#btnEdit')
+                .prop('disabled', true);
+        });
+    </script>
+
+    <script>
+        function editValues() {
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            var id = $('#userId').val();
+            var balance = $('#balance').val();
+            var tradeFee = $('#tradeFee').val();
+            var monthlyFee = $('#monthlyFee').val();
+
+            if (balance < 0 || tradeFee < 0
+                || monthlyFee < 0 || tradeFee > 100
+                || monthlyFee > 100) {
+                alert('Invalid values');
+                return;
+            }
+            
+            $.ajax({
+                    url: "/api/UpdateAccounts",
+                    type: "POST",
+                    data: JSON.stringify({
+                        userId: id,
+                        balance: balance,
+                        tradeFee: tradeFee,
+                        monthlyFee: monthlyFee
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    headers: { 'X-CSRF-TOKEN': token }
+                })
+                .done(function success(data) {
+                    alert('Values ' + data.response);
+                })
+                .fail(function fail(data, statusCode) {
+                    alert('Request failed. Returned status of ' + statusCode);
+                });
+        }
+    </script>
 }

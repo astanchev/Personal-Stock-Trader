@@ -47,9 +47,14 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews(c =>
+            services.AddControllersWithViews(options =>
             {
-                c.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            services.AddAntiforgery(options =>
+           {
+                options.HeaderName = "X-CSRF-TOKEN";
             });
 
             services.AddRazorPages();
