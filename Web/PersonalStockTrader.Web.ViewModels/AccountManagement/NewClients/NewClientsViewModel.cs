@@ -7,3 +7,5 @@
         public IEnumerable<NotConfirmedClientsViewModel> NewClients { get; set; }
     }
 }
+
+

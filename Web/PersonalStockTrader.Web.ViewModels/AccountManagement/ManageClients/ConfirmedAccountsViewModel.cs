@@ -16,3 +16,4 @@
         public bool Condition { get; set; }
     }
 }
+

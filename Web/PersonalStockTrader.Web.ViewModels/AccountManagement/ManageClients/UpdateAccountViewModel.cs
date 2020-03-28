@@ -11,3 +11,4 @@
         public string TradeFee { get; set; }
     }
 }
+

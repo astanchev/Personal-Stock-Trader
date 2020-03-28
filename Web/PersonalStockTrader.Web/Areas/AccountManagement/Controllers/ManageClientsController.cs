@@ -1,23 +1,22 @@
 ﻿namespace PersonalStockTrader.Web.Areas.AccountManagement.Controllers
 {
     using System.Threading.Tasks;
-
+    using Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.WebEncoders.Testing;
     using Newtonsoft.Json.Linq;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Messaging;
     using PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients;
+    using ViewModels.Contact;
 
     public class ManageClientsController : AccountManagementController
     {
         private readonly IAccountManagementService accountManagement;
-        private readonly IEmailSender emailSender;
 
-        public ManageClientsController(IAccountManagementService accountManagement, IEmailSender emailSender)
+        public ManageClientsController(IAccountManagementService accountManagement)
         {
             this.accountManagement = accountManagement;
-            this.emailSender = emailSender;
         }
 
         public IActionResult Index()

@@ -19,3 +19,4 @@
         public decimal MonthlyFee { get; set; }
     }
 }
+

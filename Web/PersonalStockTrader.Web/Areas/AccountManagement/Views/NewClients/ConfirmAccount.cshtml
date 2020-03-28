@@ -1,5 +1,7 @@
 ﻿@model PersonalStockTrader.Web.ViewModels.AccountManagement.NewClients.ClientToBeConfirmedViewModel
-
+@{
+    this.ViewData["Title"] = "Confirm account";
+}
 
 <div class="col-12 grid-margin">
     <div class="card">
@@ -10,24 +12,24 @@
                 <p class="card-description">
                     Client info
                 </p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label asp-for="Username" class="col-sm-3 col-form-label text-right">Username</label>
-                                <div class="col-sm-9">
-                                    <input asp-for="Username" type="text" class="form-control" value="@Model.Username" readonly />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label asp-for="Email" class="col-sm-3 col-form-label text-right">Email</label>
-                                <div class="col-sm-9">
-                                    <input asp-for="Email" type="text" class="form-control" value="@Model.Email" readonly />
-                                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label asp-for="Username" class="col-sm-3 col-form-label text-right">Username</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Username" type="text" class="form-control" value="@Model.Username" readonly />
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label asp-for="Email" class="col-sm-3 col-form-label text-right">Email</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Email" type="text" class="form-control" value="@Model.Email" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">

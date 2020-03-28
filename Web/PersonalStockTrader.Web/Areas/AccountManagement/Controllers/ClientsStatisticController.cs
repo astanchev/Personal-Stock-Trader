@@ -15,7 +15,7 @@
             this.accountManagement = accountManagement;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var viewModel = new ClientsStatisticsViewModel
             {

@@ -25,7 +25,6 @@
             var allNotAnswered = this.contactFormService.GetAllNotAnswered();
             var notAnsweredLast10Days = this.contactFormService.GetNotAnsweredLast10Days();
 
-
             var viewModel = new EmailsIndexPageViewModel
             {
                 NotAnsweredEmails = allNotAnswered,

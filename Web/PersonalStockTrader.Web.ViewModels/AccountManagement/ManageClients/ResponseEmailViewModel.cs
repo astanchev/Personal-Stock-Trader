@@ -1,8 +1,7 @@
 ﻿namespace PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients
 {
-    public class UpdateAccountResponseModel
+    public class ResponseEmailViewModel
     {
         public string Response { get; set; }
     }
 }
-

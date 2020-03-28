@@ -1,4 +1,7 @@
 ﻿@model PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients.ClientToBeManagedViewModel
+@{
+    this.ViewData["Title"] = "Manage Clients";
+}
 
 <div class="col-12 grid-margin">
     <div class="card">
@@ -86,11 +89,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="button-holder">
-                                    <a class="btn btn-warning btn-lg btn-block">
+                                    <a class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#sendEmail" data-whatever="">
                                         <i class="mdi mdi-email-variant"></i> Send email
                                     </a>
                                 </div>
-                                <div class="button-holder">
+                                <div class="button-holder" style="margin-top: 5px">
                                     <a href="/AccountManagement/ManageClients/DeleteClient?userId=@Model.UserId" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</a>
                                 </div>
                             </div>
@@ -101,7 +104,38 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message to @Model.Username</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="emailForm" method="post">
+                    <div class="form-group">
+                        <label for="recipientName" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipientName" value="@Model.Email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="col-form-label">Subject:</label>
+                        <input type="text" class="form-control" id="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="sendBtn" type="button" class="btn btn-primary" onclick="sendMail()">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts {
@@ -184,6 +218,35 @@
             })
                 .done(function success(data) {
                     alert('Values ' + data.response);
+                })
+                .fail(function fail(data, statusCode) {
+                    alert('Request failed. Returned status of ' + statusCode);
+                });
+        }
+    </script>
+
+    <script>
+        function sendMail() {
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            var email = $('#recipientName').val();
+            var subject = $('#subject').val();
+            var message = $('#message').val();
+           
+            $.ajax({
+                    url: "/api/SendEmail",
+                    type: "POST",
+                    data: JSON.stringify({
+                        email: email,
+                        subject: subject,
+                        message: message
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    headers: { 'X-CSRF-TOKEN': token }
+                })
+                .done(function success(data) {
+                    $('#sendEmail').modal('hide');
+                    alert(data.response);
                 })
                 .fail(function fail(data, statusCode) {
                     alert('Request failed. Returned status of ' + statusCode);

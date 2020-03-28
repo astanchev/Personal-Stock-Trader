@@ -14,3 +14,4 @@
         public IDictionary<DateTime, int> NotAnsweredLast10Days { get; set; }
     }
 }
+
