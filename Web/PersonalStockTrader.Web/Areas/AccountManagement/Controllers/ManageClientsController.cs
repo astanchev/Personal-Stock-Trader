@@ -24,15 +24,15 @@
         {
             var viewModel = new ManageClientsViewModel()
             {
-                Clients = this.accountManagement.GetAllConfirmedClients(),
+                Clients = this.accountManagement.GetAllConfirmedAccounts(),
             };
 
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> ManageClient(string userId)
+        public async Task<IActionResult> ManageClient(int accountId)
         {
-            var user = await this.accountManagement.GetClientToBeManagedByIdAsync(userId);
+            var user = await this.accountManagement.GetClientToBeManagedByAccountIdAsync(accountId);
 
             return this.View(user);
         }
@@ -42,8 +42,24 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return await this.ManageClient(input.UserId);
+                return await this.ManageClient(input.AccountId);
             }
+
+            if (input.AccountIsDeleted)
+            {
+                await this.accountManagement.RestoreUserAccountAsync(input.AccountId);
+            }
+            else
+            {
+                await this.accountManagement.DeleteUserAccountAsync(input.AccountId);
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
+        }
+
+        public async Task<IActionResult> DeleteClient(string userId)
+        {
+            await this.accountManagement.DeleteUserAsync(userId);
 
             return this.RedirectToAction(nameof(this.Index));
         }

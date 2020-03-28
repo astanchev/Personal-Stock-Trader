@@ -10,6 +10,8 @@
 
         public int AccountId { get; set; }
 
+        public bool AccountIsDeleted { get; set; }
+
         public decimal Balance { get; set; }
 
         public decimal TradeFee { get; set; }

@@ -4,6 +4,6 @@
 
     public class ManageClientsViewModel
     {
-        public IEnumerable<ConfirmedClientsViewModel> Clients { get; set; }
+        public IEnumerable<ConfirmedAccountsViewModel> Clients { get; set; }
     }
 }

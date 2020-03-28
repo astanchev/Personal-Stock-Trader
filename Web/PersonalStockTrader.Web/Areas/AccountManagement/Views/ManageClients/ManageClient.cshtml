@@ -4,12 +4,14 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">@Model.Username</h4>
-            <form method="post">
+            <form id="editForm" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <p class="card-description">
                     Client info
                 </p>
                 <input id="userId" asp-for="UserId" type="hidden" value="@Model.UserId" />
+                <input id="accountIsDeleted" asp-for="AccountIsDeleted" type="hidden" value="@Model.AccountIsDeleted" />
+                <input id="accountId" asp-for="AccountId" type="hidden" value="@Model.AccountId" />
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -62,7 +64,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <form id="editForm" method="post"></form>
                                     <button id="btnEdit" type="button" class="btn btn-success btn-lg btn-icon-text" onclick="editValues()" disabled>
                                         Edit Values
                                         <i class="mdi mdi-file-check btn-icon-append"></i>
@@ -76,18 +77,22 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary btn-lg btn-block"><i class="mdi mdi-account-check"></i> Activate Account</button>
-                                <button type="button" class="btn btn-inverse-danger btn-lg btn-block"><i class="mdi mdi-account-remove"></i> Deactivate account</button>
+                                <button type="submit" id="activateAccount" class="btn btn-inverse-primary btn-lg btn-block"><i class="mdi mdi-account-check"></i> Activate Account</button>
+                                <button type="submit" id="deactivateAccount" class="btn btn-inverse-danger btn-lg btn-block"><i class="mdi mdi-account-remove"></i> Deactivate account</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <button type="button" class="btn btn-warning btn-lg btn-block">
-                                    <i class="mdi mdi-email-variant"></i> Send email
-                                </button>
-                                <button type="button" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</button>
+                                <div class="button-holder">
+                                    <a class="btn btn-warning btn-lg btn-block">
+                                        <i class="mdi mdi-email-variant"></i> Send email
+                                    </a>
+                                </div>
+                                <div class="button-holder">
+                                    <a href="/AccountManagement/ManageClients/DeleteClient?userId=@Model.UserId" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -101,20 +106,54 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    
+
     <script>
-        $(window).on('load', function (e) {
-            $('form').each(function () {
-                    $(this).data('serialized', $(this).serialize())
-                })
-                .on('change input', function () {
-                    $(this)
-                        .find('#btnEdit')
-                        .prop('disabled', $(this).serialize() == $(this).data('serialized'));
-                })
-                .find('#btnEdit')
-                .prop('disabled', true);
-        });
+        var isDeleted = $('#accountIsDeleted').val();
+
+        if (isDeleted === 'False') {
+            $(window).on('load',
+                function (e) {
+                    $('form').each(function () {
+                        $(this).data('serialized', $(this).serialize())
+                    })
+                        .on('change input',
+                            function () {
+                                $(this)
+                                    .find('#btnEdit')
+                                    .prop('disabled', $(this).serialize() == $(this).data('serialized'))
+                                    .find('#btnEdit')
+                                    .prop('disabled', true);
+                            });
+                });
+        }
+    </script>
+
+    <script>
+        var balance = document.getElementById('balance');
+        var monthlyFee = document.getElementById('monthlyFee');
+        var tradeFee = document.getElementById('tradeFee');
+
+        balance.addEventListener('change', setTwoNumberDecimal);
+        monthlyFee.addEventListener('change', setTwoNumberDecimal);
+        tradeFee.addEventListener('change', setTwoNumberDecimal);
+
+        function setTwoNumberDecimal(event) {
+            this.value = parseFloat(this.value).toFixed(2);
+        }
+    </script>
+
+    <script>
+        var isDeleted = $('#accountIsDeleted').val();
+
+        if (isDeleted === 'True') {
+            $('#activateAccount').attr('disabled', false);
+            $('#deactivateAccount').attr('disabled', true);
+            $('#btnEdit').attr('disabled', true);
+        } else {
+            $('#activateAccount').attr('disabled', true);
+            $('#deactivateAccount').attr('disabled', false);
+        }
+
     </script>
 
     <script>
@@ -125,26 +164,24 @@
             var tradeFee = $('#tradeFee').val();
             var monthlyFee = $('#monthlyFee').val();
 
-            if (balance < 0 || tradeFee < 0
-                || monthlyFee < 0 || tradeFee > 100
-                || monthlyFee > 100) {
+            if (balance < 0 || tradeFee < 0 || monthlyFee < 0 || tradeFee > 100 || monthlyFee > 100) {
                 alert('Invalid values');
                 return;
             }
-            
+
             $.ajax({
-                    url: "/api/UpdateAccounts",
-                    type: "POST",
-                    data: JSON.stringify({
-                        userId: id,
-                        balance: balance,
-                        tradeFee: tradeFee,
-                        monthlyFee: monthlyFee
-                    }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    headers: { 'X-CSRF-TOKEN': token }
-                })
+                url: "/api/UpdateAccounts",
+                type: "POST",
+                data: JSON.stringify({
+                    userId: id,
+                    balance: balance,
+                    tradeFee: tradeFee,
+                    monthlyFee: monthlyFee
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token }
+            })
                 .done(function success(data) {
                     alert('Values ' + data.response);
                 })

@@ -1,6 +1,6 @@
 ﻿namespace PersonalStockTrader.Web.ViewModels.AccountManagement.ManageClients
 {
-    public class ConfirmedClientsViewModel
+    public class ConfirmedAccountsViewModel
     {
         public string UserId { get; set; }
 

@@ -32,25 +32,23 @@
             this.feePaymentsRepository = feePaymentsRepository;
         }
 
-        public IEnumerable<ConfirmedClientsViewModel> GetAllConfirmedClients()
+        public IEnumerable<ConfirmedAccountsViewModel> GetAllConfirmedAccounts()
         {
-            var clients = this.userRepository
-                .All()
-                .Where(u => u.Account != null && u.Account.Confirmed);
-
-            var result = clients
-                .Select(u => new ConfirmedClientsViewModel
+            var accounts = this.accountRepository
+                .AllWithDeleted()
+                .Where(a => !a.User.IsDeleted)
+                .Select(a => new ConfirmedAccountsViewModel
                 {
-                    UserId = u.Id,
-                    Username = u.UserName,
-                    Email = u.Email,
-                    AccountId = u.Account.Id,
-                    Balance = u.Account.Balance,
-                    Condition = u.Account.IsDeleted,
+                    UserId = a.UserId,
+                    Username = a.User.UserName,
+                    Email = a.User.Email,
+                    AccountId = a.Id,
+                    Balance = a.Balance,
+                    Condition = a.IsDeleted,
                 })
                 .ToList();
 
-            return result;
+            return accounts;
         }
 
         public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
@@ -86,20 +84,21 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<ClientToBeManagedViewModel> GetClientToBeManagedByIdAsync(string userId)
+        public async Task<ClientToBeManagedViewModel> GetClientToBeManagedByAccountIdAsync(int accountId)
         {
-            return await this.userRepository
+            return await this.accountRepository
                 .AllWithDeleted()
-                .Where(u => u.Id == userId)
-                .Select(u => new ClientToBeManagedViewModel
+                .Where(a => a.Id == accountId)
+                .Select(a => new ClientToBeManagedViewModel
                 {
-                    UserId = u.Id,
-                    Username = u.UserName,
-                    Email = u.Email,
-                    AccountId = u.Account.Id,
-                    Balance = u.Account.Balance,
-                    TradeFee = u.Account.TradeFee,
-                    MonthlyFee = u.Account.MonthlyFee,
+                    UserId = a.UserId,
+                    Username = a.User.UserName,
+                    Email = a.User.Email,
+                    AccountId = a.Id,
+                    AccountIsDeleted = a.IsDeleted,
+                    Balance = a.Balance,
+                    TradeFee = a.TradeFee,
+                    MonthlyFee = a.MonthlyFee,
                 })
                 .FirstOrDefaultAsync();
         }
@@ -129,28 +128,20 @@
             await this.userRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAccountAsync(string userId)
+        public async Task DeleteUserAccountAsync(int accountId)
         {
-            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
-
-            var account = await this.accountRepository.GetByIdWithDeletedAsync(user.Account.Id);
+            var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
 
             this.accountRepository.Delete(account);
-
-            this.userRepository.Update(user);
 
             await this.userRepository.SaveChangesAsync();
         }
 
-        public async Task RestoreUserAccountAsync(string userId)
+        public async Task RestoreUserAccountAsync(int accountId)
         {
-            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
-
-            var account = await this.accountRepository.GetByIdWithDeletedAsync(user.Account.Id);
+            var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
 
             this.accountRepository.Undelete(account);
-
-            this.userRepository.Update(user);
 
             await this.userRepository.SaveChangesAsync();
         }
@@ -159,7 +150,7 @@
         {
             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
 
-            this.userRepository.HardDelete(user);
+            this.userRepository.Delete(user);
 
             await this.userRepository.SaveChangesAsync();
         }

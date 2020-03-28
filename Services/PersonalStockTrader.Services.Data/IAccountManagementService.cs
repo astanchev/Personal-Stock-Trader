@@ -9,19 +9,19 @@
 
     public interface IAccountManagementService
     {
-        IEnumerable<ConfirmedClientsViewModel> GetAllConfirmedClients();
+        IEnumerable<ConfirmedAccountsViewModel> GetAllConfirmedAccounts();
 
         Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync();
 
         Task<ClientToBeConfirmedViewModel> GetClientToBeConfirmedByIdAsync(string userId);
 
-        Task<ClientToBeManagedViewModel> GetClientToBeManagedByIdAsync(string userId);
+        Task<ClientToBeManagedViewModel> GetClientToBeManagedByAccountIdAsync(int accountId);
 
         Task ConfirmUserAccountAsync(ClientToBeConfirmedViewModel user);
 
-        Task DeleteUserAccountAsync(string userId);
+        Task DeleteUserAccountAsync(int accountId);
 
-        Task RestoreUserAccountAsync(string userId);
+        Task RestoreUserAccountAsync(int accountId);
 
         Task DeleteUserAsync(string userId);
 
