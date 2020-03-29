@@ -53,9 +53,9 @@
 
         public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
         {
-            return (await this.userManager
-                    .GetUsersInRoleAsync(GlobalConstants.NotConfirmedUserRoleName))
-                .Where(u => u.IsDeleted == false)
+            return this.userManager
+                .Users
+                .Where(u => u.IsDeleted == false && !u.Account.Confirmed)
                 .Select(u => new NotConfirmedClientsViewModel
                 {
                     UserId = u.Id,
@@ -128,31 +128,49 @@
             await this.userRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAccountAsync(int accountId)
+        public async Task DeleteUserAccountAsync(string userId, int accountId)
         {
             var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
 
             this.accountRepository.Delete(account);
 
-            await this.userRepository.SaveChangesAsync();
+            await this.accountRepository.SaveChangesAsync();
+
+            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
+
+            await this.userManager.RemoveFromRoleAsync(user, GlobalConstants.ConfirmedUserRoleName);
+
+            await this.userManager.AddToRoleAsync(user, GlobalConstants.NotConfirmedUserRoleName);
         }
 
-        public async Task RestoreUserAccountAsync(int accountId)
+        public async Task RestoreUserAccountAsync(string userId, int accountId)
         {
             var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
 
             this.accountRepository.Undelete(account);
 
-            await this.userRepository.SaveChangesAsync();
+            await this.accountRepository.SaveChangesAsync();
+
+            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
+
+            await this.userManager.RemoveFromRoleAsync(user, GlobalConstants.NotConfirmedUserRoleName);
+
+            await this.userManager.AddToRoleAsync(user, GlobalConstants.ConfirmedUserRoleName);
         }
 
-        public async Task DeleteUserAsync(string userId)
+        public async Task DeleteUserAsync(string userId, int accountId)
         {
             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
 
             this.userRepository.Delete(user);
 
             await this.userRepository.SaveChangesAsync();
+
+            var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
+
+            this.accountRepository.Delete(account);
+
+            await this.accountRepository.SaveChangesAsync();
         }
 
         public async Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee)

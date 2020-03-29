@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemDisplayName</title>
     <!-- plugins:css -->
+    <link href="~/css/fontawesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/vendors/base/vendor.bundle.base.css">
     <!-- endinject -->
@@ -15,7 +16,8 @@
     <link rel="stylesheet" href="~/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link href="~/css/site.css" rel="stylesheet" />
     <!-- endinject -->
     <link rel="shortcut icon" href="~/favicon.ico" />
 </head>
@@ -35,13 +37,10 @@
                         <a class="navbar-brand brand-logo" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
                         <a class="navbar-brand brand-logo-mini" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
                     }
-                    else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+                    else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName) || this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                     {
-
-                    }
-                    else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
-                    {
-
+                        <a class="navbar-brand brand-logo" asp-area="User" asp-controller="Trade" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
+                        <a class="navbar-brand brand-logo-mini" asp-area="User" asp-controller="Trade" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
                     }
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -93,13 +92,14 @@
                                     </a>
                                 </form>
                             }
-                            else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+                            else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName) || this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                             {
-
-                            }
-                            else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
-                            {
-
+                                <form method="post" class="form-inline" asp-area="User" asp-controller="Trade" asp-action="Logout">
+                                    <a class="dropdown-item">
+                                        <i class="mdi mdi-logout text-info font-weight-bold"></i>
+                                        <button type="submit" class="nav-link btn btn-link text-dark font-weight-bold">Logout</button>
+                                    </a>
+                                </form>
                             }
                         </div>
                     </li>
