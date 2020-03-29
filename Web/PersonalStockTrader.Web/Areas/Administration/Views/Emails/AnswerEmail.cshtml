@@ -1,4 +1,7 @@
 ﻿@model PersonalStockTrader.Web.ViewModels.Administration.Emails.SendReplayViewModel
+@{
+    this.ViewData["Title"] = "Answer email";
+}
 
 <div class="content-wrapper">
     <div class="row">
@@ -14,22 +17,22 @@
                         <div class="form-group">
                             <input type="hidden" asp-for="Id" value="@Model.Id">
                         </div>
-                            <div class="form-group">
-                                <label asp-for="Name">Name</label>
-                                <input type="text" class="form-control" asp-for="Name" value="@Model.Name" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Email">Email address</label>
-                                <input type="email" class="form-control" asp-for="Email" value="@Model.Email" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Subject">Subject</label>
-                                <input type="text" class="form-control" asp-for="Subject" value="@Model.Subject" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Content">Content</label>
-                                <textarea rows="6" class="form-control" asp-for="Content" value="@Model.Subject" readonly></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label asp-for="Name">Name</label>
+                            <input type="text" class="form-control" asp-for="Name" value="@Model.Name" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email">Email address</label>
+                            <input type="email" class="form-control" asp-for="Email" value="@Model.Email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Subject">Subject</label>
+                            <input type="text" class="form-control" asp-for="Subject" value="@Model.Subject" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Content">Content</label>
+                            <textarea rows="6" class="form-control" asp-for="Content" value="@Model.Subject" readonly></textarea>
+                        </div>
                         <div class="form-group">
                             <label asp-for="Answer">Answer</label>
                             <textarea rows="6" class="form-control" asp-for="Answer"></textarea>

@@ -1,1 +1,170 @@
-﻿@model PersonalStockTrader.Web.ViewModels.AccountManagement.ClientsStatistic.ClientsStatisticsViewModel
+﻿@using System.Globalization
+@model PersonalStockTrader.Web.ViewModels.AccountManagement.ClientsStatistic.ClientsStatisticsViewModel
+@{
+    this.ViewData["Title"] = "Clients Statistics";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Paid trade fees (USD) last 7 days</h4>
+                    <canvas id="tradeBars"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Paid monthly commissions (USD) last 6 months</h4>
+                    <canvas id="monthlyArea"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        New clients last 90 days
+                    </h4>
+                    <canvas id="clientsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        Money from commissions and fees last 90 days
+                    </h4>
+                    <canvas id="allChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        new Chart(document.getElementById("tradeBars"), {
+            type: 'horizontalBar',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.TradeFeesLast7Days.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))
+                ],
+                datasets: [
+                    {
+                        label: "Fees (USD)",
+                        backgroundColor: ["#4AFF33", "#3399FF","#BE33FF","#e8c3b9","#169B3D", "#F6FF33","#FF5733"],
+                        data: [
+                            @string.Join(", ", Model.TradeFeesLast7Days.Values.ToArray())
+                        ]
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Fees (USD)'
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("monthlyArea"), {
+            type: 'line',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.MonthlyFeesLast6Months.Keys.Select(x => "'" + x + "'").ToArray()))
+                ],
+                datasets: [{
+                        data: [
+                            @string.Join(", ", Model.MonthlyFeesLast6Months.Values.ToArray())
+                        ],
+                        borderColor: "#2E42DD",
+                        backgroundColor: '#2EDDC9',
+                        fill: 'origin'
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Commissions (USD)'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("clientsChart"), {
+            type: 'bar',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.NewUsersLast90Days.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))
+                ],
+                datasets: [{
+                       backgroundColor: "#2B42F5",
+                        data: [
+                            @string.Join(", ", Model.NewUsersLast90Days.Values.ToArray())
+                        ]
+                    }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'New users (count)'
+                }
+            }
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("allChart"), {
+            type: 'line',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.FeesLast90Days.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))
+                ],
+                datasets: [{
+                        borderColor: "#C70039",
+                        backgroundColor: "#F7B4C3",
+                        data: [
+                            @string.Join(", ", Model.FeesLast90Days.Values.ToArray())
+                        ],
+                        fill: true
+                    }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Fees and commissions (USD)'
+                }
+            }
+        });
+    </script>
+}
+

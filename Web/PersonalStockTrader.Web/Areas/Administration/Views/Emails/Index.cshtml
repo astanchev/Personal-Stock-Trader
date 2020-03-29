@@ -1,5 +1,8 @@
 ﻿@using System.Globalization
 @model PersonalStockTrader.Web.ViewModels.Administration.Emails.EmailsIndexPageViewModel
+@{
+    this.ViewData["Title"] = "Manage site emails";
+}
 
 <div class="content-wrapper">
     <div class="row">
@@ -77,8 +80,10 @@
                     ],
                     datasets: [
                         {
-                            data: [@string.Join(", ", Model.NotAnsweredLast10Days.Values.ToArray())],
-                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                            data: [
+                                @string.Join(", ", Model.NotAnsweredLast10Days.Values.ToArray())
+                            ],
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#F6FF33","#4AFF33","#c45850", "#169B3D", "#FF5733","#3cba9f","#e8c3b9","#BE33FF"],
                             borderColor: "#ff0000",
                             fill: true
                         }]
@@ -93,7 +98,7 @@
                 }
             });
     </script>
-    
+
     <script>
         new Chart(document.getElementById('doughnutChart'), {
             type: 'doughnut',

@@ -171,7 +171,7 @@
             await this.accountRepository.SaveChangesAsync();
         }
 
-        public IDictionary<string, decimal> GetPaidTradeFeesLast7Days()
+        public IDictionary<DateTime, decimal> GetPaidTradeFeesLast7Days()
         {
             var result = this.CreateEmptyResultNDays(7);
 
@@ -181,15 +181,17 @@
                 .GroupBy(c => c.CreatedOn.Date)
                 .Select(c => new
                 {
-                    Day = c.Key.ToShortDateString(),
+                    Day = (DateTime)c.Key,
                     Value = c.Sum(x => x.Amount),
                 });
 
             foreach (var tradeFee in tradeFees)
             {
-                if (result.ContainsKey(tradeFee.Day))
+                string date = tradeFee.Day.Day.ToString() + "-" + tradeFee.Day.Month.ToString() + "-" + tradeFee.Day.Year.ToString();
+
+                if (result.ContainsKey(tradeFee.Day.Date))
                 {
-                    result[tradeFee.Day] = tradeFee.Value;
+                    result[tradeFee.Day.Date] = tradeFee.Value;
                 }
             }
 
@@ -225,7 +227,7 @@
             return result;
         }
 
-        public IDictionary<string, decimal> GetAllPaidFeesLast90Days()
+        public IDictionary<DateTime, decimal> GetAllPaidFeesLast90Days()
         {
             var result = this.CreateEmptyResultNDays(90);
 
@@ -235,31 +237,69 @@
                 .GroupBy(c => c.CreatedOn.Date)
                 .Select(c => new
                 {
-                    Day = c.Key.ToShortDateString(),
+                    Day = (DateTime)c.Key,
                     Value = c.Sum(x => x.Amount),
                 });
 
             foreach (var tradeFee in tradeFees)
             {
-                if (result.ContainsKey(tradeFee.Day))
+                if (result.ContainsKey(tradeFee.Day.Date))
                 {
-                    result[tradeFee.Day] = tradeFee.Value;
+                    result[tradeFee.Day.Date] = tradeFee.Value;
                 }
             }
 
             return result;
         }
 
-        private IDictionary<string, decimal> CreateEmptyResultNDays(int days)
+        public IDictionary<DateTime, int> GetAllNewUsersLast90Days()
         {
-            var result = new Dictionary<string, decimal>();
+            var result = this.CreateEmptyIntResultNDays(90);
+
+            var usersCountByDays = this.userManager
+                .Users
+                .Where(u => u.CreatedOn > DateTime.Now.Date.AddDays(-89))
+                .GroupBy(c => c.CreatedOn.Date)
+                .Select(u => new
+                {
+                    Day = (DateTime)u.Key,
+                    Value = u.Count(),
+                });
+
+            foreach (var day in usersCountByDays)
+            {
+                if (result.ContainsKey(day.Day.Date))
+                {
+                    result[day.Day.Date] = day.Value;
+                }
+            }
+
+            return result;
+        }
+
+        private IDictionary<DateTime, decimal> CreateEmptyResultNDays(int days)
+        {
+            var result = new Dictionary<DateTime, decimal>();
 
             var startDate = DateTime.UtcNow.Date.AddDays(-(days - 1));
 
             for (DateTime i = startDate; i <= DateTime.UtcNow.Date; i = i.AddDays(1))
             {
-                string key = i.ToShortDateString();
-                result.Add(key, 0M);
+                result.Add(i.Date, 0M);
+            }
+
+            return result;
+        }
+
+        private IDictionary<DateTime, int> CreateEmptyIntResultNDays(int days)
+        {
+            var result = new Dictionary<DateTime, int>();
+
+            var startDate = DateTime.UtcNow.Date.AddDays(-(days - 1));
+
+            for (DateTime i = startDate; i <= DateTime.UtcNow.Date; i = i.AddDays(1))
+            {
+                result.Add(i.Date, 0);
             }
 
             return result;

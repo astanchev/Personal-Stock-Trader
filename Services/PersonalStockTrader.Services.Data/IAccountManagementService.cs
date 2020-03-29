@@ -27,10 +27,12 @@
 
         Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee);
 
-        IDictionary<string, decimal> GetPaidTradeFeesLast7Days();
+        IDictionary<DateTime, decimal> GetPaidTradeFeesLast7Days();
 
         IDictionary<string, decimal> GetPaidMonthlyFeesLast6Months();
 
-        IDictionary<string, decimal> GetAllPaidFeesLast90Days();
+        IDictionary<DateTime, decimal> GetAllPaidFeesLast90Days();
+
+        IDictionary<DateTime, int> GetAllNewUsersLast90Days();
     }
 }

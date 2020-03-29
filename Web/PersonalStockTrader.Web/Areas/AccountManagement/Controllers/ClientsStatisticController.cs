@@ -22,6 +22,7 @@
                 TradeFeesLast7Days = this.accountManagement.GetPaidTradeFeesLast7Days(),
                 MonthlyFeesLast6Months = this.accountManagement.GetPaidMonthlyFeesLast6Months(),
                 FeesLast90Days = this.accountManagement.GetAllPaidFeesLast90Days(),
+                NewUsersLast90Days = this.accountManagement.GetAllNewUsersLast90Days(),
             };
 
             return this.View(viewModel);
