@@ -97,13 +97,9 @@
                     {
                         return this.LocalRedirect("~/AccountManagement/NewClients");
                     }
-                    else if (isInRoleConfirmedUser)
+                    else if (isInRoleConfirmedUser || isInRoleNotConfirmedUser)
                     {
-                        return this.LocalRedirect("~/Users/Account");
-                    }
-                    else if (isInRoleNotConfirmedUser)
-                    {
-                        return this.LocalRedirect("~/Users/Account");
+                        return this.LocalRedirect("~/User/Trade");
                     }
                 }
 
