@@ -117,4 +117,10 @@
     <ProjectReference Include="..\PersonalStockTrader.Web.Infrastructure\PersonalStockTrader.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
