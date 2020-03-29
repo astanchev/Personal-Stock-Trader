@@ -46,19 +46,19 @@
 
             if (input.AccountIsDeleted)
             {
-                await this.accountManagement.RestoreUserAccountAsync(input.AccountId);
+                await this.accountManagement.RestoreUserAccountAsync(input.UserId, input.AccountId);
             }
             else
             {
-                await this.accountManagement.DeleteUserAccountAsync(input.AccountId);
+                await this.accountManagement.DeleteUserAccountAsync(input.UserId, input.AccountId);
             }
 
             return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> DeleteClient(string userId)
+        public async Task<IActionResult> DeleteClient(string userId, int accountId)
         {
-            await this.accountManagement.DeleteUserAsync(userId);
+            await this.accountManagement.DeleteUserAsync(userId, accountId);
 
             return this.RedirectToAction(nameof(this.Index));
         }

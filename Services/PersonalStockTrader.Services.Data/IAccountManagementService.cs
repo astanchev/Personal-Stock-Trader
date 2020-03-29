@@ -19,11 +19,11 @@
 
         Task ConfirmUserAccountAsync(ClientToBeConfirmedViewModel user);
 
-        Task DeleteUserAccountAsync(int accountId);
+        Task DeleteUserAccountAsync(string userId, int accountId);
 
-        Task RestoreUserAccountAsync(int accountId);
+        Task RestoreUserAccountAsync(string userId, int accountId);
 
-        Task DeleteUserAsync(string userId);
+        Task DeleteUserAsync(string userId, int accountId);
 
         Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee);
 
