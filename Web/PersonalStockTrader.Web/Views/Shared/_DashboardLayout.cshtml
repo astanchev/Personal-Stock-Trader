@@ -74,6 +74,12 @@
                             <span class="nav-profile-name text-dark font-weight-bold">@User.Identity.Name</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                            <form method="post" class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                <a class="dropdown-item">
+                                    <i class="mdi mdi-account-card-details menu-icon text-info font-weight-bold"></i>
+                                    <button type="submit" class="nav-link btn btn-link text-dark font-weight-bold">Profile</button>
+                                </a>
+                            </form>
                             @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                             {
                                 <form method="post" class="form-inline" asp-area="Administration" asp-controller="Dashboard" asp-action="Logout">
