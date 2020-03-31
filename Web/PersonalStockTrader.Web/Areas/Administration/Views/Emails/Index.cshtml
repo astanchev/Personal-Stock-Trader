@@ -54,7 +54,7 @@
                                     <td class="text-center">@email.CreatedOn</td>
                                     <td class="text-center">
                                         <div class="button-holder">
-                                            <a href="/Administration/Emails/AnswerEmail?emailId=@email.Id" class="btn btn-info text-uppercase">Answer</a>
+                                            <a asp-area="Administration" asp-controller="Emails" asp-action="AnswerEmail" asp-route-emailId="@email.Id" class="btn btn-info text-uppercase">Answer</a>
                                         </div>
                                     </td>
                                 </tr>

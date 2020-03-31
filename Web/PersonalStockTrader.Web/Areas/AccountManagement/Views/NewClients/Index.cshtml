@@ -31,7 +31,7 @@
                                 <td class="text-center"><label class="badge badge-danger">Pending</label></td>
                                 <td class="text-center">
                                     <div class="button-holder">
-                                        <a href="/AccountManagement/NewClients/ConfirmAccount?userId=@client.UserId" class="btn btn-info text-uppercase">Confirm</a>
+                                        <a asp-area="AccountManagement" asp-controller="NewClients" asp-action="ConfirmAccount" asp-route-userId="@client.UserId" class="btn btn-info text-uppercase">Confirm</a>
                                     </div>
                                 </td>
                             </tr>

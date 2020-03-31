@@ -94,7 +94,7 @@
                                     </a>
                                 </div>
                                 <div class="button-holder" style="margin-top: 5px">
-                                    <a href="/AccountManagement/ManageClients/DeleteClient?userId=@Model.UserId&accountId=@Model.AccountId" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</a>
+                                    <a asp-area="AccountManagement" asp-controller="ManageClients" asp-action="DeleteClient" asp-route-accountId="@Model.AccountId" class="btn btn-danger btn-lg btn-block"><i class="mdi mdi-account-off"></i> Delete user</a>
                                 </div>
                             </div>
                         </div>

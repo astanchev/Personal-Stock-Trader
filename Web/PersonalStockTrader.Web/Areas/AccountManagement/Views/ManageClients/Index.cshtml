@@ -42,7 +42,7 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="button-holder">
-                                        <a href="/AccountManagement/ManageClients/ManageClient?accountId=@client.AccountId" class="btn btn-info text-uppercase">Update</a>
+                                        <a asp-area="AccountManagement" asp-controller="ManageClients" asp-action="ManageClient" asp-route-accountId="@client.AccountId" class="btn btn-info text-uppercase">Update</a>
                                     </div>
                                 </td>
                             </tr>

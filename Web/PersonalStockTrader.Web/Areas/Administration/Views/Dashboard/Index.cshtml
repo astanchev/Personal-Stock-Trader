@@ -36,12 +36,12 @@
                                 <td class="text-center">@Model.AccountManagers[i].Email</td>
                                 <td class="text-center">
                                     <div class="button-holder">
-                                        <a href="/Administration/Dashboard/UpdateAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-inverse-info text-uppercase">Update</a>
+                                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="UpdateAccountManager" asp-route-userId="@Model.AccountManagers[i].UserId" class="btn btn-inverse-info text-uppercase">Update</a>
                                     </div>
                                 </td>
                                 <td class="text-center">
                                     <div class="button-holder">
-                                        <a href="/Administration/Dashboard/DeleteAccountManager?UserId=@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
+                                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="UpdateAccountManager" asp-route-userId="@Model.AccountManagers[i].UserId" class="btn btn-danger text-uppercase">Delete</a>
                                     </div>
                                 </td>
                             </tr>
