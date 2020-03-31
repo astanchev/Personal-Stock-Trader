@@ -43,6 +43,17 @@
         }
         else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
         {
-
+            <li class="nav-item">
+                <a class="nav-link" asp-area="User" asp-controller="TradePlatform" asp-action="Index">
+                    <i class="mdi mdi-cash-multiple menu-icon text-info"></i>
+                    <span class="menu-title text-info font-weight-bold">Trading platform</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="User" asp-controller="TradeHistory" asp-action="Index">
+                    <i class="mdi mdi-calendar-clock menu-icon text-info"></i>
+                    <span class="menu-title text-info font-weight-bold">History<br/>of trades</span>
+                </a>
+            </li>
         }
     </ul>

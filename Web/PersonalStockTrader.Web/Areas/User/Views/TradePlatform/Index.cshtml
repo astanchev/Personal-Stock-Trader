@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Trading platform";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-9 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">MSFT 1 min. chart</h4>
+                    <canvas id="msftChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Trade</h4>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <span class="input-group-text bg-transparent border-right-0">
+                                    <i class="mdi mdi-cash-usd text-info"></i>
+                                </span>
+                            </div>
+                            <input type="number" class="form-control form-control-lg border-left-0 text-center" value="100.25" readonly>
+                            <div class="input-group-prepend bg-transparent">
+                                <span class="input-group-text bg-transparent border-right-0">
+                                    <i class="mdi mdi-calendar-clock text-info"></i>
+                                </span>
+                            </div>
+                            <input type="datetime" class="form-control form-control-lg border-left-0 text-center" value="01/01/2020 12:00" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-success">Buy</button>
+                            <input type="number" min="0" max="1000" step="1" value="0" class="text-center">
+                            <button type="button" class="btn btn-danger">Sell</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="balance" class="col-form-label font-weight-bold">Current Account Balance</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <span class="input-group-text bg-transparent border-right-0">
+                                    <i class="mdi mdi-cash mdi-24px text-info"></i>
+                                </span>
+                            </div>
+                            <input id="balance" type="number" class="form-control form-control-lg border-left-0 border-right-0 text-center text-dark" value="6000.00" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text font-weight-bold text-dark border-left-0">USD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Current Positions</h4>
+            <div class="table-responsive">
+                <table id="positions" class="table table-hover table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-center">Stock</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-center">Direction (Buy/Sell)</th>
+                            <th scope="col" class="text-center">Buy/Sell price</th>
+                            <th scope="col" class="text-center">Current price</th>
+                            <th scope="col" class="text-center">Profit/Loss</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('#positions').DataTable({
+                "pagingType": "simple_numbers"
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

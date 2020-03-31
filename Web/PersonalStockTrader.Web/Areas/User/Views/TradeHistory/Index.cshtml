@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Trade history";
+}
+
+<h1 class="font-weight-bold text-center text-dark">@ViewData["Title"]</h1>
+<div class="container-fluid text-right">Day month 2020</div>
+<div class="content-wrapper">
+    <form class="forms-sample">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Username</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control font-weight-bold text-dark text-center text-dark" placeholder="Username" readonly="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control font-weight-bold text-dark text-center text-dark" placeholder="Email" readonly="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Account number</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control font-weight-bold text-dark text-center text-dark" placeholder="Account number" readonly="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Balance</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control font-weight-bold text-dark text-center text-dark" placeholder="Balance" readonly="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Current Positions</h4>
+            <div class="table-responsive">
+                <table id="positions" class="table table-hover table-striped">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col" class="text-center">Stock</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-center">Direction (Buy/Sell)</th>
+                        <th scope="col" class="text-center">Buy/Sell price</th>
+                        <th scope="col" class="text-center">Close price</th>
+                        <th scope="col" class="text-center">Profit/Loss</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid text-left">
+    <button type="button" class="btn btn-info btn-icon-text">
+        Generate report
+        <i class="mdi mdi-printer btn-icon-append"></i>   
+    </button>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#positions').DataTable({
+                "pagingType": "simple_numbers"
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

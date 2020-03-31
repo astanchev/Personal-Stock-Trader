@@ -20,10 +20,15 @@
         [Authorize(Roles = GlobalConstants.NotConfirmedUserRoleName + "," + GlobalConstants.ConfirmedUserRoleName)]
         public IActionResult Index()
         {
+            if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+            {
+                return this.Redirect("/User/TradePlatform/Index");
+            }
+
             return this.View();
         }
 
-        [Authorize(Roles = GlobalConstants.NotConfirmedUserRoleName  + "," + GlobalConstants.ConfirmedUserRoleName)]
+        [Authorize(Roles = GlobalConstants.NotConfirmedUserRoleName + "," + GlobalConstants.ConfirmedUserRoleName)]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
