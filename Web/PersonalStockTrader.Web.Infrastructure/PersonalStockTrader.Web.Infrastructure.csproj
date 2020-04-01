@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -16,6 +16,11 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.113" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
+    <ProjectReference Include="..\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

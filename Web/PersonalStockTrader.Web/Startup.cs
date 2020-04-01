@@ -1,7 +1,11 @@
 ﻿namespace PersonalStockTrader.Web
 {
+    using System;
     using System.Reflection;
 
+    using Hangfire;
+    using Hangfire.Dashboard;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -10,12 +14,15 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using PersonalStockTrader.Common;
     using PersonalStockTrader.Data;
     using PersonalStockTrader.Data.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Data.Repositories;
     using PersonalStockTrader.Data.Seeding;
+    using PersonalStockTrader.Services;
+    using PersonalStockTrader.Services.CronJobs;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Services.Messaging;
@@ -47,6 +54,27 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
+            services.AddSignalR();
+
+            services.AddHangfire(
+                config => config
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseSqlServerStorage(
+                        this.configuration.GetConnectionString("DefaultConnection"),
+                        new SqlServerStorageOptions
+                        {
+                            CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                            QueuePollInterval = TimeSpan.Zero,
+                            UseRecommendedIsolationLevel = true,
+                            UsePageLocksOnDequeue = true,
+                            DisableGlobalLocks = true,
+                        }));
+
+            services.AddHangfireServer();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -72,10 +100,12 @@
             services.AddTransient<IAdministratorService, AdministratorService>();
             services.AddTransient<IContactFormService, ContactFormService>();
             services.AddTransient<IAccountManagementService, AccountManagementService>();
+            services.AddTransient<IStockService, StockService>();
+            services.AddTransient<IApiConnection, AlphaVantageApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -83,6 +113,8 @@
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                this.SeedHangfireJobs(recurringJobManager);
 
                 if (env.IsDevelopment())
                 {
@@ -115,14 +147,34 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+            app.UseHangfireDashboard("/hangfire");
+
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<StocksHub>("/stockshub");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllers();
                         endpoints.MapRazorPages();
                     });
+        }
+
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
+        {
+            //recurringJobManager.AddOrUpdate<SendMonthlyReport>("SendMonthlyReport", x => x.Work(), Cron.Monthly);
+            //recurringJobManager.AddOrUpdate<SeedDBFromApi>("SeedDBFromApi", x => x.Work(), "*/10 * * * * *");//every 10 sec
+            recurringJobManager.AddOrUpdate<SeedDBFromApi>("SeedDBFromApi", x => x.Work(), Cron.Minutely);//every min
+        }
+
+        public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+        {
+            public bool Authorize(DashboardContext context)
+            {
+                var httpContext = context.GetHttpContext();
+                return httpContext.User.IsInRole(GlobalConstants.AdministratorRoleName);
+            }
         }
     }
 }

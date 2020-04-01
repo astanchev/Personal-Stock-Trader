@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E389DEB6-5F90-444B-A054-12A10D39C76F}"
 EndProject
@@ -37,7 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Web.Tests", "Tests\PersonalStockTrader.Web.Tests\PersonalStockTrader.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalStockTrader.Web.ViewModels", "Web\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Web.ViewModels", "Web\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalStockTrader.Services.Models", "PersonalStockTrader.Services.Models\PersonalStockTrader.Services.Models.csproj", "{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalStockTrader.Services.CronJobs", "PersonalStockTrader.Services.CronJobs\PersonalStockTrader.Services.CronJobs.csproj", "{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +105,14 @@ Global
 		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,6 +131,8 @@ Global
 		{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7} = {7A731632-6714-44E2-A9E4-069EBA9E666C}
 		{3EE06C6E-C8F3-418A-A309-8AC81976A074} = {7A731632-6714-44E2-A9E4-069EBA9E666C}
 		{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7} = {E389DEB6-5F90-444B-A054-12A10D39C76F}
+		{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3} = {516E002B-9E6E-4456-B7F6-EAA353966DE6}
+		{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26} = {516E002B-9E6E-4456-B7F6-EAA353966DE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384484BE-4680-4529-9CC2-AD37BA4D12D1}

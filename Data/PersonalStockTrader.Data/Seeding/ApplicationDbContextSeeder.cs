@@ -29,6 +29,7 @@
                           {
                               new RolesSeeder(),
                               new AdministratorSeeder(),
+                              new StockSeeder(),
                           };
 
             foreach (var seeder in seeders)

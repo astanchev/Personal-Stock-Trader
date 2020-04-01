@@ -1,56 +1,63 @@
-﻿@{
+﻿@model PersonalStockTrader.Web.ViewModels.User.TradePlatform.DisplayViewModel
+@{
     ViewData["Title"] = "Trading platform";
 }
 
 <div class="content-wrapper">
     <div class="row">
-        <div class="col-lg-9 grid-margin stretch-card">
+        <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">MSFT 1 min. chart</h4>
-                    <canvas id="msftChart"></canvas>
+                    <h4 class="card-title">IBM 1 min. chart</h4>
+                    <canvas id="ibmChart"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 grid-margin stretch-card">
+        <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
+
                 <div class="card-body">
                     <h4 class="card-title">Trade</h4>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-transparent">
-                                <span class="input-group-text bg-transparent border-right-0">
-                                    <i class="mdi mdi-cash-usd text-info"></i>
-                                </span>
-                            </div>
-                            <input type="number" class="form-control form-control-lg border-left-0 text-center" value="100.25" readonly>
-                            <div class="input-group-prepend bg-transparent">
-                                <span class="input-group-text bg-transparent border-right-0">
-                                    <i class="mdi mdi-calendar-clock text-info"></i>
-                                </span>
-                            </div>
-                            <input type="datetime" class="form-control form-control-lg border-left-0 text-center" value="01/01/2020 12:00" readonly>
+                    <div class="row">
+                        
+                        <div class="col-md-6 alert alert-primary text-center">
+                            <strong>Price IBM: </strong>
+                            <span id="price" name="price">@Model.Price</span>
                         </div>
-                    </div>
-                    <div class="form-group text-center">
-                        <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-success">Buy</button>
-                            <input type="number" min="0" max="1000" step="1" value="0" class="text-center">
-                            <button type="button" class="btn btn-danger">Sell</button>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="balance" class="col-form-label font-weight-bold">Current Account Balance</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-transparent">
-                                <span class="input-group-text bg-transparent border-right-0">
-                                    <i class="mdi mdi-cash mdi-24px text-info"></i>
-                                </span>
+
+                            <div class="col-md-6 alert alert-warning text-center">
+                                <strong>Time: </strong>
+                                <span id="datetime" name="datetime">@Model.DateTime</span>
                             </div>
-                            <input id="balance" type="number" class="form-control form-control-lg border-left-0 border-right-0 text-center text-dark" value="6000.00" readonly>
-                            <div class="input-group-append">
-                                <span class="input-group-text font-weight-bold text-dark border-left-0">USD</span>
-                            </div>
+                        
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="form-sample">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label font-weight-bold text-right">Quantity shares</label>
+                                            <div class="col-sm-9">
+                                                <input id="quantity" type="number" min="0" max="1000" step="1" value="0" onchange="calculateValue()" class="text-center form-control border border-dark" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label font-weight-bold text-right">Total amount</label>
+                                            <div class="col-sm-9">
+                                                <input id="totalPrice" type="number" class="text-center form-control border border-dark" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success btn-lg">Buy</button>
+                                    <button type="button" class="btn btn-danger btn-lg">Sell</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -85,11 +92,57 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function (e) {
+
+            e.preventDefault();
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/stockshub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connection.on("ReceiveStockPriceUpdate",
+                (newPrice, newTime) => {
+                    let d = new Date(Date.parse(newTime));
+                    document.getElementById("price").textContent = newPrice;
+                    document.getElementById("datetime").textContent = d.toString();
+                });
+
+            const time = document.getElementById("datetime").textContent;
+
+            connection.start()
+                .then(() => {
+                    connection.invoke("GetUpdateForStockPrice", time);
+                })
+                .catch(err => console.error(err.toString()));
+        });
+    </script>
+
+    <script>
+        function calculateValue() {
+            var quantity = document.getElementById("quantity").value;
+            var price = document.getElementById("price").textContent;
+            document.getElementById("totalPrice").value = (Number(quantity) * Number(price)).toFixed(2);
+        };
+    </script>
+
+    <script>
+        $(document).ready(function () {
             $('#positions').DataTable({
                 "pagingType": "simple_numbers"
             });
             $('.dataTables_length').addClass('bs-select');
         });
+    </script>
+    
+    <script>
+        var time = document.getElementById("datetime");
+        time.addEventListener('change', changeTime(e));
+
+        function changeTime(e) {
+            e.preventDefault();
+
+            this.value = e.value().toLocaleString();
+        }
     </script>
 }

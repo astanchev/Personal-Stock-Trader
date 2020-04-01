@@ -16,6 +16,10 @@
         [Required]
         public string Name { get; set; }
 
+        public int StockId { get; set; }
+
+        public virtual Stock Stock { get; set; }
+
         public virtual ICollection<MetaData> MetaDatas { get; set; }
 
         public virtual ICollection<DataSet> DataSets { get; set; }

@@ -9,7 +9,11 @@
     {
         public int StockId { get; set; }
 
-        public Stock Stock { get; set; }
+        public virtual Stock Stock { get; set; }
+
+        public int AccountId { get; set; }
+
+        public Account Account { get; set; }
 
         [Range(1, int.MaxValue)]
         public int CountStocks { get; set; }

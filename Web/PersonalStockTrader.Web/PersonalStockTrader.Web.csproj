@@ -110,6 +110,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data\PersonalStockTrader.Data.csproj" />
+    <ProjectReference Include="..\..\PersonalStockTrader.Services.CronJobs\PersonalStockTrader.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Mapping\PersonalStockTrader.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Messaging\PersonalStockTrader.Services.Messaging.csproj" />
