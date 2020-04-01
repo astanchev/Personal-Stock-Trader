@@ -75,7 +75,7 @@
                 .Select(x => new DisplayViewModel()
                 {
                     Price = x.ClosePrice.ToString("F2"),
-                    DateTime = x.DateAndTime.ToString("o"),
+                    DateTime = x.DateAndTime.ToString("g", CultureInfo.InvariantCulture),
                 })
                 .FirstOrDefaultAsync();
         }
@@ -95,7 +95,7 @@
                 {
                     New = true,
                     NewPrice = await this.GetLastPrice(ticker),
-                    NewTime = await this.GetLastUpdatedTime(ticker),
+                    NewTime = (await this.GetLastUpdatedTime(ticker)).ToString("g", CultureInfo.InvariantCulture),
                 };
 
                 return result;

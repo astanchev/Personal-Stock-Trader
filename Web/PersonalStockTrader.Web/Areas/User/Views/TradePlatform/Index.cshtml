@@ -103,9 +103,9 @@
 
             connection.on("ReceiveStockPriceUpdate",
                 (newPrice, newTime) => {
-                    let d = new Date(Date.parse(newTime));
+
                     document.getElementById("price").textContent = newPrice;
-                    document.getElementById("datetime").textContent = d.toString();
+                    document.getElementById("datetime").textContent = newTime;
                 });
 
             const time = document.getElementById("datetime").textContent;
@@ -133,16 +133,5 @@
             });
             $('.dataTables_length').addClass('bs-select');
         });
-    </script>
-    
-    <script>
-        var time = document.getElementById("datetime");
-        time.addEventListener('change', changeTime(e));
-
-        function changeTime(e) {
-            e.preventDefault();
-
-            this.value = e.value().toLocaleString();
-        }
     </script>
 }

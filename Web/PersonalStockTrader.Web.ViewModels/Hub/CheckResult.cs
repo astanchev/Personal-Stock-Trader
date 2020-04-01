@@ -8,6 +8,6 @@
 
         public string NewPrice { get; set; }
 
-        public DateTime NewTime { get; set; }
+        public string NewTime { get; set; }
     }
 }
