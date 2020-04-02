@@ -20,17 +20,17 @@
                 <div class="card-body">
                     <h4 class="card-title">Trade</h4>
                     <div class="row">
-                        
+
                         <div class="col-md-6 alert alert-primary text-center">
                             <strong>Price IBM: </strong>
                             <span id="price" name="price">@Model.LastPrice</span>
                         </div>
 
-                            <div class="col-md-6 alert alert-warning text-center">
-                                <strong>Time: </strong>
-                                <span id="datetime" name="datetime">@Model.LastDateTime</span>
-                            </div>
-                        
+                        <div class="col-md-6 alert alert-warning text-center">
+                            <strong>Time: </strong>
+                            <span id="datetime" name="datetime" contenteditable="true">@Model.LastDateTime</span>
+                        </div>
+
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label font-weight-bold text-right">Quantity shares</label>
+                                            <label class="col-sm-3 col-form-label font-weight-bold text-right text-uppercase">Shares</label>
                                             <div class="col-sm-9">
                                                 <input id="quantity" type="number" min="0" max="1000" step="1" value="0" onchange="calculateValue()" class="text-center form-control border border-dark" />
                                             </div>
@@ -46,18 +46,28 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label font-weight-bold text-right">Total amount</label>
+                                            <label class="col-sm-3 col-form-label text-uppercase font-weight-bold text-right">Total</label>
                                             <div class="col-sm-9">
                                                 <input id="totalPrice" type="number" class="text-center form-control border border-dark" readonly />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <hr/>
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-success btn-lg">Buy</button>
-                                    <button type="button" class="btn btn-danger btn-lg">Sell</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label font-weight-bold text-right">Current Balance</label>
+                                            <div class="col-md-9">
+                                                <input id="balance" class="text-center form-control border border-dark" value="6000" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                    <hr />
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-lg">Buy</button>
+                                        <button type="button" class="btn btn-danger btn-lg">Sell</button>
+                                    </div>
                             </form>
                         </div>
                     </div>
@@ -96,20 +106,19 @@
         document.addEventListener('DOMContentLoaded', function (e) {
 
             e.preventDefault();
-            
+
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("/stockshub")
                 .configureLogging(signalR.LogLevel.Information)
                 .build();
 
+            const time = document.getElementById("datetime").textContent;
+
             connection.on("ReceiveStockPriceUpdate",
                 (newPrice, newTime) => {
-
                     document.getElementById("price").textContent = newPrice;
                     document.getElementById("datetime").textContent = newTime;
                 });
-
-            const time = document.getElementById("datetime").textContent;
 
             connection.start()
                 .then(() => {
@@ -135,20 +144,21 @@
             $('.dataTables_length').addClass('bs-select');
         });
     </script>
-    
+
     <script>
-        new Chart(document.getElementById("ibmChart"), {
+        var price = document.getElementById("price");
+        var dateTime = document.getElementById("datetime");
+        var values = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x => x.Price).ToArray()));
+        var labels = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x =>x.DateTime).ToArray()));
+
+        var chart = new Chart(document.getElementById("ibmChart"), {
             type: 'line',
             data: {
-                labels: [
-                    @Html.Raw(string.Join(", ",Model.PricesAndTimes.Select(x => "'" + x.DateTime + "'").ToArray()))
-                ],
+                labels: labels,
                 datasets: [{
                     borderColor: "#096902",
                     backgroundColor: "#03fcd3",
-                    data: [
-                        @string.Join(", ", Model.PricesAndTimes.Select(x => x.Price).ToArray())
-                    ],
+                    data: values,
                     fill: true
                 }]
             },
@@ -156,9 +166,35 @@
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: 'IBM stock price last 300 minutes'
+                    text: 'IBM stock price last 90 minutes'
                 }
             }
         });
+
+        const targetNode = document.getElementById('datetime');
+
+// Options for the observer (which mutations to observe)
+        const config = { attributes: true, characterData: true, childList: true, subtree: true };
+
+// Callback function to execute when mutations are observed
+        const callback = function(mutationsList, observer) {
+            // Use traditional 'for loops' for IE 11
+            for(let mutation of mutationsList) {
+                labels.push(dateTime.textContent);
+                labels.shift();
+                values.push(price.textContent);
+                values.shift();
+
+                chart.update();
+            }
+        };
+
+// Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+// Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+
+        
     </script>
 }

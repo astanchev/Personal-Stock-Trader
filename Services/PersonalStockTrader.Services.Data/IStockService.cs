@@ -22,6 +22,6 @@
 
         Task CreateStockAsync(string ticker, string name, string intervalName);
 
-        Task<IEnumerable<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker);
+        Task<IList<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker);
     }
 }

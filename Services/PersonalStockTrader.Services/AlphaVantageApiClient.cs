@@ -7,7 +7,6 @@
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Services.Data;
 

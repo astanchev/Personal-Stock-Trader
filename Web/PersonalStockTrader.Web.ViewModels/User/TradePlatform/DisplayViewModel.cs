@@ -4,7 +4,7 @@
 
     public class DisplayViewModel
     {
-        public IEnumerable<PriceTimeViewModel> PricesAndTimes { get; set; }
+        public IList<PriceTimeViewModel> PricesAndTimes { get; set; }
 
         public string LastPrice { get; set; }
 

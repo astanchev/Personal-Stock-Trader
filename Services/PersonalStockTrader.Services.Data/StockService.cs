@@ -21,6 +21,8 @@
         private readonly IDeletableEntityRepository<Interval> intervalRepository;
         private readonly IDeletableEntityRepository<DataSet> datasetRepository;
         private readonly IDeletableEntityRepository<MetaData> metadataRepository;
+        private readonly decimal lastPrice;
+        private readonly DateTime lastDateTime;
 
         public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository)
         {
@@ -29,6 +31,10 @@
             this.datasetRepository = datasetRepository;
             this.metadataRepository = metadataRepository;
         }
+
+        public decimal LastPrice => this.lastPrice;
+
+        public DateTime LastDateTime => this.lastDateTime;
 
         public async Task<string> GetLastPrice(string ticker)
         {
@@ -181,7 +187,7 @@
             await this.stockRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker)
+        public async Task<IList<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker)
         {
             var stockId = await this.GetStockId(ticker);
 
@@ -196,11 +202,10 @@
                     Price = x.ClosePrice.ToString("F2"),
                     DateTime = x.DateAndTime.ToString("g", CultureInfo.InvariantCulture),
                 })
-                .Take(300)
+                .Take(90)
                 .ToList();
 
             return result.OrderBy(x => DateTime.Parse(x.DateTime)).ToList();
-            ;
         }
 
         private async Task<int> GetIntervalId(int stockId)
