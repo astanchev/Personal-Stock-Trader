@@ -62,7 +62,7 @@
             return time;
         }
 
-        public async Task<DisplayViewModel> GetLastPriceAndTime(string ticker)
+        public async Task<PriceTimeViewModel> GetLastPriceAndTime(string ticker)
         {
             var stockId = await this.GetStockId(ticker);
 
@@ -72,7 +72,7 @@
                 .All()
                 .Where(d => d.IntervalId == intervalId)
                 .OrderByDescending(x => x.DateAndTime)
-                .Select(x => new DisplayViewModel()
+                .Select(x => new PriceTimeViewModel()
                 {
                     Price = x.ClosePrice.ToString("F2"),
                     DateTime = x.DateAndTime.ToString("g", CultureInfo.InvariantCulture),
@@ -86,10 +86,12 @@
 
             if (!string.IsNullOrEmpty(lastData))
             {
-                siteDate = DateTime.ParseExact(lastData, "o", CultureInfo.InvariantCulture);
+                siteDate = DateTime.ParseExact(lastData, "g", CultureInfo.InvariantCulture);
             }
 
-            if (await this.GetLastUpdatedTime(ticker) > siteDate)
+            var lastUpdatedTime = await this.GetLastUpdatedTime(ticker);
+
+            if (lastUpdatedTime > siteDate)
             {
                 var result = new CheckResult
                 {
@@ -177,6 +179,28 @@
             await this.stockRepository.AddAsync(stock);
 
             await this.stockRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker)
+        {
+            var stockId = await this.GetStockId(ticker);
+
+            var intervalId = await this.GetIntervalId(stockId);
+
+            var result = this.datasetRepository
+                .All()
+                .Where(d => d.IntervalId == intervalId)
+                .OrderByDescending(x => x.DateAndTime)
+                .Select(x => new PriceTimeViewModel()
+                {
+                    Price = x.ClosePrice.ToString("F2"),
+                    DateTime = x.DateAndTime.ToString("g", CultureInfo.InvariantCulture),
+                })
+                .Take(300)
+                .ToList();
+
+            return result.OrderBy(x => DateTime.Parse(x.DateTime)).ToList();
+            ;
         }
 
         private async Task<int> GetIntervalId(int stockId)

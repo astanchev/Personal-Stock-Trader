@@ -1,9 +1,13 @@
 ﻿namespace PersonalStockTrader.Web.ViewModels.User.TradePlatform
 {
+    using System.Collections.Generic;
+
     public class DisplayViewModel
     {
-        public string Price { get; set; }
+        public IEnumerable<PriceTimeViewModel> PricesAndTimes { get; set; }
 
-        public string DateTime { get; set; }
+        public string LastPrice { get; set; }
+
+        public string LastDateTime { get; set; }
     }
 }

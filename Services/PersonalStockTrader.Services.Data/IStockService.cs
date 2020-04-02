@@ -1,6 +1,7 @@
 ﻿namespace PersonalStockTrader.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using PersonalStockTrader.Data.Models;
@@ -13,12 +14,14 @@
 
         Task<DateTime> GetLastUpdatedTime(string ticker);
 
-        Task<DisplayViewModel> GetLastPriceAndTime(string ticker);
+        Task<PriceTimeViewModel> GetLastPriceAndTime(string ticker);
 
         Task<CheckResult> GetUpdate(string lastData, string ticker);
 
         Task ImportData(string jsonString, string ticker);
 
         Task CreateStockAsync(string ticker, string name, string intervalName);
+
+        Task<IEnumerable<PriceTimeViewModel>> GetPricesLast300Minutes(string ticker);
     }
 }

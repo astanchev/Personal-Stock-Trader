@@ -1,4 +1,5 @@
-﻿@model PersonalStockTrader.Web.ViewModels.User.TradePlatform.DisplayViewModel
+﻿@using System.Globalization
+@model PersonalStockTrader.Web.ViewModels.User.TradePlatform.DisplayViewModel
 @{
     ViewData["Title"] = "Trading platform";
 }
@@ -22,12 +23,12 @@
                         
                         <div class="col-md-6 alert alert-primary text-center">
                             <strong>Price IBM: </strong>
-                            <span id="price" name="price">@Model.Price</span>
+                            <span id="price" name="price">@Model.LastPrice</span>
                         </div>
 
                             <div class="col-md-6 alert alert-warning text-center">
                                 <strong>Time: </strong>
-                                <span id="datetime" name="datetime">@Model.DateTime</span>
+                                <span id="datetime" name="datetime">@Model.LastDateTime</span>
                             </div>
                         
                     </div>
@@ -95,7 +96,7 @@
         document.addEventListener('DOMContentLoaded', function (e) {
 
             e.preventDefault();
-
+            
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("/stockshub")
                 .configureLogging(signalR.LogLevel.Information)
@@ -132,6 +133,32 @@
                 "pagingType": "simple_numbers"
             });
             $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+    
+    <script>
+        new Chart(document.getElementById("ibmChart"), {
+            type: 'line',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.PricesAndTimes.Select(x => "'" + x.DateTime + "'").ToArray()))
+                ],
+                datasets: [{
+                    borderColor: "#096902",
+                    backgroundColor: "#03fcd3",
+                    data: [
+                        @string.Join(", ", Model.PricesAndTimes.Select(x => x.Price).ToArray())
+                    ],
+                    fill: true
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'IBM stock price last 300 minutes'
+                }
+            }
         });
     </script>
 }
