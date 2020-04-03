@@ -95,19 +95,41 @@
                 siteDate = DateTime.ParseExact(lastData, "g", CultureInfo.InvariantCulture);
             }
 
-            if (!this.memoryCache.TryGetValue<TempData>("StockData", out var lastTempData))
-            {
-                lastTempData = await this.GetLastTempData();
-                this.memoryCache.Set("StockData", lastTempData, TimeSpan.FromMinutes(1));
-            }
+            //TODO: Fix cache
+            // Not working correctly:
+            //if (!this.memoryCache.TryGetValue<TempData>("StockData", out var lastTempData))
+            //{
+            //    lastTempData = await this.GetLastTempData();
+            //    this.memoryCache.Set("StockData", lastTempData, TimeSpan.FromMinutes(1));
+            //}
 
-            if (lastTempData.LastDateTime > siteDate)
+            //var lastTempData = await this.tempDataRepository
+            //    .All()
+            //    .FirstOrDefaultAsync();
+
+            //if (lastTempData.LastDateTime > siteDate)
+            //{
+            //    var result = new CheckResult
+            //    {
+            //        New = true,
+            //        NewPrice = lastTempData.LastPrice.ToString("F2"),
+            //        NewTime = lastTempData.LastDateTime.ToString("g", CultureInfo.InvariantCulture),
+            //    };
+
+            //    return result;
+            //}
+
+            //return new CheckResult { New = false };
+
+            var lastTempData = await this.GetLastUpdatedTime(ticker);
+
+            if (lastTempData > siteDate)
             {
                 var result = new CheckResult
                 {
                     New = true,
-                    NewPrice = lastTempData.LastPrice.ToString("F2"),
-                    NewTime = lastTempData.LastDateTime.ToString("g", CultureInfo.InvariantCulture),
+                    NewPrice = await this.GetLastPrice(ticker),
+                    NewTime = (await this.GetLastUpdatedTime(ticker)).ToString("g", CultureInfo.InvariantCulture),
                 };
 
                 return result;

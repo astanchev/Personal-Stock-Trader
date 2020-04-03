@@ -1,8 +1,9 @@
 ﻿namespace PersonalStockTrader.Web
 {
     using System.Threading.Tasks;
-    using Common;
+
     using Microsoft.AspNetCore.SignalR;
+    using PersonalStockTrader.Common;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Web.ViewModels.Hub;
 
