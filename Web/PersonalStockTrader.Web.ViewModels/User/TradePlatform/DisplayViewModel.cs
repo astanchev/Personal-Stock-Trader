@@ -9,5 +9,7 @@
         public string LastPrice { get; set; }
 
         public string LastDateTime { get; set; }
+
+        public decimal Balance { get; set; }
     }
 }

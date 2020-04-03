@@ -75,6 +75,8 @@
 
             services.AddHangfireServer();
 
+            services.AddMemoryCache();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -102,6 +104,7 @@
             services.AddTransient<IAccountManagementService, AccountManagementService>();
             services.AddTransient<IStockService, StockService>();
             services.AddTransient<IApiConnection, AlphaVantageApiClient>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
