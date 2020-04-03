@@ -121,15 +121,15 @@
 
             //return new CheckResult { New = false };
 
-            var lastTempData = await this.GetLastUpdatedTime(ticker);
+            var lastTempData = await this.GetLastUpdatedData(ticker);
 
-            if (lastTempData > siteDate)
+            if (lastTempData.LastDateTime > siteDate)
             {
                 var result = new CheckResult
                 {
                     New = true,
-                    NewPrice = await this.GetLastPrice(ticker),
-                    NewTime = (await this.GetLastUpdatedTime(ticker)).ToString("g", CultureInfo.InvariantCulture),
+                    NewPrice = lastTempData.LastPrice.ToString("f2"),
+                    NewTime = lastTempData.LastDateTime.ToString("g", CultureInfo.InvariantCulture),
                 };
 
                 return result;
@@ -155,7 +155,7 @@
 
             var timeDto = dailySeriesImportDto.TimeSeries1min;
 
-            await this.UpdateTempData(timeDto);
+            // await this.UpdateTempData(timeDto);
 
             var stockId = await this.GetStockId(ticker);
 
@@ -291,6 +291,26 @@
 
             this.tempDataRepository.Update(tempData);
             await this.tempDataRepository.SaveChangesAsync();
+        }
+
+        private async Task<TempData> GetLastUpdatedData(string ticker)
+        {
+            var stockId = await this.GetStockId(ticker);
+
+            var intervalId = await this.GetIntervalId(stockId);
+
+            var data = await this.datasetRepository
+                .All()
+                .Where(d => d.IntervalId == intervalId)
+                .OrderByDescending(d => d.DateAndTime)
+                .Select(x => new TempData()
+                {
+                    LastPrice = x.ClosePrice,
+                    LastDateTime = x.DateAndTime,
+                })
+                .FirstOrDefaultAsync();
+
+            return data;
         }
     }
 }
