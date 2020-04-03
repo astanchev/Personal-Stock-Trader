@@ -151,7 +151,13 @@
             app.UseAuthorization();
 
             app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
-            app.UseHangfireDashboard("/hangfire");
+            app.UseHangfireDashboard(
+                "/hangfire", 
+                new DashboardOptions
+                {
+                    Authorization = new[] { new HangfireAuthorizationFilter() },
+                    AppPath = "/Administration/Dashboard",
+                });
 
             app.UseEndpoints(
                 endpoints =>
