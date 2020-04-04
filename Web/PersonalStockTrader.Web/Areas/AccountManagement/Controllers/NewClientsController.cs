@@ -26,11 +26,11 @@
             this.signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var viewModel = new NewClientsViewModel()
             {
-                NewClients = await this.accountManagement.GetAllNotConfirmedClientsAsync(),
+                NewClients = this.accountManagement.GetAllNotConfirmedClientsAsync(),
             };
 
             return this.View(viewModel);

@@ -20,7 +20,6 @@
             this.accountManagement = accountManagement;
         }
 
-
         [HttpPost]
         public async Task<ActionResult<UpdateAccountResponseModel>> Post(UpdateAccountViewModel input)
         {

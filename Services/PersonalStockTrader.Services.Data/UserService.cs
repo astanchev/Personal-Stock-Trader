@@ -24,5 +24,14 @@
                 .Select(a => a.Balance)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<int> GetUserAccountIdAsync(string userId)
+        {
+            return await this.accountRepository
+                .All()
+                .Where(a => a.UserId == userId)
+                .Select(a => a.Id)
+                .FirstOrDefaultAsync();
+        }
     }
 }

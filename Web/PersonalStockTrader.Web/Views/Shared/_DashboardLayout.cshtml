@@ -37,7 +37,12 @@
                         <a class="navbar-brand brand-logo" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
                         <a class="navbar-brand brand-logo-mini" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
                     }
-                    else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName) || this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
+                    else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+                    {
+                        <a class="navbar-brand brand-logo" asp-area="User" asp-controller="Trade" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
+                        <a class="navbar-brand brand-logo-mini" asp-area="User" asp-controller="Trade" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
+                    }
+                    else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                     {
                         <a class="navbar-brand brand-logo" asp-area="User" asp-controller="Trade" asp-action="Index"><h4 class="text-success">Personal<br />Stock Trader</h4></a>
                         <a class="navbar-brand brand-logo-mini" asp-area="User" asp-controller="Trade" asp-action="Index"><img src="~/favicon.ico" alt="logo" /></a>
@@ -98,7 +103,16 @@
                                     </a>
                                 </form>
                             }
-                            else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName) || this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
+                            else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+                            {
+                                <form method="post" class="form-inline" asp-area="User" asp-controller="Trade" asp-action="Logout">
+                                    <a class="dropdown-item">
+                                        <i class="mdi mdi-logout text-info font-weight-bold"></i>
+                                        <button type="submit" class="nav-link btn btn-link text-dark font-weight-bold">Logout</button>
+                                    </a>
+                                </form>
+                            }
+                            else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
                             {
                                 <form method="post" class="form-inline" asp-area="User" asp-controller="Trade" asp-action="Logout">
                                     <a class="dropdown-item">

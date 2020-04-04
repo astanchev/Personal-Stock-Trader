@@ -1,4 +1,4 @@
-﻿namespace PersonalStockTrader.Web
+﻿namespace PersonalStockTrader.Web.Hubs
 {
     using System.Threading.Tasks;
 
@@ -19,7 +19,7 @@
         public async Task GetUpdateForStockPrice(string lastData)
         {
             CheckResult result;
-            ;
+
             do
             {
                 result = await this.stockService.GetUpdate(lastData, GlobalConstants.StockTicker);

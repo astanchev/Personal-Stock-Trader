@@ -34,19 +34,19 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <form class="form-sample">
+                            <form id="tradeForm" asp-area="User" asp-controller="TradePlatform" asp-action="TradeShares" method="post" class="form-sample">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label font-weight-bold text-right text-uppercase">Shares</label>
                                             <div class="col-sm-9">
-                                                <input id="quantity" type="number" min="0" max="1000" step="1" value="0" onchange="calculateValue()" class="text-center form-control border border-dark" />
+                                                <input id="quantity" name="quantity" type="number" min="0" max="1000" step="1" value="0" onchange="calculateValue()" class="text-center form-control border border-dark" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-uppercase font-weight-bold text-right">Total</label>
+                                            <label id="total" class="col-sm-3 col-form-label text-uppercase font-weight-bold text-right">Total</label>
                                             <div class="col-sm-9">
                                                 <input id="totalPrice" type="number" class="text-center form-control border border-dark" readonly />
                                             </div>
@@ -58,6 +58,8 @@
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label font-weight-bold text-right">Current Balance</label>
                                             <div class="col-md-9">
+                                                <input id="accountId" name="accountId" type="hidden" value="@Model.AccountId" />
+                                                <input id="positionId" name="positionId" type="hidden" value="@Model.Position.PositionId" />
                                                 <input id="balance" class="text-center form-control border border-dark" value="@Model.Balance.ToString("F2")" readonly />
                                             </div>
                                         </div>
@@ -65,8 +67,8 @@
                                 </div>
                                 <hr />
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-success btn-lg">Buy</button>
-                                    <button type="button" class="btn btn-danger btn-lg">Sell</button>
+                                    <button id="btnBuy" type="submit" asp-action="TradeShares"  asp-route-isBuy="true" class="btn btn-success btn-lg">Buy</button>
+                                    <button id="btnSell" type="submit" asp-action="TradeShares" asp-route-isBuy="false" class="btn btn-danger btn-lg">Sell</button>
                                 </div>
                             </form>
                         </div>
@@ -79,7 +81,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Current Positions</h4>
+            <h4 class="card-title">Opened Positions</h4>
             <div class="table-responsive">
                 <table id="positions" class="table table-hover table-striped">
                     <thead class="thead-light">
@@ -93,6 +95,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (Model.Position.PositionId > 0)
+                        {
+                            <tr id="position">
+                                <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
+                                <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
+                                <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>
+                                <td id="positionCurrentPrice" class="text-center"></td>
+                                <td id="positionProfit" class="text-center"></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -103,29 +115,63 @@
 @section Scripts
 {
     <script>
-        document.addEventListener('DOMContentLoaded', function (e) {
+        function updateTable() {
+            var isBuy = $('#positionDirection').innerHTML;
+            var openPrice = Number($('#positionOpenPrice').textContent);
+            var currentPrice = Number($('#positionCurrentPrice').textContent);
+            var quantity = Number($('#positionQuantity').textContent);
+            var balance = Number($('#balance').textContent);
+            var profit = (openPrice - currentPrice) * quantity;
 
-            e.preventDefault();
+            if (isBuy) {
+                $('#positionProfit').textContent = (- 1.0 * profit).toFixed(2);
+                $('#positionDirection').innerHTML = '<label class="badge badge-success">Bought</label>';
+            } else {
+                $('#positionProfit').textContent = profit.toFixed(2);
+                $('#positionDirection').innerHTML = '<label class="badge badge-danger">Sold</label>';
+            }
 
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("/stockshub")
-                .configureLogging(signalR.LogLevel.Information)
-                .build();
+            if (Number($('#positionProfit').textContent) > 0) {
+                $('#positionProfit').addClass('text-danger');
+            } else if (Number($('#positionProfit').textContent) < 0) {
+                $('#positionProfit').addClass('text-success');
+            }
 
-            const time = document.getElementById("datetime").textContent;
+            $('#balance').textContent = (balance - Number($('#positionProfit').textContent)).toFixed(2);
+        }
+    </script>
 
-            connection.on("ReceiveStockPriceUpdate",
-                (newPrice, newTime) => {
-                    document.getElementById("price").textContent = newPrice;
-                    document.getElementById("datetime").textContent = newTime;
-                });
 
-            connection.start()
-                .then(() => {
-                    connection.invoke("GetUpdateForStockPrice", time);
-                })
-                .catch(err => console.error(err.toString()));
-        });
+
+    <script>
+        document.addEventListener('DOMContentLoaded',
+            function(e) {
+
+                e.preventDefault();
+
+                if (@Model.Position.PositionId !== 0) {
+                    updateTable();
+                }
+
+                const connection = new signalR.HubConnectionBuilder()
+                    .withUrl("/stockshub")
+                    .configureLogging(signalR.LogLevel.Information)
+                    .build();
+
+                const time = document.getElementById("datetime").textContent;
+
+                connection.on("ReceiveStockPriceUpdate",
+                    (newPrice, newTime) => {
+                        document.getElementById("price").textContent = newPrice;
+                        document.getElementById("datetime").textContent = newTime;
+                    });
+
+                connection.start()
+                    .then(() => {
+                        connection.invoke("GetUpdateForStockPrice", time);
+                    })
+                    .catch(err => console.error(err.toString()));
+            });
     </script>
 
     <script>
@@ -138,7 +184,7 @@
 
     <script>
         var balance = document.getElementById('balance');
-        
+
         balance.addEventListener('change', setTwoNumberDecimal);
 
         function setTwoNumberDecimal(event) {
@@ -147,7 +193,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#positions').DataTable({
                 "pagingType": "simple_numbers"
             });
@@ -159,27 +205,30 @@
         var price = document.getElementById("price");
         var dateTime = document.getElementById("datetime");
         var values = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x => x.Price).ToArray()));
-        var labels = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x =>x.DateTime).ToArray()));
+        var labels = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x => x.DateTime).ToArray()));
 
-        var chart = new Chart(document.getElementById("ibmChart"), {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    borderColor: "#096902",
-                    backgroundColor: "#03fcd3",
-                    data: values,
-                    fill: true
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'IBM stock price last 90 minutes'
+        var chart = new Chart(document.getElementById("ibmChart"),
+            {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            borderColor: "#096902",
+                            backgroundColor: "#03fcd3",
+                            data: values,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'IBM stock price last 90 minutes'
+                    }
                 }
-            }
-        });
+            });
 
         const targetNode = document.getElementById('datetime');
 
@@ -189,11 +238,17 @@
 // Callback function to execute when mutations are observed
         const callback = function(mutationsList, observer) {
             // Use traditional 'for loops' for IE 11
-            for(let mutation of mutationsList) {
+            for (let mutation of mutationsList) {
                 labels.push(dateTime.textContent);
                 labels.shift();
                 values.push(price.textContent);
                 values.shift();
+
+                $('#positionCurrentPrice').textContent = price.textContent;
+
+                if (@Model.Position.PositionId !== 0) {
+                    updateTable();
+                }
 
                 chart.update();
             }
@@ -204,7 +259,6 @@
 
 // Start observing the target node for configured mutations
         observer.observe(targetNode, config);
-
 
     </script>
 }

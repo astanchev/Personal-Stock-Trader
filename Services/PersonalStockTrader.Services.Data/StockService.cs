@@ -9,7 +9,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Memory;
     using Newtonsoft.Json;
-    using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Services.Models;
@@ -22,18 +21,16 @@
         private readonly IDeletableEntityRepository<Interval> intervalRepository;
         private readonly IDeletableEntityRepository<DataSet> datasetRepository;
         private readonly IDeletableEntityRepository<MetaData> metadataRepository;
-        private readonly IRepository<TempData> tempDataRepository;
-        private readonly IMemoryCache memoryCache;
+        //private readonly IMemoryCache memoryCache;
 
-        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository, IRepository<TempData> tempDataRepository,
-            IMemoryCache memoryCache)
+        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository/*,
+            IMemoryCache memoryCache*/)
         {
             this.stockRepository = stockRepository;
             this.intervalRepository = intervalRepository;
             this.datasetRepository = datasetRepository;
             this.metadataRepository = metadataRepository;
-            this.tempDataRepository = tempDataRepository;
-            this.memoryCache = memoryCache;
+            //this.memoryCache = memoryCache;
         }
 
         public async Task<string> GetLastPrice(string ticker)
@@ -96,30 +93,12 @@
             }
 
             //TODO: Fix cache
-            // Not working correctly:
+            // Not clearing data after 1 min.:
             //if (!this.memoryCache.TryGetValue<TempData>("StockData", out var lastTempData))
             //{
-            //    lastTempData = await this.GetLastTempData();
+            //    lastTempData = await this.GetLastUpdatedData(ticker);
             //    this.memoryCache.Set("StockData", lastTempData, TimeSpan.FromMinutes(1));
             //}
-
-            //var lastTempData = await this.tempDataRepository
-            //    .All()
-            //    .FirstOrDefaultAsync();
-
-            //if (lastTempData.LastDateTime > siteDate)
-            //{
-            //    var result = new CheckResult
-            //    {
-            //        New = true,
-            //        NewPrice = lastTempData.LastPrice.ToString("F2"),
-            //        NewTime = lastTempData.LastDateTime.ToString("g", CultureInfo.InvariantCulture),
-            //    };
-
-            //    return result;
-            //}
-
-            //return new CheckResult { New = false };
 
             var lastTempData = await this.GetLastUpdatedData(ticker);
 
@@ -138,13 +117,6 @@
             return new CheckResult { New = false };
         }
 
-        private async Task<TempData> GetLastTempData()
-        {
-            return await this.tempDataRepository
-                .All()
-                .FirstOrDefaultAsync();
-        }
-
         public async Task ImportData(string jsonString, string ticker)
         {
             var dailySeriesImportDto = JsonConvert.DeserializeObject<DailySeriesImport>(jsonString);
@@ -154,8 +126,6 @@
             var lastUpdatedTime = await this.GetLastUpdatedTime(ticker);
 
             var timeDto = dailySeriesImportDto.TimeSeries1min;
-
-            // await this.UpdateTempData(timeDto);
 
             var stockId = await this.GetStockId(ticker);
 
@@ -261,47 +231,10 @@
                 .FirstOrDefaultAsync();
         }
 
-        private async Task UpdateTempData(Dictionary<DateTime, TimeSeries1minImport> timeDto)
-        {
-            var updateTempData = timeDto
-                .OrderByDescending(t => t.Key)
-                .Select(t => new
-                {
-                    Price = decimal.Parse(t.Value.The4Close),
-                    DateTime = t.Key,
-                })
-                .FirstOrDefault();
-
-            if (!this.tempDataRepository.All().Any())
-            {
-                var temp = new TempData
-                {
-                    LastDateTime = DateTime.UtcNow,
-                    LastPrice = 0M,
-                };
-
-                await this.tempDataRepository.AddAsync(temp);
-                await this.tempDataRepository.SaveChangesAsync();
-            }
-
-            var tempData = await this.tempDataRepository.All().FirstOrDefaultAsync();
-
-            tempData.LastDateTime = updateTempData.DateTime;
-            tempData.LastPrice = updateTempData.Price;
-
-            this.tempDataRepository.Update(tempData);
-            await this.tempDataRepository.SaveChangesAsync();
-        }
-
         private async Task<TempData> GetLastUpdatedData(string ticker)
         {
-            var stockId = await this.GetStockId(ticker);
-
-            var intervalId = await this.GetIntervalId(stockId);
-
             var data = await this.datasetRepository
                 .All()
-                .Where(d => d.IntervalId == intervalId)
                 .OrderByDescending(d => d.DateAndTime)
                 .Select(x => new TempData()
                 {

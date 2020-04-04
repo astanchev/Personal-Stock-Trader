@@ -509,9 +509,6 @@ namespace PersonalStockTrader.Data.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CloseTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("CountStocks")
                         .HasColumnType("int");
 
@@ -529,9 +526,6 @@ namespace PersonalStockTrader.Data.Migrations
 
                     b.Property<int>("OpenClose")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("OpenTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("StockId")
                         .HasColumnType("int");
@@ -583,24 +577,6 @@ namespace PersonalStockTrader.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Stocks");
-                });
-
-            modelBuilder.Entity("PersonalStockTrader.Data.Models.TempData", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("LastDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("LastPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TempDatas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

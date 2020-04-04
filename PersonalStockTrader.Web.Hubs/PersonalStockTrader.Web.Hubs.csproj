@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalStockTrader.Services.Models\PersonalStockTrader.Services.Models.csproj" />
+    <ProjectReference Include="..\Web\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

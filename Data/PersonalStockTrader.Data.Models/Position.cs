@@ -18,10 +18,6 @@
         [Range(1, int.MaxValue)]
         public int CountStocks { get; set; }
 
-        public DateTime OpenTime { get; set; }
-
-        public DateTime? CloseTime { get; set; }
-
         public TypeOfTrade TypeOfTrade { get; set; }
 
         public OpenClose OpenClose { get; set; }

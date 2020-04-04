@@ -4,7 +4,15 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+@if (this.TempData["InfoMessage"] != null)
+{
+    <div id="emailConfirm" class="alert alert-info alert-dismissible fade show" role="alert">
+        @this.TempData["InfoMessage"]
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">OK</span>
+        </button>
+    </div>
+}
 
 <h4>New here?</h4>
 <h6 class="font-weight-light">Join us today! It takes only few steps</h6>

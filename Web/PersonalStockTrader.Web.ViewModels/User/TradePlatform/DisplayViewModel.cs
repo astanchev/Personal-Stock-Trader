@@ -11,5 +11,9 @@
         public string LastDateTime { get; set; }
 
         public decimal Balance { get; set; }
+
+        public int AccountId { get; set; }
+
+        public PositionViewModel Position { get; set; }
     }
 }

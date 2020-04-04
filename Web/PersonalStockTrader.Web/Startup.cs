@@ -26,6 +26,7 @@
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Services.Messaging;
+    using PersonalStockTrader.Web.Hubs;
     using PersonalStockTrader.Web.ViewModels;
 
     public class Startup
@@ -105,6 +106,8 @@
             services.AddTransient<IStockService, StockService>();
             services.AddTransient<IApiConnection, AlphaVantageApiClient>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IPositionsService, PositionsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

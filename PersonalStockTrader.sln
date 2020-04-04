@@ -39,9 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Web.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Web.ViewModels", "Web\PersonalStockTrader.Web.ViewModels\PersonalStockTrader.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalStockTrader.Services.Models", "PersonalStockTrader.Services.Models\PersonalStockTrader.Services.Models.csproj", "{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Services.Models", "PersonalStockTrader.Services.Models\PersonalStockTrader.Services.Models.csproj", "{91F9C7CD-EE28-4C65-9631-9BDC33D61BC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalStockTrader.Services.CronJobs", "PersonalStockTrader.Services.CronJobs\PersonalStockTrader.Services.CronJobs.csproj", "{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalStockTrader.Services.CronJobs", "PersonalStockTrader.Services.CronJobs\PersonalStockTrader.Services.CronJobs.csproj", "{A8902F6C-0E21-4D28-B3ED-D9F1CAE84C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

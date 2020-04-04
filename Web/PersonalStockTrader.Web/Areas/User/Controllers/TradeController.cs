@@ -7,8 +7,10 @@
     using Microsoft.AspNetCore.Mvc;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Web.Controllers;
 
-    public class TradeController : UserController
+    [Area("User")]
+    public class TradeController : BaseController
     {
         private readonly SignInManager<ApplicationUser> signInManager;
 

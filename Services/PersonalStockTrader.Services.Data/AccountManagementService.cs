@@ -22,13 +22,15 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Account> accountRepository;
+        private readonly IPositionsService positionsService;
         private readonly IRepository<FeePayment> feePaymentsRepository;
 
-        public AccountManagementService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> userRepository, IDeletableEntityRepository<Account> accountRepository, IRepository<FeePayment> feePaymentsRepository)
+        public AccountManagementService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> userRepository, IDeletableEntityRepository<Account> accountRepository, IPositionsService positionsService, IRepository<FeePayment> feePaymentsRepository)
         {
             this.userManager = userManager;
             this.userRepository = userRepository;
             this.accountRepository = accountRepository;
+            this.positionsService = positionsService;
             this.feePaymentsRepository = feePaymentsRepository;
         }
 
@@ -51,7 +53,7 @@
             return accounts;
         }
 
-        public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
+        public IEnumerable<NotConfirmedClientsViewModel> GetAllNotConfirmedClientsAsync()
         {
             return this.userManager
                 .Users
@@ -114,6 +116,7 @@
                 TradeFee = user.TradeFee,
                 Confirmed = true,
                 Notes = user.Notes,
+                Positions = new List<Position>(),
             };
 
             var result = await this.userManager.RemoveFromRoleAsync(userToBeConfirmed, GlobalConstants.NotConfirmedUserRoleName);
@@ -131,6 +134,8 @@
         public async Task DeleteUserAccountAsync(string userId, int accountId)
         {
             var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
+
+            await this.positionsService.ClosePosition(accountId);
 
             this.accountRepository.Delete(account);
 

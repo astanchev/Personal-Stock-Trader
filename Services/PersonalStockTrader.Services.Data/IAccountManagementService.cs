@@ -11,7 +11,7 @@
     {
         IEnumerable<ConfirmedAccountsViewModel> GetAllConfirmedAccounts();
 
-        Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync();
+        IEnumerable<NotConfirmedClientsViewModel> GetAllNotConfirmedClientsAsync();
 
         Task<ClientToBeConfirmedViewModel> GetClientToBeConfirmedByIdAsync(string userId);
 

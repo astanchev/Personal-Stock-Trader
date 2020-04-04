@@ -20,7 +20,9 @@
     using PersonalStockTrader.Data.Models;
 
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class RegisterModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
@@ -96,6 +98,14 @@
                     StartBalance = this.Input.StartBalance,
                     EmailConfirmed = true,
                 };
+
+                var existingUser = this.userManager.FindByNameAsync(user.UserName);
+
+                if (existingUser != null)
+                {
+                    this.TempData["InfoMessage"] = "User with this name exists!";
+                    return this.RedirectToPage("Register");
+                }
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)

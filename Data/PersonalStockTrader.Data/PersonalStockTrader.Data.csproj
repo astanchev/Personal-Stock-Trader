@@ -13,6 +13,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200314160354_ChangeUserAcountRelation.cs" />
     <Compile Remove="Migrations\20200314160354_ChangeUserAcountRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200404140252_UpdatePositionsTable.cs" />
+    <Compile Remove="Migrations\20200404140252_UpdatePositionsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200404232755_NewChanges.cs" />
+    <Compile Remove="Migrations\20200404232755_NewChanges.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
