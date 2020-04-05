@@ -98,6 +98,7 @@
                         @if (Model.Position.PositionId > 0)
                         {
                             <tr id="position">
+                                <td id="ticker" class="text-center">@Model.Ticker</td>
                                 <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
                                 <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
                                 <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>

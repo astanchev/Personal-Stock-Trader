@@ -4,6 +4,7 @@
 
     public class DisplayViewModel
     {
+        public string Ticker { get; set; }
         public IList<PriceTimeViewModel> PricesAndTimes { get; set; }
 
         public string LastPrice { get; set; }

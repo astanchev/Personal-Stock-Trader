@@ -17,14 +17,14 @@
         private readonly IDeletableEntityRepository<Position> positionRepository;
         private readonly IDeletableEntityRepository<Account> accountRepository;
         private readonly IDeletableEntityRepository<Stock> stockRepository;
-        private readonly IDeletableEntityRepository<DataSet> datasetsRepository;
+        private static IDeletableEntityRepository<DataSet> datasetsRepository;
 
-        public PositionsService(IDeletableEntityRepository<Position> positionRepository, IDeletableEntityRepository<Account> accountRepository, IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<DataSet> datasetsRepository)
+        public PositionsService(IDeletableEntityRepository<Position> positionRepository, IDeletableEntityRepository<Account> accountRepository, IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<DataSet> repository)
         {
             this.positionRepository = positionRepository;
             this.accountRepository = accountRepository;
             this.stockRepository = stockRepository;
-            this.datasetsRepository = datasetsRepository;
+            datasetsRepository = repository;
         }
 
         public async Task OpenPosition(int accountId, int numberShares, bool isBuy)
@@ -53,7 +53,7 @@
 
             account.Positions.Add(position);
 
-            var positionStockPrice = this.FindPositionOpenPrice(position.CreatedOn);
+            var positionStockPrice = FindPositionOpenPrice(position.CreatedOn);
             account.Balance -= position.CountStocks * positionStockPrice;
 
             this.accountRepository.Update(account);
@@ -68,7 +68,7 @@
             var account = await this.accountRepository
                 .All()
                 .FirstOrDefaultAsync(a => a.Id == accountId);
-            var currentStockPrice = await this.datasetsRepository
+            var currentStockPrice = await datasetsRepository
                 .All()
                 .OrderByDescending(d => d.DateAndTime)
                 .Select(d => d.ClosePrice)
@@ -137,7 +137,7 @@
 
         public async Task<PositionViewModel> GetOpenPosition(int accountId)
         {
-            return await this.positionRepository
+            var position = await this.positionRepository
                 .All()
                 .Where(p => p.AccountId == accountId && p.OpenClose == OpenClose.Open)
                 .Select(p => new PositionViewModel
@@ -145,14 +145,16 @@
                     PositionId = p.Id,
                     Quantity = p.CountStocks,
                     Direction = p.TypeOfTrade == TypeOfTrade.Buy,
-                    OpenPrice = this.FindPositionOpenPrice(p.ModifiedOn ?? p.CreatedOn),
+                    OpenPrice = FindPositionOpenPrice(p.ModifiedOn ?? p.CreatedOn),
                 })
                 .FirstOrDefaultAsync();
+
+            return position;
         }
 
-        private decimal FindPositionOpenPrice(DateTime openTime)
+        private static decimal FindPositionOpenPrice(DateTime openTime)
         {
-            return this.datasetsRepository
+            return datasetsRepository
                 .All()
                 .Where(d => d.DateAndTime.Minute == openTime.Minute)
                 .Select(d => d.ClosePrice)

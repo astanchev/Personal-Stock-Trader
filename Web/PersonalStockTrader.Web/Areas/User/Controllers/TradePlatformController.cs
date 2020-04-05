@@ -35,6 +35,7 @@
 
             var output = new DisplayViewModel()
             {
+                Ticker = GlobalConstants.StockTicker,
                 PricesAndTimes = pricesAndTimes,
                 LastPrice = result.Price,
                 LastDateTime = result.DateTime,

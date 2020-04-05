@@ -53,11 +53,13 @@
             return accounts;
         }
 
-        public IEnumerable<NotConfirmedClientsViewModel> GetAllNotConfirmedClientsAsync()
+        public async Task<IEnumerable<NotConfirmedClientsViewModel>> GetAllNotConfirmedClientsAsync()
         {
-            return this.userManager
-                .Users
-                .Where(u => u.IsDeleted == false && !u.Account.Confirmed)
+            var usersNotConfirmed = await this.userManager
+                .GetUsersInRoleAsync(GlobalConstants.NotConfirmedUserRoleName);
+
+            return usersNotConfirmed
+                .Where(u => u.IsDeleted == false && u.Account == null)
                 .Select(u => new NotConfirmedClientsViewModel
                 {
                     UserId = u.Id,

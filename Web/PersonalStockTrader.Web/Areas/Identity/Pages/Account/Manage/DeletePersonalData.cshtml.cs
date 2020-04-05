@@ -84,6 +84,10 @@ namespace PersonalStockTrader.Web.Areas.Identity.Pages.Account.Manage
             userToBeRemoved.Email = null;
             userToBeRemoved.NormalizedEmail = null;
             userToBeRemoved.PasswordHash = null;
+            userToBeRemoved.SecurityStamp = null;
+            userToBeRemoved.ConcurrencyStamp = null;
+            userToBeRemoved.IsDeleted = true;
+            userToBeRemoved.StartBalance = 0M;
 
             await this.userRepository.SaveChangesAsync();
 

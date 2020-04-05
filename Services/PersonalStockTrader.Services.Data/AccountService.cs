@@ -33,17 +33,15 @@
 
         public async Task<PositionViewModel> GetCurrentPosition(int accountId)
         {
-            var account = await this.accountRepository
-                .All()
-                .FirstOrDefaultAsync(a => a.Id == accountId);
+            var position = await this.positionsService.GetOpenPosition(accountId);
 
-            if (account.Positions.All(p => p.OpenClose == OpenClose.Close))
+            if (position == null)
             {
                 return new PositionViewModel();
             }
             else
             {
-                return await this.positionsService.GetOpenPosition(accountId);
+                return position;
             }
         }
     }
