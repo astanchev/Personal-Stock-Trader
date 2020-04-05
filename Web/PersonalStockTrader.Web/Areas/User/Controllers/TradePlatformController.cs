@@ -2,10 +2,11 @@
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Data.Models;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PersonalStockTrader.Common;
+    using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
 

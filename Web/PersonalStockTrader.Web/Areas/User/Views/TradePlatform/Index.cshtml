@@ -16,11 +16,10 @@
         </div>
         <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
-
                 <div class="card-body">
                     <h4 class="card-title">Trade</h4>
-                    <div class="row">
 
+                    <div class="row">
                         <div class="col-md-6 alert alert-primary text-center">
                             <strong>Price IBM: </strong>
                             <span id="price" name="price">@Model.LastPrice</span>
@@ -28,10 +27,11 @@
 
                         <div class="col-md-6 alert alert-warning text-center">
                             <strong>Time: </strong>
-                            <span id="datetime" name="datetime" contenteditable="true">@Model.LastDateTime</span>
+                            <span id="datetime" name="datetime" >@Model.LastDateTime</span>
                         </div>
 
                     </div>
+
                     <div class="card">
                         <div class="card-body">
                             <form id="tradeForm" asp-area="User" asp-controller="TradePlatform" asp-action="TradeShares" method="post" class="form-sample">
@@ -60,14 +60,14 @@
                                             <div class="col-md-9">
                                                 <input id="accountId" name="accountId" type="hidden" value="@Model.AccountId" />
                                                 <input id="positionId" name="positionId" type="hidden" value="@Model.Position.PositionId" />
-                                                <input id="balance" class="text-center form-control border border-dark" value="@Model.Balance.ToString("F2")" readonly />
+                                                <input id="balance" class="text-center form-control border border-dark font-weight-bold" value="@Model.Balance.ToString("F2")" readonly />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="text-center">
-                                    <button id="btnBuy" type="submit" asp-action="TradeShares"  asp-route-isBuy="true" class="btn btn-success btn-lg">Buy</button>
+                                    <button id="btnBuy" type="submit" asp-action="TradeShares" asp-route-isBuy="true" class="btn btn-success btn-lg">Buy</button>
                                     <button id="btnSell" type="submit" asp-action="TradeShares" asp-route-isBuy="false" class="btn btn-danger btn-lg">Sell</button>
                                 </div>
                             </form>
@@ -102,7 +102,7 @@
                                 <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
                                 <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
                                 <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>
-                                <td id="positionCurrentPrice" class="text-center">@Model.LastPrice</td>
+                                <td id="positionCurrentPrice" class="text-center" >@Model.LastPrice</td>
                                 <td id="positionProfit" class="text-center font-weight-bold">@Model.CurrentProfit.ToString("f2")</td>
                             </tr>
                         }
@@ -126,7 +126,7 @@
             isBuy.innerHTML = '<label class="badge badge-danger">Sold</label>';
         }
     </script>
-    
+
     <script>
         var positionProfit = document.getElementById('positionProfit');
         if (Number(positionProfit.textContent) < 0) {
@@ -139,39 +139,8 @@
     </script>
 
     <script>
-        function updateTable() {
-            var isBuy = document.getElementById('positionDirection');
-            var positionProfit = document.getElementById('positionProfit');
-            var openPrice = document.getElementById('positionOpenPrice').textContent;
-            var currentPrice = document.getElementById('positionCurrentPrice').textContent;
-            var quantity = document.getElementById('positionQuantity').textContent;
-            var balance = document.getElementById('balance').textContent;
-            var profit = (openPrice - currentPrice) * quantity;
-
-            if (isBuy) {
-                positionProfit.textContent = (- 1.0 * profit).toFixed(2);
-                $('#positionDirection').innerHTML = '<label class="badge badge-success">Bought</label>';
-            } else {
-                positionProfit.textContent = profit.toFixed(2);
-                $('#positionDirection').innerHTML = '<label class="badge badge-danger">Sold</label>';
-            }
-
-            if (Number(positionProfit.textContent) > 0) {
-                positionProfit.classList.add('text-danger');
-            } else if (Number(positionProfit.textContent) < 0) {
-                positionProfit.classList.add('text-success');
-            }
-
-            $('#balance').textContent = (balance - Number($('#positionProfit').textContent)).toFixed(2);
-        }
-    </script>
-
-
-
-    <script>
         document.addEventListener('DOMContentLoaded',
             function(e) {
-
                 e.preventDefault();
 
                 const connection = new signalR.HubConnectionBuilder()
@@ -225,6 +194,7 @@
     </script>
 
     <script>
+        var positionId = @Model.Position.PositionId;
         var price = document.getElementById("price");
         var dateTime = document.getElementById("datetime");
         var values = @Html.Raw(Json.Serialize(Model.PricesAndTimes.Select(x => x.Price).ToArray()));
@@ -254,10 +224,8 @@
             });
 
         const targetNode = document.getElementById('datetime');
-
 // Options for the observer (which mutations to observe)
         const config = { attributes: true, characterData: true, childList: true, subtree: true };
-
 // Callback function to execute when mutations are observed
         const callback = function(mutationsList, observer) {
             // Use traditional 'for loops' for IE 11
@@ -266,22 +234,48 @@
                 labels.shift();
                 values.push(price.textContent);
                 values.shift();
-
-                $('#positionCurrentPrice').textContent = price.textContent;
-
-                if (@Model.Position.PositionId !== 0) {
-                    updateTable();
-                }
-
                 chart.update();
+
+                if (positionId !== 0) {
+                    var currentPrice = document.getElementById('positionCurrentPrice');
+
+                    currentPrice.textContent = price.textContent;
+                }
             }
         };
-
 // Create an observer instance linked to the callback function
         const observer = new MutationObserver(callback);
-
 // Start observing the target node for configured mutations
         observer.observe(targetNode, config);
+    </script>
+    
+    <script>
+        const targetTd = document.getElementById('positionCurrentPrice');
+        var positionDirection = document.getElementById('positionDirection');
+        var positionProfit = document.getElementById('positionProfit');
+        var openPrice = document.getElementById('positionOpenPrice');
+        var quantity = document.getElementById('positionQuantity');
+        var balance = document.getElementById('balance');
 
+        // Options for the observer (which mutations to observe)
+        const config2 = { attributes: true, characterData: true, childList: true, subtree: true };
+        // Callback function to execute when mutations are observed
+        const callback2 = function (mutationsList, observer) {
+            // Use traditional 'for loops' for IE 11
+            for (let mutation of mutationsList) {
+
+                if (positionDirection.innerText === 'Bought') {
+                    positionProfit.textContent = ((Number(targetTd.textContent) - Number(openPrice.textContent)) * Number(quantity.textContent)).toFixed(2);
+                } else {
+                    positionProfit.textContent = ((Number(openPrice.textContent) - Number(targetTd.textContent)) * Number(quantity.textContent)).toFixed(2);
+                }
+
+                balance.value = ((Number(balance.value) - Number(positionProfit.textContent))).toFixed(2);
+            }
+        };
+        // Create an observer instance linked to the callback function
+        const observer2 = new MutationObserver(callback2);
+        // Start observing the target node for configured mutations
+        observer2.observe(targetTd, config2);
     </script>
 }

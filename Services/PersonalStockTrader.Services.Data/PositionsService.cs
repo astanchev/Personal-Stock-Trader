@@ -65,50 +65,24 @@
             var position = await this.positionRepository
                 .All()
                 .FirstOrDefaultAsync(p => p.Id == positionId);
-            var account = await this.accountRepository
-                .All()
-                .FirstOrDefaultAsync(a => a.Id == accountId);
-            var currentStockPrice = await datasetsRepository
-                .All()
-                .OrderByDescending(d => d.DateAndTime)
-                .Select(d => d.ClosePrice)
-                .FirstOrDefaultAsync();
-            var currentShares = position.CountStocks;
-            account.Balance += currentShares * currentStockPrice;
 
+            var currentShares = position.CountStocks;
             var newPositionDirection = isBuy == true ? TypeOfTrade.Buy : TypeOfTrade.Sell;
+
+            await this.ClosePosition(accountId);
 
             if (newPositionDirection == position.TypeOfTrade)
             {
-                position.CountStocks += numberShares;
-                account.Balance -= (numberShares + currentShares) * currentStockPrice;
+                await this.OpenPosition(accountId, numberShares + currentShares, isBuy);
             }
             else if (numberShares > position.CountStocks)
             {
-                position.CountStocks = numberShares - position.CountStocks;
-                position.TypeOfTrade = newPositionDirection;
-                account.Balance -= (numberShares - position.CountStocks) * currentStockPrice;
+                await this.OpenPosition(accountId, numberShares - currentShares, isBuy);
             }
             else if (numberShares < position.CountStocks)
             {
-                position.CountStocks = position.CountStocks - numberShares;
-                account.Balance -= (position.CountStocks - numberShares) * currentStockPrice;
+                await this.OpenPosition(accountId, currentShares - numberShares, !isBuy);
             }
-            else
-            {
-                position.CountStocks = 0;
-                position.OpenClose = OpenClose.Close;
-                account.Balance -= account.TradeFee;
-                var tradeFee = new FeePayment
-                {
-                    Amount = account.TradeFee,
-                    TypeFee = TypeFee.TradeFee,
-                };
-                account.Fees.Add(tradeFee);
-            }
-
-            await this.positionRepository.SaveChangesAsync();
-            await this.accountRepository.SaveChangesAsync();
         }
 
         public async Task ClosePosition(int accountId)
@@ -118,12 +92,13 @@
                 .FirstOrDefaultAsync(a => a.Id == accountId);
 
             var position = account.Positions.FirstOrDefault(p => p.OpenClose == OpenClose.Open);
+            var currentStockPrice = await GetCurrentStockPrice();
 
             if (position != null)
             {
-                position.CountStocks = 0;
                 position.OpenClose = OpenClose.Close;
                 account.Balance -= account.TradeFee;
+                account.Balance += position.CountStocks * currentStockPrice;
                 var tradeFee = new FeePayment
                 {
                     Amount = account.TradeFee,
@@ -133,6 +108,15 @@
                 account.Fees.Add(tradeFee);
                 await this.accountRepository.SaveChangesAsync();
             }
+        }
+
+        private static async Task<decimal> GetCurrentStockPrice()
+        {
+            return await datasetsRepository
+                .All()
+                .OrderByDescending(d => d.DateAndTime)
+                .Select(d => d.ClosePrice)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<PositionViewModel> GetOpenPosition(int accountId)
