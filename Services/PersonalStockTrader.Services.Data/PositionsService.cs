@@ -156,7 +156,8 @@
         {
             return datasetsRepository
                 .All()
-                .Where(d => d.DateAndTime.Minute == openTime.Minute)
+                .OrderByDescending(d => d.DateAndTime)
+                .Where(d => d.DateAndTime <= openTime)
                 .Select(d => d.ClosePrice)
                 .FirstOrDefault();
         }

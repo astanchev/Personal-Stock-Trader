@@ -98,12 +98,12 @@
                         @if (Model.Position.PositionId > 0)
                         {
                             <tr id="position">
-                                <td id="ticker" class="text-center">@Model.Ticker</td>
+                                <td id="ticker" class="text-center font-weight-bold">@Model.Ticker</td>
                                 <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
                                 <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
                                 <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>
-                                <td id="positionCurrentPrice" class="text-center"></td>
-                                <td id="positionProfit" class="text-center"></td>
+                                <td id="positionCurrentPrice" class="text-center">@Model.LastPrice</td>
+                                <td id="positionProfit" class="text-center font-weight-bold">@Model.CurrentProfit.ToString("f2")</td>
                             </tr>
                         }
                     </tbody>
@@ -116,26 +116,50 @@
 @section Scripts
 {
     <script>
+        var isBuy = document.getElementById('positionDirection');
+
+        if (isBuy.textContent === 'True') {
+            isBuy.textContent = '';
+            isBuy.innerHTML = '<label class="badge badge-success">Bought</label>';
+        } else {
+            isBuy.textContent = '';
+            isBuy.innerHTML = '<label class="badge badge-danger">Sold</label>';
+        }
+    </script>
+    
+    <script>
+        var positionProfit = document.getElementById('positionProfit');
+        if (Number(positionProfit.textContent) < 0) {
+            positionProfit.classList.add('text-danger');
+            positionProfit.innerHTML += '<i class="mdi mdi-arrow-down">';
+        } else if (Number(positionProfit.textContent) < 0) {
+            positionProfit.classList.add('text-success');
+            positionProfit.innerHTML += '<i class="mdi mdi-arrow-up">';
+        }
+    </script>
+
+    <script>
         function updateTable() {
-            var isBuy = $('#positionDirection').innerHTML;
-            var openPrice = Number($('#positionOpenPrice').textContent);
-            var currentPrice = Number($('#positionCurrentPrice').textContent);
-            var quantity = Number($('#positionQuantity').textContent);
-            var balance = Number($('#balance').textContent);
+            var isBuy = document.getElementById('positionDirection');
+            var positionProfit = document.getElementById('positionProfit');
+            var openPrice = document.getElementById('positionOpenPrice').textContent;
+            var currentPrice = document.getElementById('positionCurrentPrice').textContent;
+            var quantity = document.getElementById('positionQuantity').textContent;
+            var balance = document.getElementById('balance').textContent;
             var profit = (openPrice - currentPrice) * quantity;
 
             if (isBuy) {
-                $('#positionProfit').textContent = (- 1.0 * profit).toFixed(2);
+                positionProfit.textContent = (- 1.0 * profit).toFixed(2);
                 $('#positionDirection').innerHTML = '<label class="badge badge-success">Bought</label>';
             } else {
-                $('#positionProfit').textContent = profit.toFixed(2);
+                positionProfit.textContent = profit.toFixed(2);
                 $('#positionDirection').innerHTML = '<label class="badge badge-danger">Sold</label>';
             }
 
-            if (Number($('#positionProfit').textContent) > 0) {
-                $('#positionProfit').addClass('text-danger');
-            } else if (Number($('#positionProfit').textContent) < 0) {
-                $('#positionProfit').addClass('text-success');
+            if (Number(positionProfit.textContent) > 0) {
+                positionProfit.classList.add('text-danger');
+            } else if (Number(positionProfit.textContent) < 0) {
+                positionProfit.classList.add('text-success');
             }
 
             $('#balance').textContent = (balance - Number($('#positionProfit').textContent)).toFixed(2);
@@ -149,10 +173,6 @@
             function(e) {
 
                 e.preventDefault();
-
-                if (@Model.Position.PositionId !== 0) {
-                    updateTable();
-                }
 
                 const connection = new signalR.HubConnectionBuilder()
                     .withUrl("/stockshub")
@@ -185,8 +205,10 @@
 
     <script>
         var balance = document.getElementById('balance');
+        var profit = document.getElementById('positionProfit');
 
         balance.addEventListener('change', setTwoNumberDecimal);
+        profit.addEventListener('change', setTwoNumberDecimal);
 
         function setTwoNumberDecimal(event) {
             this.value = parseFloat(this.value).toFixed(2);

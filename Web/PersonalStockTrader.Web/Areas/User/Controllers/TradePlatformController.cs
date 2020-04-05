@@ -32,6 +32,9 @@
             var balance = await this.userService.GetUserBalanceAsync(userId);
             var accountId = await this.userService.GetUserAccountIdAsync(userId);
             var position = await this.accountService.GetCurrentPosition(accountId);
+            var currentProfit = position.Direction
+                ? (decimal.Parse(result.Price) - position.OpenPrice) * position.Quantity
+                : (position.OpenPrice - decimal.Parse(result.Price)) * position.Quantity;
 
             var output = new DisplayViewModel()
             {
@@ -40,6 +43,7 @@
                 LastPrice = result.Price,
                 LastDateTime = result.DateTime,
                 Balance = balance,
+                CurrentProfit = currentProfit,
                 AccountId = accountId,
                 Position = position,
             };
