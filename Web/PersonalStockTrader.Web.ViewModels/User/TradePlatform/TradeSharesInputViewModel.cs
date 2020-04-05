@@ -2,11 +2,11 @@
 {
     public class TradeSharesInputViewModel
     {
-        public int AccountId { get; set; }
+        public string AccountId { get; set; }
 
-        public int PositionId { get; set; }
+        public string PositionId { get; set; }
 
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
 
         public bool IsBuy { get; set; }
     }

@@ -3,10 +3,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.EntityFrameworkCore;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
+    using PersonalStockTrader.Web.ViewModels.User.TradeShares;
 
     public class AccountService : IAccountService
     {
@@ -19,16 +19,20 @@
             this.positionsService = positionsService;
         }
 
-        public async Task ManagePositions(TradeSharesInputViewModel input)
+        public async Task<TradeSharesResultModel> ManagePositions(TradeSharesInputViewModel input)
         {
-            if (input.PositionId != 0)
+            var result = new TradeSharesResultModel();
+
+            if (int.Parse(input.PositionId) != 0)
             {
-                await this.positionsService.UpdatePosition(input.AccountId, input.PositionId, input.Quantity, input.IsBuy);
+                result = await this.positionsService.UpdatePosition(int.Parse(input.AccountId), int.Parse(input.PositionId), int.Parse(input.Quantity), input.IsBuy);
             }
             else
             {
-                await this.positionsService.OpenPosition(input.AccountId, input.Quantity, input.IsBuy);
+                result = await this.positionsService.OpenPosition(int.Parse(input.AccountId), int.Parse(input.Quantity), input.IsBuy);
             }
+
+            return result;
         }
 
         public async Task<PositionViewModel> GetCurrentPosition(int accountId)

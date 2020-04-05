@@ -27,14 +27,14 @@
 
                         <div class="col-md-6 alert alert-warning text-center">
                             <strong>Time: </strong>
-                            <span id="datetime" name="datetime" >@Model.LastDateTime</span>
+                            <span id="datetime" name="datetime">@Model.LastDateTime</span>
                         </div>
 
                     </div>
 
                     <div class="card">
                         <div class="card-body">
-                            <form id="tradeForm" asp-area="User" asp-controller="TradePlatform" asp-action="TradeShares" method="post" class="form-sample">
+                            <form id="tradeForm" method="post" class="form-sample">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
@@ -67,8 +67,8 @@
                                 </div>
                                 <hr />
                                 <div class="text-center">
-                                    <button id="btnBuy" type="submit" asp-action="TradeShares" asp-route-isBuy="true" class="btn btn-success btn-lg">Buy</button>
-                                    <button id="btnSell" type="submit" asp-action="TradeShares" asp-route-isBuy="false" class="btn btn-danger btn-lg">Sell</button>
+                                    <button id="btnBuy" type="button" onclick="trade(true)" class="btn btn-success btn-lg">Buy</button>
+                                    <button id="btnSell" type="button" onclick="trade(false)" class="btn btn-danger btn-lg">Sell</button>
                                 </div>
                             </form>
                         </div>
@@ -95,17 +95,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.Position.PositionId > 0)
-                        {
-                            <tr id="position">
-                                <td id="ticker" class="text-center font-weight-bold">@Model.Ticker</td>
-                                <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
-                                <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
-                                <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>
-                                <td id="positionCurrentPrice" class="text-center" >@Model.LastPrice</td>
-                                <td id="positionProfit" class="text-center font-weight-bold">@Model.CurrentProfit.ToString("f2")</td>
-                            </tr>
-                        }
+                        <tr id="position">
+                            <td id="ticker" class="text-center font-weight-bold">@Model.Ticker</td>
+                            <td id="positionQuantity" class="text-center">@Model.Position.Quantity</td>
+                            <td id="positionDirection" class="text-center">@Model.Position.Direction</td>
+                            <td id="positionOpenPrice" class="text-center">@Model.Position.OpenPrice.ToString("f2")</td>
+                            <td id="positionCurrentPrice" class="text-center">@Model.LastPrice</td>
+                            <td id="positionProfit" class="text-center font-weight-bold">@Model.CurrentProfit.ToString("f2")</td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -116,17 +114,106 @@
 @section Scripts
 {
     <script>
-        var isBuy = document.getElementById('positionDirection');
+        document.addEventListener('DOMContentLoaded',
+            function(e) {
+                e.preventDefault();
+                var pos = document.getElementById('position');
+                var isBuy = document.getElementById('positionDirection');
 
-        if (isBuy.textContent === 'True') {
-            isBuy.textContent = '';
-            isBuy.innerHTML = '<label class="badge badge-success">Bought</label>';
-        } else {
-            isBuy.textContent = '';
-            isBuy.innerHTML = '<label class="badge badge-danger">Sold</label>';
-        }
+                if (@Model.Position.PositionId > 0) {
+                    pos.style.display = '';
+
+                    if (isBuy.innerHTML === 'True') {
+                        isBuy.innerHTML = '';
+                        isBuy.innerHTML = '<label class="badge badge-success">Bought</label>';
+                    } else {
+                        isBuy.innerHTML = '';
+                        isBuy.innerHTML = '<label class="badge badge-danger">Sold</label>';
+                    }
+                } else {
+                    pos.style.display = 'none';
+                }
+            })
     </script>
 
+    <script>
+        function trade(isBuy) {
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            var accountId = $('#accountId').val();
+            var balance = $('#balance').val();
+            var quantity = $('#quantity').val();
+            var positionId = $('#positionId').val();
+            var total = $('#total').val();
+
+            var endBalance = Number(balance) - Number(total);
+
+            if (endBalance < 500) {
+                alert('You can not afford that amount of shares!');
+                return;
+            }
+
+            document.getElementById('positionId').value = 0;
+
+            $.ajax({
+                    url: "/api/TradeShares",
+                    type: "POST",
+                    data: JSON.stringify({
+                        accountId: accountId,
+                        positionId: positionId,
+                        quantity: quantity,
+                        isBuy: isBuy
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    headers: { 'X-CSRF-TOKEN': token }
+                })
+                .done(function success(data) {
+                    var pos = document.getElementById('position');
+                    var buySell = document.getElementById('positionDirection');
+                    document.getElementById('quantity').value = 0;
+                    document.getElementById('totalPrice').value = '';
+
+                    if (data.positionId === 0 && $('#positionId').val() !== 0) {
+                        pos.style.display = 'none';
+                    } else if ($('#positionId').val() === 0 && data.positionId !== 0) {
+                        pos.style.display = '';
+                        document.getElementById('balance').value = data.balance;
+                        document.getElementById('positionId').value = data.positionId;
+                        document.getElementById('positionQuantity').textContent = data.quantity;
+                        document.getElementById('positionOpenPrice').textContent = data.openPrice;
+                        document.getElementById('positionDirection').textContent = data.isBuy;
+
+                        if (buySell.textContent === 'true') {
+                            buySell.textContent = '';
+                            buySell.innerHTML = '<label class="badge badge-success">Bought</label>';
+                        } else {
+                            buySell.textContent = '';
+                            buySell.innerHTML = '<label class="badge badge-danger">Sold</label>';
+                        }
+
+                    } else if ($('#positionId').val() !== 0 && data.positionId !== 0) {
+                        pos.style.display = '';
+                        document.getElementById('balance').value = data.balance;
+                        document.getElementById('positionId').value = data.positionId;
+                        document.getElementById('positionQuantity').textContent = data.quantity;
+                        document.getElementById('positionOpenPrice').textContent = data.openPrice;
+                        document.getElementById('positionDirection').textContent = data.isBuy;
+
+                        if (buySell.textContent === 'true') {
+                            buySell.textContent = '';
+                            buySell.innerHTML = '<label class="badge badge-success">Bought</label>';
+                        } else {
+                            buySell.textContent = '';
+                            buySell.innerHTML = '<label class="badge badge-danger">Sold</label>';
+                        }
+                    }
+                })
+                .fail(function fail(data, statusCode) {
+                    alert('Request failed. Returned status of ' + statusCode);
+                });
+        }
+    </script>
+    
     <script>
         var positionProfit = document.getElementById('positionProfit');
         if (Number(positionProfit.textContent) < 0) {
@@ -248,7 +335,7 @@
 // Start observing the target node for configured mutations
         observer.observe(targetNode, config);
     </script>
-    
+
     <script>
         const targetTd = document.getElementById('positionCurrentPrice');
         var positionDirection = document.getElementById('positionDirection');
@@ -260,14 +347,18 @@
         // Options for the observer (which mutations to observe)
         const config2 = { attributes: true, characterData: true, childList: true, subtree: true };
         // Callback function to execute when mutations are observed
-        const callback2 = function (mutationsList, observer) {
+        const callback2 = function(mutationsList, observer) {
             // Use traditional 'for loops' for IE 11
             for (let mutation of mutationsList) {
 
                 if (positionDirection.innerText === 'Bought') {
-                    positionProfit.textContent = ((Number(targetTd.textContent) - Number(openPrice.textContent)) * Number(quantity.textContent)).toFixed(2);
+                    positionProfit.textContent =
+                        ((Number(targetTd.textContent) - Number(openPrice.textContent)) * Number(quantity.textContent))
+                        .toFixed(2);
                 } else {
-                    positionProfit.textContent = ((Number(openPrice.textContent) - Number(targetTd.textContent)) * Number(quantity.textContent)).toFixed(2);
+                    positionProfit.textContent =
+                        ((Number(openPrice.textContent) - Number(targetTd.textContent)) * Number(quantity.textContent))
+                        .toFixed(2);
                 }
 
                 balance.value = ((Number(balance.value) - Number(positionProfit.textContent))).toFixed(2);
@@ -277,5 +368,6 @@
         const observer2 = new MutationObserver(callback2);
         // Start observing the target node for configured mutations
         observer2.observe(targetTd, config2);
+        observer2.observe(openPrice, config2);
     </script>
 }

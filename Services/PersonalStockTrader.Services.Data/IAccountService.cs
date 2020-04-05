@@ -3,10 +3,11 @@
     using System.Threading.Tasks;
 
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
+    using PersonalStockTrader.Web.ViewModels.User.TradeShares;
 
     public interface IAccountService
     {
-        Task ManagePositions(TradeSharesInputViewModel input);
+        Task<TradeSharesResultModel> ManagePositions(TradeSharesInputViewModel input);
 
         Task<PositionViewModel> GetCurrentPosition(int accountId);
     }

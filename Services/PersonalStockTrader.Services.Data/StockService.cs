@@ -21,16 +21,16 @@
         private readonly IDeletableEntityRepository<Interval> intervalRepository;
         private readonly IDeletableEntityRepository<DataSet> datasetRepository;
         private readonly IDeletableEntityRepository<MetaData> metadataRepository;
-        //private readonly IMemoryCache memoryCache;
+        private readonly IMemoryCache memoryCache;
 
-        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository/*,
-            IMemoryCache memoryCache*/)
+        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository,
+            IMemoryCache memoryCache)
         {
             this.stockRepository = stockRepository;
             this.intervalRepository = intervalRepository;
             this.datasetRepository = datasetRepository;
             this.metadataRepository = metadataRepository;
-            //this.memoryCache = memoryCache;
+            this.memoryCache = memoryCache;
         }
 
         public async Task<string> GetLastPrice(string ticker)
@@ -92,15 +92,15 @@
                 siteDate = DateTime.ParseExact(lastData, "g", CultureInfo.InvariantCulture);
             }
 
-            //TODO: Fix cache
-            // Not clearing data after 1 min.:
-            //if (!this.memoryCache.TryGetValue<TempData>("StockData", out var lastTempData))
-            //{
-            //    lastTempData = await this.GetLastUpdatedData(ticker);
-            //    this.memoryCache.Set("StockData", lastTempData, TimeSpan.FromMinutes(1));
-            //}
+            if (!this.memoryCache.TryGetValue<TempData>("StockData", out var lastTempData))
+            {
+                lastTempData = await this.GetLastUpdatedData(ticker);
 
-            var lastTempData = await this.GetLastUpdatedData(ticker);
+                var memoryCacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+
+                this.memoryCache.Set("StockData", lastTempData, memoryCacheOptions);
+            }
 
             if (lastTempData.LastDateTime > siteDate)
             {

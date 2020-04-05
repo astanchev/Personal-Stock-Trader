@@ -11,6 +11,7 @@
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
+    using Web.ViewModels.User.TradeShares;
 
     public class PositionsService : IPositionsService
     {
@@ -27,7 +28,7 @@
             datasetsRepository = repository;
         }
 
-        public async Task OpenPosition(int accountId, int numberShares, bool isBuy)
+        public async Task<TradeSharesResultModel> OpenPosition(int accountId, int numberShares, bool isBuy)
         {
             var account = await this.accountRepository
                 .All()
@@ -58,9 +59,18 @@
 
             this.accountRepository.Update(account);
             await this.accountRepository.SaveChangesAsync();
+
+            return new TradeSharesResultModel
+            {
+                PositionId = position.Id,
+                Quantity = position.CountStocks,
+                OpenPrice = FindPositionOpenPrice(position.CreatedOn),
+                Balance = account.Balance,
+                IsBuy = position.TypeOfTrade == TypeOfTrade.Buy ? true : false,
+            };
         }
 
-        public async Task UpdatePosition(int accountId, int positionId, int numberShares, bool isBuy)
+        public async Task<TradeSharesResultModel> UpdatePosition(int accountId, int positionId, int numberShares, bool isBuy)
         {
             var position = await this.positionRepository
                 .All()
@@ -73,16 +83,18 @@
 
             if (newPositionDirection == position.TypeOfTrade)
             {
-                await this.OpenPosition(accountId, numberShares + currentShares, isBuy);
+                return await this.OpenPosition(accountId, numberShares + currentShares, isBuy);
             }
             else if (numberShares > position.CountStocks)
             {
-                await this.OpenPosition(accountId, numberShares - currentShares, isBuy);
+                return await this.OpenPosition(accountId, numberShares - currentShares, isBuy);
             }
             else if (numberShares < position.CountStocks)
             {
-                await this.OpenPosition(accountId, currentShares - numberShares, !isBuy);
+                return await this.OpenPosition(accountId, currentShares - numberShares, !isBuy);
             }
+
+            return new TradeSharesResultModel();
         }
 
         public async Task ClosePosition(int accountId)
@@ -110,15 +122,6 @@
             }
         }
 
-        private static async Task<decimal> GetCurrentStockPrice()
-        {
-            return await datasetsRepository
-                .All()
-                .OrderByDescending(d => d.DateAndTime)
-                .Select(d => d.ClosePrice)
-                .FirstOrDefaultAsync();
-        }
-
         public async Task<PositionViewModel> GetOpenPosition(int accountId)
         {
             var position = await this.positionRepository
@@ -134,6 +137,15 @@
                 .FirstOrDefaultAsync();
 
             return position;
+        }
+
+        private static async Task<decimal> GetCurrentStockPrice()
+        {
+            return await datasetsRepository
+                .All()
+                .OrderByDescending(d => d.DateAndTime)
+                .Select(d => d.ClosePrice)
+                .FirstOrDefaultAsync();
         }
 
         private static decimal FindPositionOpenPrice(DateTime openTime)
