@@ -1,5 +1,7 @@
 ﻿namespace PersonalStockTrader.Common
 {
+    using System;
+
     public static class GlobalConstants
     {
         public const string SystemName = "PersonalStockTrader";

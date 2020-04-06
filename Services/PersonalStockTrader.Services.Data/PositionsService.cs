@@ -1,6 +1,7 @@
 ﻿namespace PersonalStockTrader.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -10,15 +11,19 @@
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
-    using Web.ViewModels.User.TradeShares;
+    using PersonalStockTrader.Web.ViewModels.User.TradeShares;
 
     public class PositionsService : IPositionsService
     {
+        private const string Buy = "Bought";
+        private const string Sell = "Sold";
+        private static IDeletableEntityRepository<DataSet> datasetsRepository;
+
         private readonly IDeletableEntityRepository<Position> positionRepository;
         private readonly IDeletableEntityRepository<Account> accountRepository;
         private readonly IDeletableEntityRepository<Stock> stockRepository;
-        private static IDeletableEntityRepository<DataSet> datasetsRepository;
 
         public PositionsService(IDeletableEntityRepository<Position> positionRepository, IDeletableEntityRepository<Account> accountRepository, IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<DataSet> repository)
         {
@@ -137,6 +142,34 @@
                 .FirstOrDefaultAsync();
 
             return position;
+        }
+
+        public async Task<IEnumerable<HistoryPositionViewModel>> GetAccountClosedPositions(int accountId, string startDate, string endDate)
+        {
+            var start = DateTime.Parse(startDate);
+            var end = DateTime.Parse(endDate);
+
+            var result = await this.positionRepository
+                .All()
+                .Where(p => p.AccountId == accountId && 
+                            p.OpenClose == OpenClose.Close &&
+                            p.CreatedOn >= start && 
+                            p.CreatedOn <= end)
+                .Select(p => new HistoryPositionViewModel
+                {
+                    Ticker = GlobalConstants.StockTicker,
+                    OpenDate = p.CreatedOn,
+                    Quantity = p.CountStocks,
+                    Direction = p.TypeOfTrade == TypeOfTrade.Buy ? Buy : Sell,
+                    OpenPrice = FindPositionOpenPrice(p.CreatedOn),
+                    ClosePrice = FindPositionOpenPrice((DateTime)p.ModifiedOn),
+                    Profit = p.TypeOfTrade == TypeOfTrade.Buy ?
+                        p.CountStocks * (FindPositionOpenPrice((DateTime)p.ModifiedOn) - FindPositionOpenPrice(p.CreatedOn)) :
+                        p.CountStocks * (FindPositionOpenPrice(p.CreatedOn) - FindPositionOpenPrice((DateTime)p.ModifiedOn)),
+                })
+                .ToListAsync();
+
+            return result;
         }
 
         private static async Task<decimal> GetCurrentStockPrice()

@@ -1,7 +1,9 @@
 ﻿namespace PersonalStockTrader.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
     using PersonalStockTrader.Web.ViewModels.User.TradeShares;
 
@@ -14,5 +16,7 @@
         Task ClosePosition(int accountId);
 
         Task<PositionViewModel> GetOpenPosition(int accountId);
+
+        Task<IEnumerable<HistoryPositionViewModel>> GetAccountClosedPositions(int accountId, string startDate, string endDate);
     }
 }
