@@ -8,12 +8,14 @@
 
     public interface IAccountService
     {
-        Task<TradeSharesResultModel> ManagePositions(TradeSharesInputViewModel input);
+        Task<TradeSharesResultModel> ManagePositionsAsync(TradeSharesInputViewModel input);
 
-        Task<PositionViewModel> GetCurrentPosition(int accountId);
+        Task<PositionViewModel> GetCurrentPositionAsync(int accountId);
 
-        Task<TradeHistoryViewModel> GetAllClosedPositionsByUserId(string userId);
+        Task<TradeHistoryViewModel> GetAllClosedPositionsByUserIdAsync(string userId);
 
-        Task<TradeHistoryViewModel> GetAllClosedPositionsIntervalByUserId(string userId, string startDate, string endDate);
+        Task<TradeHistoryViewModel> GetAllClosedPositionsIntervalByUserIdAsync(string userId, string startDate, string endDate);
+
+        Task TakeAllAccountsMonthlyFeesAsync();
     }
 }

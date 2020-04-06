@@ -33,6 +33,14 @@
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="phantomjs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="rasterize.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\css\maps\style.css.map" />
     <None Include="wwwroot\fonts\auth\.DS_Store" />
     <None Include="wwwroot\fonts\faces\.DS_Store" />

@@ -117,17 +117,9 @@
         document.addEventListener('DOMContentLoaded',
             function(e) {
                 e.preventDefault();
+                
                 var pos = document.getElementById('position');
                 var isBuy = document.getElementById('positionDirection');
-                var positionProfit = document.getElementById('positionProfit');
-
-                if (Number(positionProfit.textContent) < 0) {
-                    positionProfit.classList.add('text-danger');
-                    positionProfit.innerHTML += '<i class="mdi mdi-arrow-down">';
-                } else if (Number(positionProfit.textContent) < 0) {
-                    positionProfit.classList.add('text-success');
-                    positionProfit.innerHTML += '<i class="mdi mdi-arrow-up">';
-                }
 
                 if (@Model.Position.PositionId > 0) {
                     pos.style.display = '';
@@ -142,7 +134,24 @@
                 } else {
                     pos.style.display = 'none';
                 }
+
             })
+    </script>
+    
+    <script>
+        var positionProfit = document.getElementById('positionProfit');
+        if (Number(positionProfit.textContent) > 0) {
+            positionProfit.classList.remove('text-danger');
+            positionProfit.classList.add('text-success');
+            positionProfit.innerHTML += '<i class="mdi mdi-arrow-up">';
+        } else if (Number(positionProfit.textContent) < 0) {
+            positionProfit.classList.remove('text-success');
+            positionProfit.classList.add('text-danger');
+            positionProfit.innerHTML += '<i class="mdi mdi-arrow-down">';
+        } else {
+            positionProfit.classList.remove('text-success');
+            positionProfit.classList.remove('text-danger');
+        }
     </script>
 
     <script>
@@ -337,7 +346,7 @@
     <script>
         const targetTd = document.getElementById('positionCurrentPrice');
         var positionDirection = document.getElementById('positionDirection');
-        var positionProfit = document.getElementById('positionProfit');
+        var posProfit = document.getElementById('positionProfit');
         var openPrice = document.getElementById('positionOpenPrice');
         var quantity = document.getElementById('positionQuantity');
         var balance = document.getElementById('balance');
@@ -359,12 +368,17 @@
                         .toFixed(2);
                 }
 
-                if (Number(positionProfit.textContent) < 0) {
-                    positionProfit.classList.add('text-danger');
-                    positionProfit.innerHTML += '<i class="mdi mdi-arrow-down">';
+                if (Number(positionProfit.textContent) > 0) {
+                    posProfit.classList.remove('text-danger');
+                    posProfit.classList.add('text-success');
+                    posProfit.innerHTML += '<i class="mdi mdi-arrow-up">';
                 } else if (Number(positionProfit.textContent) < 0) {
-                    positionProfit.classList.add('text-success');
-                    positionProfit.innerHTML += '<i class="mdi mdi-arrow-up">';
+                    posProfit.classList.remove('text-success');
+                    posProfit.classList.add('text-danger');
+                    posProfit.innerHTML += '<i class="mdi mdi-arrow-down">';
+                } else {
+                    posProfit.classList.remove('text-success');
+                    posProfit.classList.remove('text-danger');
                 }
 
                 balance.value = ((Number(balance.value) - Number(positionProfit.textContent))).toFixed(2);

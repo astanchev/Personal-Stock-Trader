@@ -3,13 +3,14 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common;
+
     using Microsoft.EntityFrameworkCore;
+    using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
     using PersonalStockTrader.Web.ViewModels.User.TradeShares;
-    using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
 
     public class AccountService : IAccountService
     {
@@ -23,7 +24,27 @@
             this.positionsService = positionsService;
         }
 
-        public async Task<TradeSharesResultModel> ManagePositions(TradeSharesInputViewModel input)
+        public async Task TakeAllAccountsMonthlyFeesAsync()
+        {
+            var openAccounts = await this.accountRepository
+                .All()
+                .Where(a => !a.IsDeleted)
+                .ToListAsync();
+
+            foreach (var account in openAccounts)
+            {
+                var tradeFee = new FeePayment
+                {
+                    Amount = account.MonthlyFee,
+                    TypeFee = TypeFee.MonthlyCommission,
+                };
+
+                account.Fees.Add(tradeFee);
+                await this.accountRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<TradeSharesResultModel> ManagePositionsAsync(TradeSharesInputViewModel input)
         {
             if (int.Parse(input.PositionId) != 0)
             {
@@ -35,7 +56,7 @@
             }
         }
 
-        public async Task<PositionViewModel> GetCurrentPosition(int accountId)
+        public async Task<PositionViewModel> GetCurrentPositionAsync(int accountId)
         {
             var position = await this.positionsService.GetOpenPosition(accountId);
 
@@ -49,15 +70,15 @@
             }
         }
 
-        public Task<TradeHistoryViewModel> GetAllClosedPositionsByUserId(string userId)
+        public Task<TradeHistoryViewModel> GetAllClosedPositionsByUserIdAsync(string userId)
         {
             var startDate = this.archiveStartDate.ToShortDateString();
             var endDate = DateTime.UtcNow.ToShortDateString();
 
-            return this.GetAllClosedPositionsIntervalByUserId(userId, startDate, endDate);
+            return this.GetAllClosedPositionsIntervalByUserIdAsync(userId, startDate, endDate);
         }
 
-        public async Task<TradeHistoryViewModel> GetAllClosedPositionsIntervalByUserId(string userId, string startDate, string endDate)
+        public async Task<TradeHistoryViewModel> GetAllClosedPositionsIntervalByUserIdAsync(string userId, string startDate, string endDate)
         {
             var accountResult = await this.accountRepository
                 .All()

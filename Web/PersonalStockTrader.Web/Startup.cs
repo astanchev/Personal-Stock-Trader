@@ -14,6 +14,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
+    using PersonalStockTrader.Web.PDFHelpers;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data;
     using PersonalStockTrader.Data.Common;
@@ -98,6 +100,8 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
+            services.AddScoped<IViewRenderService, ViewRenderService>();
+            services.AddScoped<IHtmlToPdfConverter, HtmlToPdfConverter>();
             services.AddTransient<IEmailSender>(
                 serviceProvider => new SendGridEmailSender(this.configuration["SendGridApiKey:ApiKey"]));
             services.AddTransient<IAdministratorService, AdministratorService>();
@@ -175,9 +179,8 @@
 
         private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
         {
-            //recurringJobManager.AddOrUpdate<SendMonthlyReport>("SendMonthlyReport", x => x.Work(), Cron.Monthly);
-            //recurringJobManager.AddOrUpdate<SeedDBFromApi>("SeedDBFromApi", x => x.Work(), "*/10 * * * * *");//every 10 sec
-            recurringJobManager.AddOrUpdate<SeedDBFromApi>("SeedDBFromApi", x => x.Work(), Cron.Minutely);//every min
+            recurringJobManager.AddOrUpdate<TakeAllMonthlyFees>("TakeAllMonthlyFees", x => x.Work(), Cron.Monthly);
+            recurringJobManager.AddOrUpdate<SeedDBFromApi>("SeedDBFromApi", x => x.Work(), Cron.Minutely);
         }
 
         public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter

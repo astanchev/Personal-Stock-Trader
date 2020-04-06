@@ -5,7 +5,7 @@
 }
 
 <h1 class="font-weight-bold text-center text-dark">@ViewData["Title"]</h1>
-<div class="container-fluid text-right">@DateTime.Now.Date.ToString("d", CultureInfo.InvariantCulture)</div>
+<div class="container-fluid text-right float-right">@DateTime.Now.Date.ToString("d", CultureInfo.InvariantCulture)</div>
 <div class="content-wrapper">
     <form class="forms-sample">
         <div class="row">
@@ -59,13 +59,17 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Current Positions</h4>
+            <h2 class="card-title">Closed Positions</h2>
             <div class="card">
                 <div class="card-body">
                     <form method="post">
                         Start date: <input id="startDate" type="date" name="startDate" value="2020-01-01" min="2019-01-01" />
-                        End date: <input id="endDate" type="date" min="2019-01-01"  value="@DateTime.Now.Date.ToString("d", CultureInfo.InvariantCulture)" name="endDate" />
-                        <input class="btn btn-info" type="submit" value="Get positions"/>
+                        End date: <input id="endDate" type="date" min="2019-01-01" name="endDate" />
+                        <input class="btn btn-inverse-primary" type="submit" value="Get positions" />
+                        <button id="generate" type="button" class="btn btn-inverse-danger btn-icon-text float-right" target="_blank" asp-action="GenerateReport">
+                            Generate report
+                            <i class="mdi mdi-printer btn-icon-append"></i>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -102,12 +106,6 @@
         </div>
     </div>
 </div>
-<div class="container-fluid text-left">
-    <button type="button" class="btn btn-info btn-icon-text">
-        Generate report
-        <i class="mdi mdi-printer btn-icon-append"></i>
-    </button>
-</div>
 
 @section Scripts
 {
@@ -119,11 +117,22 @@
             $('.dataTables_length').addClass('bs-select');
         });
     </script>
-    
+
     <script>
         var today = new Date().toISOString().split("T")[0];
         document.getElementById("startDate").setAttribute("max", today);
         document.getElementById("endDate").setAttribute("max", today);
-        document.getElementById("endDate").setAttribute("value", today);
+        document.getElementById("endDate").value = today;
+    </script>
+    
+    <script>
+        document.getElementById("generate").addEventListener('click', (e) => {
+            e.preventDefault();
+
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            window.open('@Url.Action("GenerateReport", "TradeHistory")?startDate=' + startDate + '&endDate=' + endDate, "_blank");
+        });
     </script>
 }

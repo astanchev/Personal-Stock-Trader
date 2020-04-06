@@ -24,7 +24,7 @@
         [HttpPost]
         public async Task<ActionResult<TradeSharesResultModel>> Post(TradeSharesInputViewModel input)
         {
-            var result = await this.accountService.ManagePositions(input);
+            var result = await this.accountService.ManagePositionsAsync(input);
 
             return result;
         }

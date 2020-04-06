@@ -28,7 +28,7 @@
             var pricesAndTimes = await this.stockService.GetPricesLast300Minutes(GlobalConstants.StockTicker);
             var balance = await this.userService.GetUserBalanceAsync(userId);
             var accountId = await this.userService.GetUserAccountIdAsync(userId);
-            var position = await this.accountService.GetCurrentPosition(accountId);
+            var position = await this.accountService.GetCurrentPositionAsync(accountId);
             var currentProfit = position.Direction
                 ? (decimal.Parse(result.Price) - position.OpenPrice) * position.Quantity
                 : (position.OpenPrice - decimal.Parse(result.Price)) * position.Quantity;

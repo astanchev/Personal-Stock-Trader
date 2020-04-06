@@ -1,0 +1,60 @@
+﻿@using System.Globalization
+@model PersonalStockTrader.Web.ViewModels.User.TradeHistory.TradeHistoryViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Generated Report</title>
+</head>
+<body>
+    <h1 style="text-align: center">Generated Report</h1>
+    <hr />
+    <div align="right"><span class="text-right float-right">@DateTime.Now</span></div>
+    <div>
+        <div><strong>Username:</strong> <span style="padding: 15px">@Model.Username </span></div>
+        <div><strong>Email:</strong> <span style="padding: 15px">@Model.Email</span></div>
+        <div><strong>Account number:</strong> <span style="padding: 15px">@Model.AccountId</span></div>
+        <div><strong>Start Balance:</strong> <span style="padding: 15px">@Model.StartBalance</span></div>
+        <div><strong>Current Balance:</strong> <span style="padding: 15px">@Model.Balance</span></div>
+    </div>
+
+    <div align="center">
+        <h2>Closed Positions</h2>
+        <div style="text-align: center">
+            <table class="table table-striped">
+                <thead>
+                    <tr style="text-align: center">
+                        <th scope="col" style="padding: 15px; text-align: center">Stock</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Open Date</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Quantity</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Direction (Buy/Sell)</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Buy/Sell price</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Close price</th>
+                        <th scope="col" style="padding: 15px; text-align: center">Profit/Loss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var position in Model.Positions)
+                    {
+                        <tr>
+                            <td style="padding: 15px; text-align: center">@position.Ticker</td>
+                            <td style="padding: 15px; text-align: center">@position.OpenDate.ToShortDateString()</td>
+                            <td style="padding: 15px; text-align: center">@position.Quantity</td>
+                            <td style="padding: 15px; text-align: center">@position.Direction</td>
+                            <td style="padding: 15px; text-align: center">@position.OpenPrice.ToString("f2")</td>
+                            <td style="padding: 15px; text-align: center">@position.ClosePrice.ToString("f2")</td>
+                            <td style="padding: 15px; text-align: center">@position.Profit.ToString("f2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

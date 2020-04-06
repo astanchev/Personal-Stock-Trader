@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -65,7 +66,7 @@
             this.accountRepository.Update(account);
             await this.accountRepository.SaveChangesAsync();
 
-            return new TradeSharesResultModel
+            var result =  new TradeSharesResultModel
             {
                 PositionId = position.Id,
                 Quantity = position.CountStocks,
@@ -73,6 +74,8 @@
                 Balance = account.Balance,
                 IsBuy = position.TypeOfTrade == TypeOfTrade.Buy ? true : false,
             };
+
+            return result;
         }
 
         public async Task<TradeSharesResultModel> UpdatePosition(int accountId, int positionId, int numberShares, bool isBuy)
@@ -137,7 +140,7 @@
                     PositionId = p.Id,
                     Quantity = p.CountStocks,
                     Direction = p.TypeOfTrade == TypeOfTrade.Buy,
-                    OpenPrice = FindPositionOpenPrice(p.ModifiedOn ?? p.CreatedOn),
+                    OpenPrice = FindPositionOpenPrice(p.CreatedOn),
                 })
                 .FirstOrDefaultAsync();
 
@@ -183,12 +186,17 @@
 
         private static decimal FindPositionOpenPrice(DateTime openTime)
         {
-            return datasetsRepository
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(openTime, easternZone);
+
+            var price =  datasetsRepository
                 .All()
                 .OrderByDescending(d => d.DateAndTime)
-                .Where(d => d.DateAndTime <= openTime)
+                .Where(d => d.DateAndTime <= easternTime)
                 .Select(d => d.ClosePrice)
                 .FirstOrDefault();
+
+            return price;
         }
     }
 }
