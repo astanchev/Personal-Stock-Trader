@@ -118,3 +118,130 @@ for details on configuring this project to bundle and minify static web assets. 
         opacity: 0
     }
 }
+
+@font-face {
+    font-family: "FontAwesome";
+    font-weight: normal;
+    font-style: normal;
+    src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?v=4.3.0");
+    src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
+}
+
+body {
+    background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/topography.png");
+}
+
+h1 {
+    font-family: "Carter One", cursive;
+    font-size: 3rem;
+}
+
+#Spinner {
+    transform-origin: 50% 50%;
+}
+
+.compass-container,
+.message {
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.compass-container {
+    padding-top: 50px;
+    width: 30%;
+    max-width: 600px;
+}
+
+.button {
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    color: #555;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: #eee;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.btn-effect {
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+    .btn-effect span {
+        display: block;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+        .btn-effect span:first-child {
+            -webkit-transform: translate(0);
+            transform: translate(0);
+        }
+
+        .btn-effect span:last-child {
+            -webkit-transform: translateY(200%) translateX(-50%);
+            transform: translateY(200%) translateX(-50%);
+            position: absolute;
+            left: 50%;
+        }
+
+    .btn-effect:hover span:first-child {
+        -webkit-transform: translateY(-200%);
+        transform: translateY(-200%);
+    }
+
+    .btn-effect:hover span:last-child {
+        -webkit-transform: translateY(-100%) translateX(-50%);
+        transform: translateY(-100%) translateX(-50%);
+    }
+
+    /* Icon orientation */
+    .btn-effect .icon {
+        font-size: 1.5rem;
+        font-style: normal;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+.icon-arrow-right:before {
+    font-family: FontAwesome;
+    content: "\f015";
+}
+
+span {
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    span {
+        font-size: 0.8rem;
+    }
+
+    .compass-container {
+        width: 40% !important;
+        padding-top: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .compass-container {
+        width: 60% !important;
+        padding-top: 10px !important;
+    }
+}
