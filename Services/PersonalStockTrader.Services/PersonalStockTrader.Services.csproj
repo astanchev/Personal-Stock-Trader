@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
   </ItemGroup>
 

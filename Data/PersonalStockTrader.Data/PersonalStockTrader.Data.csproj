@@ -41,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Data\PersonalStockTrader.Services.Data.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Data.Common\PersonalStockTrader.Data.Common.csproj" />
     <ProjectReference Include="..\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />

@@ -116,6 +116,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data\PersonalStockTrader.Data.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.CronJobs\PersonalStockTrader.Services.CronJobs.csproj" />

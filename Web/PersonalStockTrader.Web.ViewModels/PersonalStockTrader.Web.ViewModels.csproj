@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\PersonalStockTrader.Common\PersonalStockTrader.Common.csproj" />
     <ProjectReference Include="..\..\Data\PersonalStockTrader.Data.Models\PersonalStockTrader.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\PersonalStockTrader.Services.Mapping\PersonalStockTrader.Services.Mapping.csproj" />
   </ItemGroup>
