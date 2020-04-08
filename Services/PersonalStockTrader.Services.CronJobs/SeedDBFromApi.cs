@@ -2,12 +2,11 @@
 {
     using System.Threading.Tasks;
 
+    using PersonalStockTrader.Common;
+
     public class SeedDBFromApi
     {
         private readonly IApiConnection alphaVantageConnection;
-        private readonly string function = "TIME_SERIES_INTRADAY";
-        private readonly string ticker = "MSFT";
-        private readonly string interval = "1min";
 
         public SeedDBFromApi(IApiConnection alphaVantageConnection)
         {
@@ -16,32 +15,7 @@
 
         public async Task Work()
         {
-            await alphaVantageConnection.GetCurrentData(function, ticker, interval);
+            await this.alphaVantageConnection.GetCurrentData(GlobalConstants.StockFunction, GlobalConstants.StockTicker, GlobalConstants.StockInterval);
         }
-
-
-        //public async Task Work()
-        //{
-        //    if (!context.DataSets.Any())
-        //    {
-        //        return;
-        //    }
-
-        //    var dataFromDb = context
-        //        .DataSets
-        //        .OrderBy(x => x.DateAndTime)
-        //        .First();
-
-        //    var priceData = new TestTable
-        //    {
-        //        DateTime = dataFromDb.DateAndTime,
-        //        Price = dataFromDb.ClosePrice
-        //    };
-
-        //    context.TestTables.Add(priceData);
-        //    context.DataSets.Remove(dataFromDb);
-        //    await context.SaveChangesAsync();
-
-        //}
     }
 }

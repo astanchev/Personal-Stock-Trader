@@ -14,8 +14,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-
-    using PersonalStockTrader.Web.PDFHelpers;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data;
     using PersonalStockTrader.Data.Common;
@@ -24,12 +22,13 @@
     using PersonalStockTrader.Data.Repositories;
     using PersonalStockTrader.Data.Seeding;
     using PersonalStockTrader.Services;
-    using PersonalStockTrader.Services.CronJobs;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Services.Messaging;
     using PersonalStockTrader.Web.Hubs;
+    using PersonalStockTrader.Web.PDFHelpers;
     using PersonalStockTrader.Web.ViewModels;
+    using Services.CronJobs;
 
     public class Startup
     {
