@@ -159,6 +159,7 @@
             var token = $('input[name="__RequestVerificationToken"]').val();
             var accountId = $('#accountId').val();
             var balance = $('#balance').val();
+            var currentPrice = document.getElementById("price").textContent;
             var quantity = $('#quantity').val();
             var positionId = $('#positionId').val();
             var total = $('#total').val();
@@ -178,6 +179,8 @@
                     data: JSON.stringify({
                         accountId: accountId,
                         positionId: positionId,
+                        balance: balance,
+                        currentPrice: currentPrice,
                         quantity: quantity,
                         isBuy: isBuy
                     }),
@@ -193,7 +196,7 @@
 
                     if (data.positionId === 0 && $('#positionId').val() !== 0) {
                         pos.style.display = 'none';
-                    } else if ($('#positionId').val() === 0 && data.positionId !== 0) {
+                    } else if ($('#positionId').val() === 0 && data.positionId > 0) {
                         pos.style.display = '';
                         document.getElementById('balance').value = data.balance;
                         document.getElementById('positionId').value = data.positionId;
@@ -209,7 +212,7 @@
                             buySell.innerHTML = '<label class="badge badge-danger">Sold</label>';
                         }
 
-                    } else if ($('#positionId').val() !== 0 && data.positionId !== 0) {
+                    } else if ($('#positionId').val() !== 0 && data.positionId > 0) {
                         pos.style.display = '';
                         document.getElementById('balance').value = data.balance;
                         document.getElementById('positionId').value = data.positionId;
@@ -224,6 +227,8 @@
                             buySell.textContent = '';
                             buySell.innerHTML = '<label class="badge badge-danger">Sold</label>';
                         }
+                    } else if (data.positionId < 0) {
+                        alert("Sorry, you don't have enough funds for that purchase");
                     }
                 })
                 .fail(function fail(data, statusCode) {

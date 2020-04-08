@@ -27,5 +27,7 @@
         public const string StockFunction = "TIME_SERIES_INTRADAY";
 
         public const string StockInterval = "1min";
+
+        public const decimal MinAccountBalance = 500.00M;
     }
 }

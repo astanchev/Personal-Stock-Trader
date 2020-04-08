@@ -24,6 +24,14 @@
         [HttpPost]
         public async Task<ActionResult<TradeSharesResultModel>> Post(TradeSharesInputViewModel input)
         {
+            if (decimal.Parse(input.Balance) - GlobalConstants.MinAccountBalance <= decimal.Parse(input.CurrentPrice) * int.Parse(input.Quantity))
+            {
+                return new TradeSharesResultModel()
+                {
+                    PositionId = -1,
+                };
+            }
+
             var result = await this.accountService.ManagePositionsAsync(input);
 
             return result;
