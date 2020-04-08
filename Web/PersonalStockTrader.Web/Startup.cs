@@ -22,13 +22,13 @@
     using PersonalStockTrader.Data.Repositories;
     using PersonalStockTrader.Data.Seeding;
     using PersonalStockTrader.Services;
+    using PersonalStockTrader.Services.CronJobs;
     using PersonalStockTrader.Services.Data;
     using PersonalStockTrader.Services.Mapping;
     using PersonalStockTrader.Services.Messaging;
     using PersonalStockTrader.Web.Hubs;
     using PersonalStockTrader.Web.PDFHelpers;
     using PersonalStockTrader.Web.ViewModels;
-    using Services.CronJobs;
 
     public class Startup
     {
