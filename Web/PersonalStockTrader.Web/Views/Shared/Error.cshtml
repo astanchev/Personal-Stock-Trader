@@ -30,15 +30,41 @@
 <body>
     <div class="message">
         <h1>You are lost.</h1>
-
-        <a asp-area="" asp-controller="Home" asp-action="Index" class="button btn-effect">
-
-            <span>Go Home</span>
-
-            <span><i class="icon icon-arrow-right"></i></span>
-
-        </a>
-
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+        {
+            <a class="button btn-effect" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">
+                <span>Go Home</span>
+                <span><i class="icon icon-arrow-right"></i></span>
+            </a>
+        }
+        else if (this.User.IsInRole(GlobalConstants.AccountManagerRoleName))
+        {
+            <a class="button btn-effect" asp-area="AccountManagement" asp-controller="NewClients" asp-action="Index">
+                <span>Go Home</span>
+                <span><i class="icon icon-arrow-right"></i></span>
+            </a>
+        }
+        else if (this.User.IsInRole(GlobalConstants.NotConfirmedUserRoleName))
+        {
+            <a class="button btn-effect" asp-area="User" asp-controller="TradePlatform" asp-action="Index">
+                <span>Go Home</span>
+                <span><i class="icon icon-arrow-right"></i></span>
+            </a>
+        }
+        else if (this.User.IsInRole(GlobalConstants.ConfirmedUserRoleName))
+        {
+            <a class="button btn-effect" asp-area="User" asp-controller="TradePlatform" asp-action="Index">
+                <span>Go Home</span>
+                <span><i class="icon icon-arrow-right"></i></span>
+            </a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="button btn-effect">
+                <span>Go Home</span>
+                <span><i class="icon icon-arrow-right"></i></span>
+            </a>
+        }
     </div>
 
     <div class="compass-container">
