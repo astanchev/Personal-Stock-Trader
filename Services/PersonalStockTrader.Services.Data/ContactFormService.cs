@@ -22,7 +22,7 @@
             this.contactRepository = contactRepository;
         }
 
-        public async Task AddAsync(ContactFormViewModel input)
+        public async Task<bool> AddAsync(ContactFormViewModel input)
         {
             var contactFormEntry = new ContactFormEntry
             {
@@ -33,10 +33,12 @@
             };
 
             await this.contactRepository.AddAsync(contactFormEntry);
-            await this.contactRepository.SaveChangesAsync();
+            var result = await this.contactRepository.SaveChangesAsync();
+
+            return result > 0;
         }
 
-        public async Task MarkAsAnsweredAsync(int emailId)
+        public async Task<bool> MarkAsAnsweredAsync(int emailId)
         {
             var contactFormEntry = await this.contactRepository
                 .All()
@@ -45,13 +47,15 @@
             if (contactFormEntry == null)
             {
                 // If Hangfire cleaned the database this might be null
-                return;
+                return false;
             }
 
             contactFormEntry.Answered = true;
 
             this.contactRepository.Update(contactFormEntry);
-            await this.contactRepository.SaveChangesAsync();
+            var result = await this.contactRepository.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<NotAnsweredEmailsOutputViewModel> GetByIdAsync(int emailId)
@@ -78,7 +82,15 @@
             return this.contactRepository
                 .All()
                 .Where(c => c.Answered == false)
-                .To<NotAnsweredEmailsOutputViewModel>()
+                .Select(c => new NotAnsweredEmailsOutputViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Email = c.Email,
+                    Subject = c.Subject,
+                    Content = c.Content,
+                    Answered = c.Answered,
+                })
                 .ToList();
         }
 

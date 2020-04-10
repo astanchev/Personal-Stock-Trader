@@ -67,14 +67,17 @@
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            await this.contactFormService.MarkAsAnsweredAsync(input.Id);
+            var result = await this.contactFormService.MarkAsAnsweredAsync(input.Id);
 
-            await this.emailSender.SendEmailAsync(
+            if (result)
+            {
+                await this.emailSender.SendEmailAsync(
                 GlobalConstants.SystemEmail,
                 GlobalConstants.AdministratorRoleName,
                 input.Email,
                 input.Subject,
                 input.Answer);
+            }
 
             return this.RedirectToAction(nameof(this.Index));
         }

@@ -1,9 +1,8 @@
-﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests.UnitTests
+﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
     using MockQueryable.Moq;
     using Moq;
     using NUnit.Framework;

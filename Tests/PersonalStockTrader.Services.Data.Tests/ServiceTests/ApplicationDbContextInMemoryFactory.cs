@@ -1,4 +1,4 @@
-﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests.IntegrationTests
+﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests
 {
     using System;
 

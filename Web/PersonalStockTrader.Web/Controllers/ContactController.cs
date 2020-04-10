@@ -33,16 +33,19 @@
                 return this.View(input);
             }
 
-            await this.contactFormService.AddAsync(input);
+            var result = await this.contactFormService.AddAsync(input);
 
-            await this.emailSender.SendEmailAsync(
-                input.Email,
-                input.Name,
-                GlobalConstants.SystemEmail,
-                input.Subject ?? GlobalConstants.ConstSubject,
-                input.Content);
+            if (result)
+            {
+                await this.emailSender.SendEmailAsync(
+                    input.Email,
+                    input.Name,
+                    GlobalConstants.SystemEmail,
+                    input.Subject ?? GlobalConstants.ConstSubject,
+                    input.Content);
 
-            this.TempData["InfoMessage"] = "Thank you for your email!";
+                this.TempData["InfoMessage"] = "Thank you for your email!";
+            }
 
             return this.Redirect("/Home/Index");
         }

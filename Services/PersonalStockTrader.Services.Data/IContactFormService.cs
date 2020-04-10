@@ -9,9 +9,9 @@
 
     public interface IContactFormService
     {
-        Task AddAsync(ContactFormViewModel input);
+        Task<bool> AddAsync(ContactFormViewModel input);
 
-        Task MarkAsAnsweredAsync(int emailId);
+        Task<bool> MarkAsAnsweredAsync(int emailId);
 
         Task<NotAnsweredEmailsOutputViewModel> GetByIdAsync(int emailId);
 
