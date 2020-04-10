@@ -10,7 +10,6 @@
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Data.Repositories;
-    using Xunit;
 
     public class SettingsServiceTests
     {

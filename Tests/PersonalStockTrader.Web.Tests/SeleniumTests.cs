@@ -21,13 +21,13 @@
             this.browser = new RemoteWebDriver(opts);
         }
 
-        [Fact(Skip = "Example test. Disabled for CI.")]
-        public void FooterOfThePageContainsPrivacyLink()
-        {
-            this.browser.Navigate().GoToUrl(this.server.RootUri);
-            Assert.Contains(
-                this.browser.FindElements(By.CssSelector("footer a")),
-                x => x.GetAttribute("href").EndsWith("/Home/Privacy"));
-        }
+       // [Fact(Skip = "Example test. Disabled for CI.")]
+        //public void FooterOfThePageContainsPrivacyLink()
+        //{
+        //    this.browser.Navigate().GoToUrl(this.server.RootUri);
+        //    Assert.Contains(
+        //        this.browser.FindElements(By.CssSelector("footer a")),
+        //        x => x.GetAttribute("href").EndsWith("/Home/Privacy"));
+        //}
     }
 }
