@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Mvc;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Services.Data;
@@ -51,7 +52,7 @@
                 Name = notAnsweredEmail.Name,
                 Email = notAnsweredEmail.Email,
                 Subject = notAnsweredEmail.Subject,
-                Content = notAnsweredEmail.Content,
+                Content = new HtmlSanitizer().Sanitize(notAnsweredEmail.Content),
                 Answered = notAnsweredEmail.Answered,
                 Answer = string.Empty,
             };
