@@ -68,6 +68,5 @@
         {
             return string.Format(ApiString, this.configuration["API:URI"], function, ticker, interval, outputSize, this.configuration["API:AlphaVantageKEY"]);
         }
-
     }
 }

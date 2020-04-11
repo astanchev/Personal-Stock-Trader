@@ -34,7 +34,17 @@
 
             var result = await this.accountService.ManagePositionsAsync(input);
 
-            return result;
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return new TradeSharesResultModel()
+                {
+                    PositionId = -1,
+                };
+            }
         }
     }
 }

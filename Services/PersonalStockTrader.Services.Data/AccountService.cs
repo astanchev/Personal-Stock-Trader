@@ -38,7 +38,7 @@
                     Amount = account.MonthlyFee,
                     TypeFee = TypeFee.MonthlyCommission,
                 };
-
+                account.Balance -= tradeFee.Amount;
                 account.Fees.Add(tradeFee);
                 await this.accountRepository.SaveChangesAsync();
             }
@@ -46,13 +46,17 @@
 
         public async Task<TradeSharesResultModel> ManagePositionsAsync(TradeSharesInputViewModel input)
         {
-            if (int.Parse(input.PositionId) != 0)
+            if (int.Parse(input.PositionId) > 0)
             {
                 return await this.positionsService.UpdatePosition(int.Parse(input.AccountId), int.Parse(input.PositionId), int.Parse(input.Quantity), input.IsBuy);
             }
-            else
+            else if (int.Parse(input.PositionId) == 0)
             {
                 return await this.positionsService.OpenPosition(int.Parse(input.AccountId), int.Parse(input.Quantity), input.IsBuy);
+            }
+            else
+            {
+                return null;
             }
         }
 

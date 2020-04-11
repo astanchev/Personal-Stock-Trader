@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using MockQueryable.Moq;
     using Moq;
     using NUnit.Framework;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Services.Data.Tests.ServiceTests.Helpers;
 
     [TestFixture]
     public class UserServiceTests
@@ -19,7 +21,7 @@
         [SetUp]
         public void Setup()
         {
-            this.mock = this.GetTestData().AsQueryable().BuildMock();
+            this.mock = TestDataHelpers.GetTestData().AsQueryable().BuildMock();
 
             this.accountRepository = new Mock<IDeletableEntityRepository<Account>>();
             this.accountRepository
@@ -59,25 +61,6 @@
             var actualUserBalance = await this.userService.GetUserAccountIdAsync("3");
 
             Assert.AreEqual(0, actualUserBalance);
-        }
-
-        private List<Account> GetTestData()
-        {
-            return new List<Account>()
-            {
-                new Account
-                {
-                    Id = 1,
-                    UserId = "1",
-                    Balance = 2000M,
-                },
-                new Account
-                {
-                    Id = 2,
-                    UserId = "2",
-                    Balance = 5000M,
-                },
-            };
         }
     }
 }
