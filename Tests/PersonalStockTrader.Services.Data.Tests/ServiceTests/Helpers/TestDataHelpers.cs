@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using Common;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
@@ -156,6 +156,37 @@
             };
         }
 
+        public static List<DataSet> GetTestDataSets()
+        {
+            return new List<DataSet>()
+            {
+                new DataSet()
+                {
+                    DateAndTime = DateTime.Parse("09.04.2020"),
+                    ClosePrice = 100.00M,
+                    IntervalId = 1,
+                },
+                new DataSet()
+                {
+                    DateAndTime = DateTime.Parse("31.12.2018"),
+                    ClosePrice = 100.00M,
+                    IntervalId = 1,
+                },
+            };
+        }
+
+        public static List<Interval> GetTestIntervals()
+        {
+            return new List<Interval>()
+            {
+                new Interval()
+                {
+                    Id = 1,
+                    StockId = 1,
+                },
+            };
+        }
+
         public static List<Stock> GetTestStocks()
         {
             return new List<Stock>()
@@ -163,8 +194,19 @@
                 new Stock()
                 {
                     Id = 1,
+                    Ticker = GlobalConstants.StockTicker,
                 },
             };
+        }
+
+        public static string GetUpToDateJSON()
+        {
+            return "{\"Meta Data\": {\"1. Information\": \"Intraday (1min) open, high, low, close prices and volume\",\"2. Symbol\": \"IBM\",\"3. Last Refreshed\": \"2020-04-09 00:00:00\",\"4. Interval\": \"1min\",\"5. Output Size\": \"Compact\",\"6. Time Zone\": \"US/Eastern\"},\"Time Series (1min)\": {\"2020-04-09 00:00:00\": {\"1. open\": \"122.1400\",\"2. high\": \"122.2100\",\"3. low\": \"121.4300\",\"4. close\": \"121.5200\",\"5. volume\": \"269094\"},\"2020-04-08 23:59:00\": {\"1. open\": \"121.6500\",\"2. high\": \"122.2300\",\"3. low\": \"121.2879\",\"4. close\": \"122.1350\",\"5. volume\": \"226196\"}}}";
+        }
+
+        public static string GetNotUpdatedJSON()
+        {
+            return "{\"Meta Data\": {\"1. Information\": \"Intraday (1min) open, high, low, close prices and volume\",\"2. Symbol\": \"IBM\",\"3. Last Refreshed\": \"2020-03-09 16:00:00\",\"4. Interval\": \"1min\",\"5. Output Size\": \"Compact\",\"6. Time Zone\": \"US/Eastern\"},\"Time Series (1min)\": {\"2020-03-09 16:00:00\": {\"1. open\": \"122.1400\",\"2. high\": \"122.2100\",\"3. low\": \"121.4300\",\"4. close\": \"121.5200\",\"5. volume\": \"269094\"},\"2020-03-09 15:59:00\": {\"1. open\": \"121.6500\",\"2. high\": \"122.2300\",\"3. low\": \"121.2879\",\"4. close\": \"122.1350\",\"5. volume\": \"226196\"}}}";
         }
     }
 }

@@ -46,6 +46,11 @@
 
         private async Task<string> GetData(string apiUrl)
         {
+            if (!apiUrl.Contains("https://www.alphavantage.co/"))
+            {
+                return string.Empty;
+            }
+
             WebRequest requestObj = WebRequest.Create(apiUrl);
             requestObj.Method = "GET";
             WebResponse responseObj = await requestObj.GetResponseAsync();

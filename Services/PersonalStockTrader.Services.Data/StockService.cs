@@ -23,8 +23,7 @@
         private readonly IDeletableEntityRepository<MetaData> metadataRepository;
         private readonly IMemoryCache memoryCache;
 
-        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository,
-            IMemoryCache memoryCache)
+        public StockService(IDeletableEntityRepository<Stock> stockRepository, IDeletableEntityRepository<Interval> intervalRepository, IDeletableEntityRepository<DataSet> datasetRepository, IDeletableEntityRepository<MetaData> metadataRepository, IMemoryCache memoryCache)
         {
             this.stockRepository = stockRepository;
             this.intervalRepository = intervalRepository;
@@ -210,7 +209,9 @@
                 .Take(90)
                 .ToList();
 
-            return result.OrderBy(x => DateTime.Parse(x.DateTime)).ToList();
+            result = result.OrderBy(x => DateTime.Parse(x.DateTime, CultureInfo.InvariantCulture)).ToList();
+
+            return result;
         }
 
         private async Task<int> GetIntervalId(int stockId)
