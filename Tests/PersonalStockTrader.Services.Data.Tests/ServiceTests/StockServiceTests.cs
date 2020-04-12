@@ -80,7 +80,9 @@
         {
             var result = await this.stockService.GetLastUpdatedTime(GlobalConstants.StockTicker);
 
-            Assert.AreEqual(DateTime.Now.Date, result.Date);
+            var expectedDate = DateTime.Parse("2020-04-09 00:00:00").Date;
+
+            Assert.AreEqual(expectedDate, result.Date);
         }
 
         [Test]
@@ -98,7 +100,7 @@
         {
             var result = await this.stockService.GetLastPriceAndTime(GlobalConstants.StockTicker);
 
-            var expectedDate = DateTime.Now.ToString("g", CultureInfo.InvariantCulture);
+            var expectedDate = DateTime.Parse("2020-04-09 00:00:00").ToString("g", CultureInfo.InvariantCulture);
 
             StringAssert.Contains(expectedDate, result.DateTime);
             StringAssert.Contains("100.00", result.Price);
