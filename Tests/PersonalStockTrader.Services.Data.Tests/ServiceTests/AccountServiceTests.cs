@@ -33,10 +33,6 @@
                 .Setup(a => a.All())
                 .Returns(this.mock.Object);
 
-            this.accountRepository
-                .Setup(a => a.All())
-                .Returns(this.mock.Object);
-
             this.positionService = new Mock<IPositionsService>();
 
             this.positionService

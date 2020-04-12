@@ -66,7 +66,7 @@
             this.accountRepository.Update(account);
             await this.accountRepository.SaveChangesAsync();
 
-            var result =  new TradeSharesResultModel
+            var result = new TradeSharesResultModel
             {
                 PositionId = position.Id,
                 Quantity = position.CountStocks,
@@ -112,7 +112,11 @@
                 .FirstOrDefaultAsync(a => a.Id == accountId);
 
             var position = account.Positions.FirstOrDefault(p => p.OpenClose == OpenClose.Open);
-            var currentStockPrice = await GetCurrentStockPrice();
+            var currentStockPrice = datasetsRepository
+                .All()
+                .OrderByDescending(d => d.DateAndTime)
+                .Select(d => d.ClosePrice)
+                .FirstOrDefault();
 
             if (position != null)
             {
@@ -175,21 +179,12 @@
             return result;
         }
 
-        private static async Task<decimal> GetCurrentStockPrice()
-        {
-            return await datasetsRepository
-                .All()
-                .OrderByDescending(d => d.DateAndTime)
-                .Select(d => d.ClosePrice)
-                .FirstOrDefaultAsync();
-        }
-
         private static decimal FindPositionOpenPrice(DateTime openTime)
         {
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(openTime, easternZone);
 
-            var price =  datasetsRepository
+            var price = datasetsRepository
                 .All()
                 .OrderByDescending(d => d.DateAndTime)
                 .Where(d => d.DateAndTime <= easternTime)

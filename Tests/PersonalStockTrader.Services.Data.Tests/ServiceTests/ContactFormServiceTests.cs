@@ -48,6 +48,21 @@
         }
 
         [Test]
+        public async Task AddAsyncShouldIncreaseContactFormEntries()
+        {
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var contactFormRepository = new EfRepository<ContactFormEntry>(context);
+            var contactFormService = new ContactFormService(contactFormRepository);
+
+            var input = new ContactFormViewModel();
+            var countPreAdd = contactFormRepository.All().Count();
+            var result = await contactFormService.AddAsync(input);
+            var countAfterAdd = contactFormRepository.All().Count();
+
+            Assert.AreEqual(countPreAdd + 1, countAfterAdd);
+        }
+
+        [Test]
         public async Task MarkAsAnsweredShouldMarkCorrectlyNotAnsweredEmailId()
         {
             var context = ApplicationDbContextInMemoryFactory.InitializeContext();

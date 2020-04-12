@@ -5,8 +5,8 @@
     using System.Linq;
 
     using PersonalStockTrader.Data.Models;
+    using PersonalStockTrader.Web.ViewModels.User.TradeHistory;
     using PersonalStockTrader.Web.ViewModels.User.TradePlatform;
-    using Web.ViewModels.User.TradeHistory;
 
     public static class TestDataHelpers
     {
@@ -67,43 +67,53 @@
                 {
                     Id = 1,
                     CreatedOn = DateTime.Parse("01.05.2019"),
+                    ModifiedOn = DateTime.Parse("01.05.2019"),
                     AccountId = 1,
                     OpenClose = OpenClose.Close,
+                    TypeOfTrade = TypeOfTrade.Buy,
                 },
                 new Position
                 {
                     Id = 2,
                     CreatedOn = DateTime.Parse("01.03.2020"),
+                    ModifiedOn = DateTime.Parse("01.03.2020"),
                     AccountId = 1,
                     OpenClose = OpenClose.Close,
-                },
-                new Position
-                {
-                    Id = 2,
-                    CreatedOn = DateTime.Parse("01.04.2020"),
-                    AccountId = 1,
-                    OpenClose = OpenClose.Open,
+                    TypeOfTrade = TypeOfTrade.Buy,
                 },
                 new Position
                 {
                     Id = 3,
+                    CreatedOn = DateTime.Parse("01.04.2020"),
+                    AccountId = 1,
+                    OpenClose = OpenClose.Open,
+                    TypeOfTrade = TypeOfTrade.Buy,
+                },
+                new Position
+                {
+                    Id = 4,
                     CreatedOn = DateTime.Parse("01.05.2019"),
+                    ModifiedOn = DateTime.Parse("01.05.2019"),
                     AccountId = 2,
                     OpenClose = OpenClose.Close,
+                    TypeOfTrade = TypeOfTrade.Buy,
                 },
                 new Position
                 {
-                    Id = 4,
+                    Id = 5,
                     CreatedOn = DateTime.Parse("01.03.2020"),
+                    ModifiedOn = DateTime.Parse("01.03.2020"),
                     AccountId = 2,
                     OpenClose = OpenClose.Close,
+                    TypeOfTrade = TypeOfTrade.Buy,
                 },
                 new Position
                 {
-                    Id = 4,
+                    Id = 6,
                     CreatedOn = DateTime.Parse("01.04.2020"),
                     AccountId = 2,
                     OpenClose = OpenClose.Open,
+                    TypeOfTrade = TypeOfTrade.Buy,
                 },
             };
         }
@@ -143,6 +153,17 @@
                 Quantity = 10,
                 Direction = false,
                 OpenPrice = 100.00M,
+            };
+        }
+
+        public static List<Stock> GetTestStocks()
+        {
+            return new List<Stock>()
+            {
+                new Stock()
+                {
+                    Id = 1,
+                },
             };
         }
     }
