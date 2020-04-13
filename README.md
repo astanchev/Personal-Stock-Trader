@@ -62,6 +62,7 @@ Every registered user,administrator and account manager has own profile page.
 **Hangfire** has two registered jobs
 * Every 1 min to collect data from external api - Alpha Vantage API and populate the database
 * Every month to collect monthly commissions from every active account
+
 **SignalR**
 * Checks if there is new data collected from Hangfire in the Database and if so - updates stock price and time in user's trading platform
 
