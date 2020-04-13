@@ -20,6 +20,7 @@ Every user has to register, except regular data and starting balance for his acc
 Every user pays trade fee for every trade and monthly commision for account maintenance.
 Every registered user,administrator and account manager has own profile page.
 
+
 **Administrator** - created from site owner
 * Manage account managers.
 * Create, update and delete account manager. 
