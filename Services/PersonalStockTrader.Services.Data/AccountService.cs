@@ -107,6 +107,7 @@
                 StartBalance = accountResult.StartBalance,
                 Balance = accountResult.Balance,
                 Positions = closedPositions,
+                StartDate = DateTime.Parse(startDate),
             };
 
             return result;

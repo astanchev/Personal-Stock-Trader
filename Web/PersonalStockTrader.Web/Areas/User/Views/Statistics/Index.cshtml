@@ -1,0 +1,99 @@
+﻿@using System.Globalization
+@model PersonalStockTrader.Web.ViewModels.User.Statistics.StatisticsViewModel
+@{
+    this.ViewData["Title"] = "Statistics";
+}
+
+
+<div class="content-wrapper">
+    <div class="card mb-3">
+        <div class="card-body">
+            <form asp-area="User" asp-controller="Statistics" asp-action="GetUpdate" method="post">
+                Start date: <input id="startDate" type="date" name="startDate" value="@Model.PaidMonthlyFees.Keys.FirstOrDefault().ToString("yyyy-MM-dd")" min="2019-01-01" />
+                End date: <input id="endDate" type="date" min="2019-01-01" name="endDate" />
+                <input class="btn btn-inverse-primary" type="submit" value="Get statistics" />
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Paid commissions</h4>
+                    <canvas id="paidCommissions"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Profit/Loss</h4>
+                    <canvas id="profitLoss"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        var today = new Date().toISOString().split("T")[0];
+        document.getElementById("startDate").setAttribute("max", today);
+        document.getElementById("endDate").setAttribute("max", today);
+        document.getElementById("endDate").value = today;
+    </script>
+
+    <script>
+        new Chart(document.getElementById("paidCommissions"), {
+            type: 'bar',
+            data: {
+                labels: [@Html.Raw(string.Join(", ",Model.PaidMonthlyFees.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))],
+                datasets: [{
+                        label: "Trade Fees",
+                        type: "line",
+                        borderColor: "#f7a274",
+                        data: [@string.Join(", ", Model.PaidTradeFees.Values.ToArray())],
+                        fill: false
+                    }, {
+                        label: "Monthly commissions",
+                        type: "bar",
+                        backgroundColor: "#150fba",
+                        data: [@string.Join(", ", Model.PaidMonthlyFees.Values.ToArray())]
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: false
+                },
+                legend: { display: true }
+            }
+        });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("profitLoss"), {
+            type: 'line',
+            data: {
+                labels: [
+                    @Html.Raw(string.Join(", ",Model.ProfitLoss.Keys.Select(x => "'" + x.Date.ToString("d", CultureInfo.InvariantCulture).Split(" ")[0] + "'").ToArray()))
+                ],
+                datasets: [{
+                    borderColor: "#8b32a8",
+                    data: [
+                        @string.Join(", ", Model.ProfitLoss.Values.ToArray())
+                    ],
+                    fill: false
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Profit from positions (USD)'
+                }
+            }
+        });
+    </script>
+}

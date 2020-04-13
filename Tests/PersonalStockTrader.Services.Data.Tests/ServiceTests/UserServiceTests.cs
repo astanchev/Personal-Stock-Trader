@@ -17,6 +17,7 @@
         private Mock<IDeletableEntityRepository<Account>> accountRepository;
         private Mock<IQueryable<Account>> mock;
         private IUserService userService;
+        private Mock<IPositionsService> positionService;
 
         [SetUp]
         public void Setup()
@@ -28,7 +29,9 @@
                 .Setup(a => a.All())
                 .Returns(this.mock.Object);
 
-            this.userService = new UserService(this.accountRepository.Object);
+            this.positionService = new Mock<IPositionsService>();
+
+            this.userService = new UserService(this.accountRepository.Object, this.positionService.Object);
         }
 
         [Test]

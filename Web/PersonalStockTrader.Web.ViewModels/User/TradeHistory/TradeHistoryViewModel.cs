@@ -1,6 +1,8 @@
 ﻿namespace PersonalStockTrader.Web.ViewModels.User.TradeHistory
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class TradeHistoryViewModel
     {
@@ -15,5 +17,7 @@
         public decimal Balance { get; set; }
 
         public IEnumerable<HistoryPositionViewModel> Positions { get; set; }
+
+        public DateTime StartDate { get; set; }
     }
 }

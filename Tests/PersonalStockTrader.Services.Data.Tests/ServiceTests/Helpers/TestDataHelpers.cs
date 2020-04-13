@@ -48,6 +48,7 @@
                     UserName = "A",
                     Email = "a@a.a",
                     StartBalance = 2000.00M,
+                    IsDeleted = false,
                 },
                 new ApplicationUser
                 {
@@ -55,6 +56,7 @@
                     UserName = "B",
                     Email = "b@b.b",
                     StartBalance = 3000.00M,
+                    IsDeleted = false,
                 },
             };
         }
