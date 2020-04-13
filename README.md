@@ -12,8 +12,7 @@ Demo project for trading stocks on NYSE. For now it is implemented for trading o
 
 ## Getting Started
 
-Site guest (**visitor**)
- 
+Site guest (**visitor**) 
 * can only visit Info pages (*Home*, *About Us*, *Privacy*, *Our Services*, *Contact Us*, *Register*, *Login*) 
 		and can send e-mail from form to site owner.
 
@@ -22,7 +21,6 @@ Every user pays trade fee for every trade and monthly commision for account main
 Every registered user,administrator and account manager has own profile page.
 
 **Administrator** - created from site owner
-
 * Manage account managers.
 * Create, update and delete account manager. 
 * Manage sent to site e-mails from visitors. 
@@ -30,7 +28,6 @@ Every registered user,administrator and account manager has own profile page.
 
 
 **Account manager** - created from administrator
-
 * Manage new accounts. 
 * Confirm user accounts. 
 * Manage confirmed clients
@@ -46,12 +43,10 @@ Every registered user,administrator and account manager has own profile page.
 	
 		
 **User with not confirmed account** - register
-
 * Can only visit his profile page.
 
 
 **User with confirmed account** - register
-
 * Can see current IBM price (1 min series) -live updated data
 * Can see live update 1 min chart for IBM stock
 * Can buy or sell IBM stocks (depending of his account balance)
