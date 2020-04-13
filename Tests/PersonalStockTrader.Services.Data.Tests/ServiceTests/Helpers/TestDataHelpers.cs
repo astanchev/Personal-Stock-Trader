@@ -14,6 +14,7 @@
         {
             var users = GetTestUsers();
             var positions = GetTestPositions();
+            var fees = GetTestFeePayments();
 
             return new List<Account>()
             {
@@ -25,6 +26,7 @@
                     Balance = 2000M,
                     MonthlyFee = 50,
                     Positions = positions.Where(p => p.AccountId == 1).ToList(),
+                    Fees = fees.Where(f => f.AccountId == 1).ToList(),
                 },
                 new Account
                 {
@@ -34,6 +36,7 @@
                     Balance = 5000M,
                     MonthlyFee = 50,
                     Positions = positions.Where(p => p.AccountId == 2).ToList(),
+                    Fees = fees.Where(f => f.AccountId == 2).ToList(),
                 },
             };
         }
@@ -158,6 +161,33 @@
             };
         }
 
+        public static List<HistoryPositionViewModel> GetTestHistoryPositions()
+        {
+            return new List<HistoryPositionViewModel>()
+            {
+                new HistoryPositionViewModel
+                {
+                    Ticker = GlobalConstants.StockTicker,
+                    OpenDate = DateTime.Parse("09.04.2020"),
+                    Quantity = 10,
+                    Direction = "Buy",
+                    OpenPrice = 100.00M,
+                    ClosePrice = 101.00M,
+                    Profit = 10.00M,
+                },
+                new HistoryPositionViewModel
+                {
+                    Ticker = GlobalConstants.StockTicker,
+                    OpenDate = DateTime.Parse("08.04.2020"),
+                    Quantity = 20,
+                    Direction = "Buy",
+                    OpenPrice = 100.00M,
+                    ClosePrice = 101.00M,
+                    Profit = 20.00M,
+                },
+            };
+        }
+
         public static List<DataSet> GetTestDataSets()
         {
             return new List<DataSet>()
@@ -197,6 +227,61 @@
                 {
                     Id = 1,
                     Ticker = GlobalConstants.StockTicker,
+                },
+            };
+        }
+
+        public static List<FeePayment> GetTestFeePayments()
+        {
+            return new List<FeePayment>()
+            {
+                new FeePayment
+                {
+                    Id = 1,
+                    CreatedOn = DateTime.Parse("09.04.2020"),
+                    Amount = 50,
+                    TypeFee = TypeFee.TradeFee,
+                    AccountId = 1,
+                },
+                new FeePayment
+                {
+                    Id = 2,
+                    CreatedOn = DateTime.Parse("08.04.2020"),
+                    Amount = 50,
+                    TypeFee = TypeFee.TradeFee,
+                    AccountId = 1,
+                },
+                new FeePayment
+                {
+                    Id = 3,
+                    CreatedOn = DateTime.Parse("09.04.2020"),
+                    Amount = 100,
+                    TypeFee = TypeFee.MonthlyCommission,
+                    AccountId = 1,
+                },
+                new FeePayment
+                {
+                    Id = 4,
+                    CreatedOn = DateTime.Parse("09.04.2020"),
+                    Amount = 50,
+                    TypeFee = TypeFee.TradeFee,
+                    AccountId = 2,
+                },
+                new FeePayment
+                {
+                    Id = 5,
+                    CreatedOn = DateTime.Parse("08.04.2020"),
+                    Amount = 50,
+                    TypeFee = TypeFee.TradeFee,
+                    AccountId = 2,
+                },
+                new FeePayment
+                {
+                    Id = 6,
+                    CreatedOn = DateTime.Parse("09.04.2020"),
+                    Amount = 100,
+                    TypeFee = TypeFee.MonthlyCommission,
+                    AccountId = 2,
                 },
             };
         }
