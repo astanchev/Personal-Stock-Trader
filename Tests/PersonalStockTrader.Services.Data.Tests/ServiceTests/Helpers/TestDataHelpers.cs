@@ -91,6 +91,7 @@
                     Id = 3,
                     CreatedOn = DateTime.Parse("01.04.2020"),
                     AccountId = 1,
+                    CountStocks = 10,
                     OpenClose = OpenClose.Open,
                     TypeOfTrade = TypeOfTrade.Buy,
                 },
