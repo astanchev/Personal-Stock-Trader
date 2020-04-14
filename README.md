@@ -101,7 +101,7 @@ Every registered user,administrator and account manager has own profile page.
 * Services
 * Web Api controllers + AJAX
 * In-Memmory Cache
-* Modul form /for sending e-mails from the admin/
+* Modul form /for sending e-mails from account manager to client/
 * TempData message for sent email from site visitor
 
 ## License
