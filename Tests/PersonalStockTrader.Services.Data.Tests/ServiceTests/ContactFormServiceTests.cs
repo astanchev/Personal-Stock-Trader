@@ -11,6 +11,7 @@
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Data.Repositories;
+    using PersonalStockTrader.Services.Data.Tests.ServiceTests.Helpers;
     using PersonalStockTrader.Web.ViewModels.Contact;
 
     [TestFixture]

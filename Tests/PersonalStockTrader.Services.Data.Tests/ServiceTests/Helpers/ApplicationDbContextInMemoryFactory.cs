@@ -1,7 +1,6 @@
-﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests
+﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests.Helpers
 {
     using System;
-
     using Microsoft.EntityFrameworkCore;
     using PersonalStockTrader.Data;
 

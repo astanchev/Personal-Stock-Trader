@@ -106,6 +106,11 @@
         {
             var user = await this.userRepository.GetByIdWithDeletedAsync(accountManager.UserId);
 
+            if (user == null)
+            {
+                return false;
+            }
+
             user.Email = accountManager.Email;
             user.UserName = accountManager.Username;
 
