@@ -193,23 +193,7 @@
         [Test]
         public async Task UpdatePositionShouldWorkCorrectlySameDirection()
         {
-            var position = this.accountRepository
-                .Object
-                .All()
-                .Where(a => a.Id == 1)
-                .Select(a => a.Positions
-                    .FirstOrDefault(p => p.Id == 3))
-                .FirstOrDefault();
-
-            Assert.NotNull(position);
-            Assert.AreEqual(OpenClose.Open, position.OpenClose);
-
-            var mockPositions = new List<Position>() {position}.AsQueryable().BuildMock();
-            var testPositionRepository = new Mock<IDeletableEntityRepository<Position>>();
-            testPositionRepository
-                .Setup(x => x.All())
-                .Returns(mockPositions.Object);
-            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
+            var testPositionService = this.MockTestPositionService();
 
             var result = await testPositionService.UpdatePosition(1, 3, 10, true);
 
@@ -219,23 +203,7 @@
         [Test]
         public async Task UpdatePositionShouldWorkCorrectlyDifferentDirectionMoreStocks()
         {
-            var position = this.accountRepository
-                .Object
-                .All()
-                .Where(a => a.Id == 1)
-                .Select(a => a.Positions
-                    .FirstOrDefault(p => p.Id == 3))
-                .FirstOrDefault();
-
-            Assert.NotNull(position);
-            Assert.AreEqual(OpenClose.Open, position.OpenClose);
-
-            var mockPositions = new List<Position>() {position}.AsQueryable().BuildMock();
-            var testPositionRepository = new Mock<IDeletableEntityRepository<Position>>();
-            testPositionRepository
-                .Setup(x => x.All())
-                .Returns(mockPositions.Object);
-            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
+            var testPositionService = this.MockTestPositionService();
 
             var result = await testPositionService.UpdatePosition(1, 3, 50, false);
 
@@ -245,23 +213,7 @@
         [Test]
         public async Task UpdatePositionShouldWorkCorrectlyDifferentDirectionLessStocks()
         {
-            var position = this.accountRepository
-                .Object
-                .All()
-                .Where(a => a.Id == 1)
-                .Select(a => a.Positions
-                    .FirstOrDefault(p => p.Id == 3))
-                .FirstOrDefault();
-
-            Assert.NotNull(position);
-            Assert.AreEqual(OpenClose.Open, position.OpenClose);
-
-            var mockPositions = new List<Position>() {position}.AsQueryable().BuildMock();
-            var testPositionRepository = new Mock<IDeletableEntityRepository<Position>>();
-            testPositionRepository
-                .Setup(x => x.All())
-                .Returns(mockPositions.Object);
-            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
+            var testPositionService = this.MockTestPositionService();
 
             var result = await testPositionService.UpdatePosition(1, 3, 1, false);
 
@@ -271,23 +223,7 @@
         [Test]
         public async Task UpdatePositionShouldWorkCorrectlyDifferentDirectionSameCountStocks()
         {
-            var position = this.accountRepository
-                .Object
-                .All()
-                .Where(a => a.Id == 1)
-                .Select(a => a.Positions
-                    .FirstOrDefault(p => p.Id == 3))
-                .FirstOrDefault();
-
-            Assert.NotNull(position);
-            Assert.AreEqual(OpenClose.Open, position.OpenClose);
-
-            var mockPositions = new List<Position>() {position}.AsQueryable().BuildMock();
-            var testPositionRepository = new Mock<IDeletableEntityRepository<Position>>();
-            testPositionRepository
-                .Setup(x => x.All())
-                .Returns(mockPositions.Object);
-            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
+            var testPositionService = this.MockTestPositionService();
 
             var result = await testPositionService.UpdatePosition(1, 3, 10, false);
 
@@ -363,6 +299,29 @@
                 await this.positionsService.GetAccountClosedPositions(-1, DateTime.Parse("01.01.2020").ToShortDateString(), DateTime.Parse("01.01.2019").ToShortDateString());
 
             CollectionAssert.IsEmpty(result);
+        }
+
+        private PositionsService MockTestPositionService()
+        {
+            var position = this.accountRepository
+                .Object
+                .All()
+                .Where(a => a.Id == 1)
+                .Select(a => a.Positions
+                    .FirstOrDefault(p => p.Id == 3))
+                .FirstOrDefault();
+
+            Assert.NotNull(position);
+            Assert.AreEqual(OpenClose.Open, position.OpenClose);
+
+            var mockPositions = new List<Position>() {position}.AsQueryable().BuildMock();
+            var testPositionRepository = new Mock<IDeletableEntityRepository<Position>>();
+            testPositionRepository
+                .Setup(x => x.All())
+                .Returns(mockPositions.Object);
+            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object,
+                this.stockRepository.Object, this.datasetRepository.Object);
+            return testPositionService;
         }
     }
 }

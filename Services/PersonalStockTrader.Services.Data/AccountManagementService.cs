@@ -4,9 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
     using PersonalStockTrader.Services.Mapping;
