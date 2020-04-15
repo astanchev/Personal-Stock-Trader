@@ -66,6 +66,10 @@ Every registered user,administrator and account manager has own profile page.
 **SignalR**
 * Checks if there is new data collected from Hangfire in the Database and if so - updates stock price and time in user's trading platform
 
+## Unit tests Code coverage
+
+![Code coverage](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Code_Coverage.png)
+
 ## Template authors
 
 - [Nikolay Kostov](https://github.com/NikolayIT)
