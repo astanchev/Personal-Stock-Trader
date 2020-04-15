@@ -12,7 +12,7 @@
     public class ApiConnectionTests
     {
         [Test]
-        public async Task GetCurrentDataInvokesStockServise()
+        public async Task GetCurrentDataInvokesStockService()
         {
             var stockService = new Mock<IStockService>();
             stockService
