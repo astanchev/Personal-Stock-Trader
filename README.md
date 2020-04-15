@@ -16,7 +16,7 @@ Site guest (**visitor**)
 * can only visit Info pages (*Home*, *About Us*, *Privacy*, *Our Services*, *Contact Us*, *Register*, *Login*) 
 		and can send e-mail from form to site owner.
 
-Every user has to register, except regular data and starting balance for his account (more then 1000USD).
+Every user has to register, except regular data and starting balance for his account (more then 1000USD). After his account is confirmed by account manager, he can use the full functionality of the trade platform.
 Every user pays trade fee for every trade and monthly commision for account maintenance.
 Every registered user,administrator and account manager has own profile page.
 
