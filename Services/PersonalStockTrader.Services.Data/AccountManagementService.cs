@@ -165,6 +165,21 @@
             await this.userManager.AddToRoleAsync(user, GlobalConstants.ConfirmedUserRoleName);
         }
 
+        public async Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee)
+        {
+            var accountToBeUpdated = await this.accountRepository
+                .AllWithDeleted()
+                .FirstOrDefaultAsync(a => a.UserId == userId);
+
+            accountToBeUpdated.Balance = balance;
+            accountToBeUpdated.TradeFee = tradeFee;
+            accountToBeUpdated.MonthlyFee = monthlyFee;
+
+            this.accountRepository.Update(accountToBeUpdated);
+
+            await this.accountRepository.SaveChangesAsync();
+        }
+
         public async Task DeleteUserAsync(string userId, int accountId)
         {
             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
@@ -176,22 +191,6 @@
             var account = await this.accountRepository.GetByIdWithDeletedAsync(accountId);
 
             this.accountRepository.Delete(account);
-
-            await this.accountRepository.SaveChangesAsync();
-        }
-
-        public async Task UpdateUserAccountAsync(string userId, decimal balance, decimal tradeFee, decimal monthlyFee)
-        {
-            var accountToBeUpdated = await this.accountRepository
-                .AllWithDeleted()
-                .FirstOrDefaultAsync(a => a.UserId == userId);
-
-
-            accountToBeUpdated.Balance = balance;
-            accountToBeUpdated.TradeFee = tradeFee;
-            accountToBeUpdated.MonthlyFee = monthlyFee;
-
-            this.accountRepository.Update(accountToBeUpdated);
 
             await this.accountRepository.SaveChangesAsync();
         }
@@ -284,12 +283,13 @@
             var usersCountByDays = this.userManager
                 .Users
                 .Where(u => u.CreatedOn > DateTime.Now.Date.AddDays(-89))
-                .GroupBy(c => c.CreatedOn.Date)
-                .Select(u => new
-                {
-                    Day = (DateTime)u.Key,
-                    Value = u.Count(),
-                });
+                            .GroupBy(c => c.CreatedOn.Date)
+                            .Select(u => new
+                            {
+                                Day = (DateTime)u.Key,
+                                Value = u.Count(),
+                            })
+                .ToList();
 
             foreach (var day in usersCountByDays)
             {

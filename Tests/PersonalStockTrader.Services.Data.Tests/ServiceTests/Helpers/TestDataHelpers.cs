@@ -52,6 +52,7 @@
                     Email = "a@a.a",
                     StartBalance = 2000.00M,
                     IsDeleted = false,
+                    CreatedOn = DateTime.Now,
                 },
                 new ApplicationUser
                 {
@@ -60,6 +61,7 @@
                     Email = "b@b.b",
                     StartBalance = 3000.00M,
                     IsDeleted = false,
+                    CreatedOn = DateTime.Now.AddDays(-1),
                 },
             };
         }
