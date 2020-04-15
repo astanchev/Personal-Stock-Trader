@@ -124,7 +124,7 @@
             var testInput = new TradeSharesInputViewModel
             {
                 AccountId = "1",
-                PositionId = "1",
+                PositionId = "-1",
                 Balance = "2000",
                 CurrentPrice = "100.00",
                 Quantity = "10",

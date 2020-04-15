@@ -1,10 +1,9 @@
-﻿namespace PersonalStockTrader.Services.Data.Tests
+﻿namespace PersonalStockTrader.Services.Data.Tests.ServiceTests
 {
     using System;
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
     using Moq;
     using NUnit.Framework;
     using PersonalStockTrader.Common;

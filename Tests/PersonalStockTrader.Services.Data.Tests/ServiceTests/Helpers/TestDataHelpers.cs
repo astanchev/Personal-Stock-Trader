@@ -64,6 +64,29 @@
             };
         }
 
+        public static List<ApplicationUser> GetTestNotConfirmedUsers()
+        {
+            return new List<ApplicationUser>()
+            {
+                new ApplicationUser
+                {
+                    Id = "11",
+                    UserName = "E",
+                    Email = "e@e.e",
+                    StartBalance = 2000.00M,
+                    IsDeleted = false,
+                },
+                new ApplicationUser
+                {
+                    Id = "22",
+                    UserName = "F",
+                    Email = "f@f.f",
+                    StartBalance = 3000.00M,
+                    IsDeleted = false,
+                },
+            };
+        }
+
         public static List<Position> GetTestPositions()
         {
             return new List<Position>()
@@ -290,6 +313,11 @@
         public static string GetUpToDateJSON()
         {
             return "{\"Meta Data\": {\"1. Information\": \"Intraday (1min) open, high, low, close prices and volume\",\"2. Symbol\": \"IBM\",\"3. Last Refreshed\": \"2020-04-09 00:00:00\",\"4. Interval\": \"1min\",\"5. Output Size\": \"Compact\",\"6. Time Zone\": \"US/Eastern\"},\"Time Series (1min)\": {\"2020-04-09 00:00:00\": {\"1. open\": \"122.1400\",\"2. high\": \"122.2100\",\"3. low\": \"121.4300\",\"4. close\": \"121.5200\",\"5. volume\": \"269094\"},\"2020-04-08 23:59:00\": {\"1. open\": \"121.6500\",\"2. high\": \"122.2300\",\"3. low\": \"121.2879\",\"4. close\": \"122.1350\",\"5. volume\": \"226196\"}}}";
+        }
+
+        public static string GetNewDateJSON()
+        {
+            return "{\"Meta Data\": {\"1. Information\": \"Intraday (1min) open, high, low, close prices and volume\",\"2. Symbol\": \"IBM\",\"3. Last Refreshed\": \"2020-04-10 00:00:00\",\"4. Interval\": \"1min\",\"5. Output Size\": \"Compact\",\"6. Time Zone\": \"US/Eastern\"},\"Time Series (1min)\": {\"2020-04-10 00:00:00\": {\"1. open\": \"122.1400\",\"2. high\": \"122.2100\",\"3. low\": \"121.4300\",\"4. close\": \"121.5200\",\"5. volume\": \"269094\"},\"2020-04-09 23:59:00\": {\"1. open\": \"121.6500\",\"2. high\": \"122.2300\",\"3. low\": \"121.2879\",\"4. close\": \"122.1350\",\"5. volume\": \"226196\"}}}";
         }
 
         public static string GetNotUpdatedJSON()

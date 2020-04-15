@@ -114,9 +114,17 @@
         }
 
         [Test]
-        public async Task GetUpdateWorkCorrectly()
+        public async Task GetUpdateWorkCorrectlyWithEmptyData()
         {
             var result = await this.stockService.GetUpdate(string.Empty, GlobalConstants.StockTicker);
+
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task GetUpdateWorkCorrectly()
+        {
+            var result = await this.stockService.GetUpdate("09/04/2020 00:00", GlobalConstants.StockTicker);
 
             Assert.NotNull(result);
         }
@@ -141,6 +149,15 @@
         public async Task ImportDataShouldUpdateRepositoriesWithNotUpdatedData()
         {
             await this.stockService.ImportData(TestDataHelpers.GetNotUpdatedJSON(), GlobalConstants.StockTicker);
+
+            this.metadataRepository.Verify(x => x.SaveChangesAsync(), Times.Once);
+            this.datasetRepository.Verify(x => x.SaveChangesAsync(), Times.AtLeastOnce);
+        }
+
+        [Test]
+        public async Task ImportDataShouldUpdateRepositoriesWithNewData()
+        {
+            await this.stockService.ImportData(TestDataHelpers.GetNewDateJSON(), GlobalConstants.StockTicker);
 
             this.metadataRepository.Verify(x => x.SaveChangesAsync(), Times.Once);
             this.datasetRepository.Verify(x => x.SaveChangesAsync(), Times.AtLeastOnce);
