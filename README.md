@@ -84,7 +84,7 @@ Every registered user,administrator and account manager has own profile page.
 
 * **Alpha Vantage API** - https://www.alphavantage.co
 * **Time and date** - https://www.timeanddate.com/
-* **Error page** You are lost... by Brett Thurston - codepen.io/ohBretterson/pen/gjyrzB
+* **Error page** You are lost... by Brett Thurston - https://codepen.io/ohBretterson/pen/gjyrzB
 
 ## Used Frameworks
 
