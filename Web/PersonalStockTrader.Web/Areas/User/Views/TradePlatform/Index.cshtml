@@ -195,14 +195,14 @@
                     document.getElementById('totalPrice').value = '';
 
                     if (data.positionId === 0 && $('#positionId').val() !== 0) {
-                        document.getElementById('balance').value = data.balance;
+                        document.getElementById('balance').value = data.balance.toFixed(2);
                         pos.style.display = 'none';
                     } else if ($('#positionId').val() === 0 && data.positionId > 0) {
                         pos.style.display = '';
-                        document.getElementById('balance').value = data.balance;
+                        document.getElementById('balance').value = data.balance.toFixed(2);
                         document.getElementById('positionId').value = data.positionId;
                         document.getElementById('positionQuantity').textContent = data.quantity;
-                        document.getElementById('positionOpenPrice').textContent = data.openPrice;
+                        document.getElementById('positionOpenPrice').textContent = data.openPrice.toFixed(2);
                         document.getElementById('positionDirection').textContent = data.isBuy;
 
                         if (buySell.textContent === 'true') {
@@ -215,10 +215,10 @@
 
                     } else if ($('#positionId').val() !== 0 && data.positionId > 0) {
                         pos.style.display = '';
-                        document.getElementById('balance').value = data.balance;
+                        document.getElementById('balance').value = data.balance.toFixed(2);
                         document.getElementById('positionId').value = data.positionId;
                         document.getElementById('positionQuantity').textContent = data.quantity;
-                        document.getElementById('positionOpenPrice').textContent = data.openPrice;
+                        document.getElementById('positionOpenPrice').textContent = data.openPrice.toFixed(2);
                         document.getElementById('positionDirection').textContent = data.isBuy;
 
                         if (buySell.textContent === 'true') {
