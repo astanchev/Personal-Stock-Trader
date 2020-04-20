@@ -102,7 +102,16 @@
                 return await this.OpenPosition(accountId, currentShares - numberShares, !isBuy);
             }
 
-            return new TradeSharesResultModel();
+            var currentBalance = this.accountRepository
+                .All()
+                .Where(a => a.Id == accountId)
+                .Select(a => a.Balance)
+                .FirstOrDefault();
+
+            return new TradeSharesResultModel()
+            {
+                Balance = currentBalance,
+            };
         }
 
         public async Task ClosePosition(int accountId)
@@ -154,7 +163,7 @@
         public async Task<IEnumerable<HistoryPositionViewModel>> GetAccountClosedPositions(int accountId, string startDate, string endDate)
         {
             var start = DateTime.Parse(startDate);
-            var end = DateTime.Parse(endDate);
+            var end = DateTime.Parse(endDate).AddDays(1);
 
             var result = await this.positionRepository
                 .All()
