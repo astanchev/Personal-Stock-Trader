@@ -2,13 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Update;
     using PersonalStockTrader.Common;
     using PersonalStockTrader.Data.Common.Repositories;
     using PersonalStockTrader.Data.Models;
@@ -165,12 +162,9 @@
             var start = DateTime.Parse(startDate);
             var end = DateTime.Parse(endDate).AddDays(1);
 
-            var result = await this.positionRepository
+            var positions = await this.positionRepository
                 .All()
-                .Where(p => p.AccountId == accountId && 
-                            p.OpenClose == OpenClose.Close &&
-                            p.CreatedOn >= start && 
-                            p.CreatedOn <= end)
+                .Where(p => p.AccountId == accountId && p.OpenClose == OpenClose.Close && p.CreatedOn >= start && p.CreatedOn <= end)
                 .Select(p => new HistoryPositionViewModel
                 {
                     Ticker = GlobalConstants.StockTicker,
@@ -185,7 +179,7 @@
                 })
                 .ToListAsync();
 
-            return result;
+            return positions;
         }
 
         private static decimal FindPositionOpenPrice(DateTime openTime)
