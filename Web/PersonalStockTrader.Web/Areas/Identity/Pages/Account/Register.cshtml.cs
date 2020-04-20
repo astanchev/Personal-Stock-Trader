@@ -100,7 +100,7 @@
                     EmailConfirmed = true,
                 };
 
-                var existingUser = this.userManager.FindByNameAsync(user.UserName);
+                var existingUser = await this.userManager.FindByNameAsync(user.UserName);
 
                 if (existingUser != null)
                 {
