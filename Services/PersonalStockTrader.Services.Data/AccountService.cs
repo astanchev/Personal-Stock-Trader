@@ -97,7 +97,9 @@
                 })
                 .FirstOrDefaultAsync();
 
-            var closedPositions = await this.positionsService.GetAccountClosedPositions(accountResult.AccountId, startDate, endDate);
+            int accountId = accountResult.AccountId;
+
+            var closedPositions = await this.positionsService.GetAccountClosedPositions(accountId, startDate, endDate);
 
             var result = new TradeHistoryViewModel
             {
