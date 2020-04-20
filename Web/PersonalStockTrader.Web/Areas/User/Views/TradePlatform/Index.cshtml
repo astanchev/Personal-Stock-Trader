@@ -195,6 +195,7 @@
                     document.getElementById('totalPrice').value = '';
 
                     if (data.positionId === 0 && $('#positionId').val() !== 0) {
+                        document.getElementById('balance').value = data.balance;
                         pos.style.display = 'none';
                     } else if ($('#positionId').val() === 0 && data.positionId > 0) {
                         pos.style.display = '';

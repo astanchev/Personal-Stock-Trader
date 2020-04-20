@@ -102,7 +102,20 @@
                 return await this.OpenPosition(accountId, currentShares - numberShares, !isBuy);
             }
 
-            return new TradeSharesResultModel();
+            var currentAccountBalance = this.accountRepository
+                .All()
+                .Where(a => a.Id == accountId)
+                .Select(a => a.Balance)
+                .FirstOrDefault();
+
+            return new TradeSharesResultModel
+            {
+                PositionId = 0,
+                Quantity = 0,
+                OpenPrice = 0,
+                Balance = currentAccountBalance,
+                IsBuy = false,
+            };
         }
 
         public async Task ClosePosition(int accountId)
