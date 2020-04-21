@@ -1,6 +1,7 @@
 # Personal Stock Trader
 
 Demo project for trading stocks on NYSE. For now it is implemented for trading only IBM stock, and provided data is 1 min. series.
+[Link](https://personalstocktrader.azurewebsites.net/)
 
 ## Roles
 
