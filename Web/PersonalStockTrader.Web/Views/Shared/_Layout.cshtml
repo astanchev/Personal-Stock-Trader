@@ -1,4 +1,5 @@
-﻿@using PersonalStockTrader.Common
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using PersonalStockTrader.Common
 @model PersonalStockTrader.Web.ViewModels.Contact.ContactFormViewModel
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +30,7 @@
     <link rel="stylesheet" href="~/css/fontawesome.css">
     <link rel="stylesheet" href="~/css/templatemo-finance-business.css">
     <link rel="stylesheet" href="~/css/owl.css">
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 
 <body>

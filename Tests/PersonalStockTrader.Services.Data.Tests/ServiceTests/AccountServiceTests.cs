@@ -36,10 +36,10 @@
             this.positionService = new Mock<IPositionsService>();
 
             this.positionService
-                .Setup(p => p.OpenPosition(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()));
+                .Setup(p => p.OpenPosition(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<decimal>(), It.IsAny<bool>()));
 
             this.positionService
-                .Setup(p => p.UpdatePosition(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()));
+                .Setup(p => p.UpdatePosition(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<decimal>(), It.IsAny<bool>()));
 
             this.positionService
                 .Setup(p => p.GetAccountClosedPositions(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -95,8 +95,8 @@
 
             await this.accountService.ManagePositionsAsync(testInput);
 
-            this.positionService.Verify(x => x.OpenPosition(1, 10, false), Times.Once);
-            this.positionService.Verify(x => x.UpdatePosition(1,  0, 10, false), Times.Never);
+            this.positionService.Verify(x => x.OpenPosition(1, 10, 100M, false), Times.Once);
+            this.positionService.Verify(x => x.UpdatePosition(1,  0, 10, 100M, false), Times.Never);
         }
 
         [Test]
@@ -114,8 +114,8 @@
 
             await this.accountService.ManagePositionsAsync(testInput);
 
-            this.positionService.Verify(x => x.OpenPosition(1, 10, false), Times.Never);
-            this.positionService.Verify(x => x.UpdatePosition(1,  1, 10, false), Times.Once);
+            this.positionService.Verify(x => x.OpenPosition(1, 10, 100M, false), Times.Never);
+            this.positionService.Verify(x => x.UpdatePosition(1,  1, 10, 100M, false), Times.Once);
         }
 
         [Test]

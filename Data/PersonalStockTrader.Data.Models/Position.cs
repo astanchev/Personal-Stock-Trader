@@ -18,6 +18,10 @@
         [Range(1, int.MaxValue)]
         public int CountStocks { get; set; }
 
+        public decimal OpenPrice { get; set; }
+
+        public decimal? ClosePrice { get; set; }
+
         public TypeOfTrade TypeOfTrade { get; set; }
 
         public OpenClose OpenClose { get; set; }

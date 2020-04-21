@@ -111,6 +111,7 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IPositionsService, PositionsService>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,14 +124,14 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                //dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
 
                 this.SeedHangfireJobs(recurringJobManager);
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
+                //if (env.IsDevelopment())
+                //{
+                //    dbContext.Database.Migrate();
+                //}
 
                 new ApplicationDbContextSeeder()
                     .SeedAsync(dbContext, serviceScope.ServiceProvider)

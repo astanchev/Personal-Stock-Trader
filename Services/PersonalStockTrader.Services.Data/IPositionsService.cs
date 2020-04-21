@@ -9,9 +9,9 @@
 
     public interface IPositionsService
     {
-        Task<TradeSharesResultModel> OpenPosition(int accountId, int numberShares, bool isBuy);
+        Task<TradeSharesResultModel> OpenPosition(int accountId, int numberShares, decimal currentPrice, bool isBuy);
 
-        Task<TradeSharesResultModel> UpdatePosition(int accountId, int positionId, int numberShares, bool isBuy);
+        Task<TradeSharesResultModel> UpdatePosition(int accountId, int positionId, int numberShares, decimal currentPrice, bool isBuy);
 
         Task ClosePosition(int accountId);
 

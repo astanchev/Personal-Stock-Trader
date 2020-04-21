@@ -13,6 +13,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+    <ApplicationInsightsResourceId>/subscriptions/505ca4ae-a5e3-420e-83b1-4fbce60c1117/resourcegroups/personalstocktrader/providers/microsoft.insights/components/personalstocktrader</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -102,6 +103,7 @@
     <PackageReference Include="Hangfire.Core" Version="1.7.11" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.11" />
     <PackageReference Include="HtmlSanitizer" Version="5.0.310" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
     <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
@@ -137,6 +139,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Connected Services\" />
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>

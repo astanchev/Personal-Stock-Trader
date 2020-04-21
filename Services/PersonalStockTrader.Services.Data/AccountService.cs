@@ -48,11 +48,11 @@
         {
             if (int.Parse(input.PositionId) > 0)
             {
-                return await this.positionsService.UpdatePosition(int.Parse(input.AccountId), int.Parse(input.PositionId), int.Parse(input.Quantity), input.IsBuy);
+                return await this.positionsService.UpdatePosition(int.Parse(input.AccountId), int.Parse(input.PositionId), int.Parse(input.Quantity), decimal.Parse(input.CurrentPrice), input.IsBuy);
             }
             else if (int.Parse(input.PositionId) == 0)
             {
-                return await this.positionsService.OpenPosition(int.Parse(input.AccountId), int.Parse(input.Quantity), input.IsBuy);
+                return await this.positionsService.OpenPosition(int.Parse(input.AccountId), int.Parse(input.Quantity), decimal.Parse(input.CurrentPrice), input.IsBuy);
             }
             else
             {

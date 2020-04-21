@@ -69,7 +69,7 @@
         public async Task OpenPositionShouldCreatePosition()
         {
             var countPreAdd = this.positionRepository.All().Count();
-            await this.positionsService.OpenPosition(1, 10, true);
+            await this.positionsService.OpenPosition(1, 10, 100M, true);
             var countAfterAdd = this.positionRepository.All().Count();
 
             Assert.AreEqual(countPreAdd + 1, countAfterAdd);
@@ -78,7 +78,7 @@
         [Test]
         public async Task OpenPositionReturnsCorrectResult()
         {
-            var result = await this.positionsService.OpenPosition(1, 10, true);
+            var result = await this.positionsService.OpenPosition(1, 10, 100M, true);
 
             Assert.AreEqual(10, result.Quantity);
             Assert.AreEqual(true, result.IsBuy);
@@ -94,7 +94,7 @@
                 .Select(a => a.Positions.Count)
                 .FirstOrDefault();
 
-            var result = await this.positionsService.OpenPosition(1, 10, true);
+            var result = await this.positionsService.OpenPosition(1, 10, 100M, true);
 
             var countAccPossAfter = this.accountRepository
                 .Object
@@ -109,7 +109,7 @@
         [Test]
         public async Task OpenPositionDirectCorrectRepositories()
         {
-            await this.positionsService.OpenPosition(1, 10, true);
+            await this.positionsService.OpenPosition(1, 10, 100M, true);
 
             this.accountRepository.Verify(a => a.All(), Times.Once);
             this.stockRepository.Verify(s => s.All(), Times.Once);
@@ -177,7 +177,7 @@
                 .Returns(mockPositions.Object);
             var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
 
-            await testPositionService.UpdatePosition(1, 3, 10, true);
+            await testPositionService.UpdatePosition(1, 3, 10, 100M, true);
             var closedPosition = this.accountRepository
                 .Object
                 .All()
@@ -195,7 +195,7 @@
         {
             var testPositionService = this.MockTestPositionService();
 
-            var result = await testPositionService.UpdatePosition(1, 3, 10, true);
+            var result = await testPositionService.UpdatePosition(1, 3, 10, 100M, true);
 
             Assert.NotNull(result);
         }
@@ -205,7 +205,7 @@
         {
             var testPositionService = this.MockTestPositionService();
 
-            var result = await testPositionService.UpdatePosition(1, 3, 50, false);
+            var result = await testPositionService.UpdatePosition(1, 3, 50, 100M, false);
 
             Assert.NotNull(result);
         }
@@ -215,7 +215,7 @@
         {
             var testPositionService = this.MockTestPositionService();
 
-            var result = await testPositionService.UpdatePosition(1, 3, 1, false);
+            var result = await testPositionService.UpdatePosition(1, 3, 1, 100M, false);
 
             Assert.NotNull(result);
         }
@@ -225,7 +225,7 @@
         {
             var testPositionService = this.MockTestPositionService();
 
-            var result = await testPositionService.UpdatePosition(1, 3, 10, false);
+            var result = await testPositionService.UpdatePosition(1, 3, 10, 100M, false);
 
             Assert.AreEqual(0, result.PositionId);
         }
@@ -251,7 +251,7 @@
                 .Returns(mockPositions.Object);
             var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
 
-            await testPositionService.UpdatePosition(1, 3, 10, true);
+            await testPositionService.UpdatePosition(1, 3, 10, 100M, true);
 
             this.accountRepository.Verify(a => a.All(), Times.AtLeastOnce);
             this.stockRepository.Verify(s => s.All(), Times.Once);
@@ -260,7 +260,7 @@
         [Test]
         public async Task GetOpenPositionWithCorrectAccountIdReturnsCorrectData()
         {
-            await this.positionsService.OpenPosition(1, 10, true);
+            await this.positionsService.OpenPosition(1, 10, 100M, true);
 
             var result = await this.positionsService.GetOpenPosition(1);
 
@@ -319,8 +319,7 @@
             testPositionRepository
                 .Setup(x => x.All())
                 .Returns(mockPositions.Object);
-            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object,
-                this.stockRepository.Object, this.datasetRepository.Object);
+            var testPositionService = new PositionsService(testPositionRepository.Object, this.accountRepository.Object, this.stockRepository.Object, this.datasetRepository.Object);
             return testPositionService;
         }
     }
