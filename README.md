@@ -3,6 +3,8 @@
 Demo project for trading stocks on NYSE. For now it is implemented for trading only IBM stock, and provided data is 1 min. series.
 [Link](https://personalstocktrader.azurewebsites.net/)
 
+[![Build status](https://dev.azure.com/amstanchev/PersonalStockTrader/_apis/build/status/PersonalStockTrader-Azure%20Web%20App%20for%20ASP.NET-CI)](https://dev.azure.com/amstanchev/PersonalStockTrader/_build/latest?definitionId=-1)
+
 ## Roles
 
 * Visitor
