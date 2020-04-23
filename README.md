@@ -33,7 +33,7 @@ Every registered user,administrator and account manager has own profile page.
 
 **Account manager** - created from administrator
 * Manage new accounts. 
-* Confirm user accounts. 
+* Confirm user accounts. After confirmation user receives automatically generated email.
 * Manage confirmed clients
 	- update their fees and balance
 	- send them e-mails
