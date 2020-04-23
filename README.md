@@ -41,7 +41,7 @@ Every registered user,administrator and account manager has own profile page.
 	- can delete user.
 * Sees clients statistics (graphics)
 	- Paid total trade fees last 7 days 
-	- Paid total monthly commissions last 6 moths
+	- Paid total monthly commissions last 6 months
 	- New clients last 90 days
 	- Money from commissions and fees last 90 days
 	
