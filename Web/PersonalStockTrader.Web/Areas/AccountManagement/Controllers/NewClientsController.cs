@@ -12,9 +12,6 @@
 
     public class NewClientsController : AccountManagementController
     {
-        private const string ConfirmMessage = "Your account has been approved!";
-        private const string ConfirmSubject = "Account confirmation";
-
         private readonly IAccountManagementService accountManagement;
         private readonly IEmailSender emailSender;
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -57,8 +54,8 @@
                 GlobalConstants.SystemEmail,
                 this.User.Identity.Name,
                 input.Email,
-                ConfirmSubject,
-                ConfirmMessage);
+                GlobalConstants.ConfirmSubject,
+                GlobalConstants.ConfirmMessage);
 
             return this.RedirectToAction(nameof(this.Index));
         }

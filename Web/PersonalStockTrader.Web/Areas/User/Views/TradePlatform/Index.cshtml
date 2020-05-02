@@ -254,6 +254,7 @@
                     (newPrice, newTime) => {
                         document.getElementById("price").textContent = newPrice;
                         document.getElementById("datetime").textContent = newTime;
+                        document.getElementById('positionCurrentPrice').textContent = newPrice;
                     });
 
                 connection.start()
@@ -336,11 +337,11 @@
                 values.shift();
                 chart.update();
 
-                if (positionId !== 0) {
-                    var currentPrice = document.getElementById('positionCurrentPrice');
+                //if (positionId !== 0) {
+                //    var currentPrice = document.getElementById('positionCurrentPrice');
 
-                    currentPrice.textContent = price.textContent;
-                }
+                //    currentPrice.textContent = price.textContent;
+                //}
             }
         };
 // Create an observer instance linked to the callback function

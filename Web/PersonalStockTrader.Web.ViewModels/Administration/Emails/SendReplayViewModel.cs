@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using PersonalStockTrader.Common;
+
     public class SendReplayViewModel
     {
         public int Id { get; set; }
@@ -17,7 +19,7 @@
         public bool Answered { get; set; }
 
         [Required]
-        [StringLength(10000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 20)]
+        [StringLength(10000, ErrorMessage = GlobalConstants.TextError, MinimumLength = 20)]
         [Display(Name = "Answer")]
         public string Answer { get; set; }
     }

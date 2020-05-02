@@ -32,7 +32,7 @@
 
             return new ResponseEmailViewModel()
             {
-                Response = "Email Sent!",
+                Response = GlobalConstants.EmailSent,
             };
         }
     }

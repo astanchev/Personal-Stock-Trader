@@ -51,8 +51,8 @@
         public class InputModel
         {
             [Required]
-            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "The {0} must have only letters and numbers.")]
-            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = GlobalConstants.UsernameErrorRegex)]
+            [StringLength(20, ErrorMessage = GlobalConstants.TextError, MinimumLength = 3)]
             [Display(Name = "Username")]
             public string Username { get; set; }
 
@@ -62,18 +62,18 @@
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = GlobalConstants.TextError, MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = GlobalConstants.PassConfirmError)]
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [Range(typeof(decimal), "1000.00", "79228162514264337593543950335", ErrorMessage = "Value for {0} must be at least {1} USD.")]
+            [Range(typeof(decimal), "1000.00", "79228162514264337593543950335", ErrorMessage = GlobalConstants.BalanceError)]
             [Display(Name = "Starting Balance")]
             public decimal StartBalance { get; set; }
         }
@@ -104,7 +104,7 @@
 
                 if (existingUser != null)
                 {
-                    this.TempData["InfoMessage"] = "User with this name exists!";
+                    this.TempData["InfoMessage"] = GlobalConstants.UserExists;
                     return this.RedirectToPage("Register");
                 }
 
@@ -115,7 +115,7 @@
                         user,
                         GlobalConstants.NotConfirmedUserRoleName);
 
-                    this.logger.LogInformation("User created a new account with password.");
+                    this.logger.LogInformation(GlobalConstants.CreatedNewPass);
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

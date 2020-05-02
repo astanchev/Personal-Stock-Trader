@@ -89,6 +89,7 @@
                     Email = c.Email,
                     Subject = c.Subject,
                     Content = c.Content,
+                    CreatedOn = c.CreatedOn,
                     Answered = c.Answered,
                 })
                 .ToList();
