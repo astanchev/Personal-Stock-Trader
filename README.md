@@ -116,30 +116,54 @@ Every registered user,administrator and account manager has own profile page.
 
 * Unregistered user
 
+**Home**
 ![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Home1.png)
 
-![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/OurServices.png) ![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/FooterContactUs.png)
+**OurServices**
+![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/OurServices.png) 
+
+**Footer Contact Us**
+![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/FooterContactUs.png)
 
 * Registration form / login form
 
-![Registration form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Register.png) ![login form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Login.png)
+**Register**
+![Registration form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Register.png) 
+
+**Login**
+![login form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Login.png)
 
 * Administrator
 
-![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/AdministratorHome.png) ![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManageEmails.png)
+**Administrator Home**
+![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/AdministratorHome.png) 
+
+**Manage Emails**
+![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManageEmails.png)
 
 * Customer manager
 
-![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManagerClients.png) ![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManagerClient.png)
+**Manager Clients**
+![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManagerClients.png) 
+
+**Manage Client**
+![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManageClient.png)
 
 * Registered user with unapproved account
 
+**New Account**
 ![Registered user with unapproved account](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/newAccount.png)
 
 * Registered user with approved account
 
-![User Home](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserHome.png) ![User Statistic](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserStatistic.png) ![Trade History](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/TradeHistory.png)
+**UserHome**
+![User Home](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserHome.png) 
 
+**User Statistic**
+![User Statistic](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserStatistic.png) 
+
+**Trade History**
+![Trade History](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/TradeHistory.png)
 
 ## License
 
