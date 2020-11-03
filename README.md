@@ -71,7 +71,7 @@ Every registered user,administrator and account manager has own profile page.
 
 ## Unit tests Code coverage
 
-![Code coverage](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Code_Coverage.png)
+![Code coverage](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Code_Coverage.png)
 
 ## Template authors
 
@@ -111,6 +111,35 @@ Every registered user,administrator and account manager has own profile page.
 * In-Memmory Cache
 * Modul form /for sending e-mails from account manager to client/
 * TempData message for sent email from site visitor
+
+## Pictures
+
+* Unregistered user
+
+![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Home1.png)
+
+![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/OurServices.png) ![Unregistered user](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/FooterContactUs.png)
+
+* Registration form / login form
+
+![Registration form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Register.png) ![login form](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/Login.png)
+
+* Administrator
+
+![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/AdministratorHome.png) ![Administrator](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManageEmails.png)
+
+* Customer manager
+
+![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManagerClients.png) ![Customer manager](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/ManagerClient.png)
+
+* Registered user with unapproved account
+
+![Registered user with unapproved account](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/newAccount.png)
+
+* Registered user with approved account
+
+![User Home](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserHome.png) ![User Statistic](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/UserStatistic.png) ![Trade History](https://github.com/astanchev/Personal-Stock-Trader/blob/master/Images/TradeHistory.png)
+
 
 ## License
 
